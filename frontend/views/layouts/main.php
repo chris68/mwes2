@@ -6,6 +6,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
+use frontend\models\Emaildomain;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -18,7 +19,7 @@ AppAsset::register($this);
 <head>
 	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Plattform zum Dokumentieren von missbräuchlichen Parken auf Gehwegen, Radwegen und in verkehrsberuhigten Zonen">
+	<meta name="description" content="Plattform zum Verwalten von Adressbüchern und Emailumleitungen">
     <?= Html::csrfMetaTags() ?>
 	<link rel="icon" type="image/x-icon" href="<?=Url::to('favicon.ico')?>">
 	<title><?= $this->title ?></title>
@@ -36,21 +37,23 @@ AppAsset::register($this);
 					'class' => 'navbar-inverse navbar-fixed-top',
 				],
 			]);
+			$emaildomains = [];
+			foreach (Emaildomain::find()->ownerScope()->orderby('name')->all() as $domain) {
+				$emaildomains[] = ['label' =>  $domain->name, 'url' => ['/emailentity/index', 's[emaildomain_id]' => $domain->id ]];
+			}
 			$menuItems = [
 				['label' => \Yii::t('base','Home'), 'url' => ['/site/index']],
 				[
 					'label' => 'Adressbücher', 
 					'visible' => !Yii::$app->user->isGuest,
-					'items' => [
-						['label' => '', 'url' => ['/']],
-					],
+					'items' => $emaildomains,
 				],
 				[
 					'label' => 'Verwalten', 
 					'visible' => !Yii::$app->user->isGuest,
 					'items' => [
-						['label' => 'Globale Adressen', 'url' => ['/']],
-						['label' => 'Adressbücher', 'url' => ['/']],
+						['label' => 'Globale Adressen', 'url' => ['/emailentity/index', 's[emaildomain_id]' => 0]],
+						['label' => 'Adressbücher', 'url' => ['/emaildomain/index']],
 						['label' => 'Absenderadressen', 'url' => ['/']],
 					],
 				],
