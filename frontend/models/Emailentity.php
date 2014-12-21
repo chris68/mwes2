@@ -21,7 +21,7 @@ use frontend\models\Emaildomain;
  */
 class Emailentity extends \yii\db\ActiveRecord
 {
-	/**
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -43,10 +43,10 @@ class Emailentity extends \yii\db\ActiveRecord
             [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9._-]+)$/i', 'message' => 'Der Emailname darf nur aus ASCII-Zeichen (ohne Umlaute, etc.), Ziffern und Punkten,Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['emaildomain_id', 'name'], 'unique', 'targetAttribute' => ['emaildomain_id', 'name'], 'message' => 'Der gewählte Emailname wird in dem Adressbuch bereits genutzt'],
             [['emaildomain_id'], 'exist', 'targetAttribute' => 'id', 'targetClass' => Emaildomain::className()],
-			[['emaildomain_id'], 
-				'exist', 'targetAttribute' => 'id', 'targetClass' => Emaildomain::className(), 
-				'filter' => function ($query) {return $query->linkScope();}, 
-				'message' => 'Sie dürfen keine Emailnamen in dem Adressbuch anlegen'],
+            [['emaildomain_id'], 
+                'exist', 'targetAttribute' => 'id', 'targetClass' => Emaildomain::className(), 
+                'filter' => function ($query) {return $query->linkScope();}, 
+                'message' => 'Sie dürfen keine Emailnamen in dem Adressbuch anlegen'],
         ];
     }
 
@@ -65,27 +65,27 @@ class Emailentity extends \yii\db\ActiveRecord
         ];
     }
 
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public static function find()
     {
         return new EmailentityQuery(get_called_class());
     }
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function behaviors()
-	{
-		return [
-			'EnsureOwnership' => [
-				'class' => 'common\behaviors\EnsureOwnership',
-				'ownerAttribute' => 'owner_id',
-				'ensureOnFind' => true,
-			],
-		];
-	}
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'EnsureOwnership' => [
+                'class' => 'common\behaviors\EnsureOwnership',
+                'ownerAttribute' => 'owner_id',
+                'ensureOnFind' => true,
+            ],
+        ];
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -108,13 +108,13 @@ class Emailentity extends \yii\db\ActiveRecord
      */
     public function getCompleteEmailname()
     {
-		if (isset($this->emaildomain)) {
-			return $this->name.'@'.$this->emaildomain->getCompleteDomainname();
-		} else {
-			// If the email domain is not set yet 
-			return $this->name.'@?.mailwitch.com';
-		}
+        if (isset($this->emaildomain)) {
+            return $this->name.'@'.$this->emaildomain->getCompleteDomainname();
+        } else {
+            // If the email domain is not set yet 
+            return $this->name.'@?.mailwitch.com';
+        }
     }
 
-	
+    
 }

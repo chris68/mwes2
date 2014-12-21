@@ -34,9 +34,9 @@ class EmaildomainController extends Controller
     {
         $searchModel = new EmaildomainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query = $dataProvider->query->ownerScope();
-		$dataProvider->sort->defaultOrder = ['name' => SORT_ASC,];
-		$dataProvider->pagination->pageSize = 20;
+        $dataProvider->query = $dataProvider->query->ownerScope();
+        $dataProvider->sort->defaultOrder = ['name' => SORT_ASC,];
+        $dataProvider->pagination->pageSize = 20;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

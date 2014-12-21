@@ -20,7 +20,7 @@ class EmailentityController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-					// todo method post currently does not play nice with pjax (see github.com/yiisoft/yii2/issues/2505)
+                    // todo method post currently does not play nice with pjax (see github.com/yiisoft/yii2/issues/2505)
                     // 'delete' => ['post'],
                 ],
             ],
@@ -35,9 +35,9 @@ class EmailentityController extends Controller
     {
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query = $dataProvider->query->ownerScope();
-		$dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC,];
-		$dataProvider->pagination->pageSize = 20;
+        $dataProvider->query = $dataProvider->query->ownerScope();
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC,];
+        $dataProvider->pagination->pageSize = 20;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -52,16 +52,16 @@ class EmailentityController extends Controller
      */
     public function actionView($id)
     {
-		if (\Yii::$app->getRequest()->getIsPjax()) {
-			return $this->renderPartial('view', [
-				'model' => $this->findModel($id),
-			]);
-		}
-		else {
-			return $this->render('view', [
-				'model' => $this->findModel($id),
-			]);
-		}
+        if (\Yii::$app->getRequest()->getIsPjax()) {
+            return $this->renderPartial('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -72,29 +72,29 @@ class EmailentityController extends Controller
     public function actionCreate($emaildomain_id = NULL)
     {
         $model = new Emailentity();
-		$model->emaildomain_id = $emaildomain_id;
+        $model->emaildomain_id = $emaildomain_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			if (\Yii::$app->getRequest()->getIsPjax()) {
-				return 
-					$this->renderPartial('_view', [
-						'model' => $model, 
-						'pjax'=> true, 
-					]);
-			} else {
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return 
+                    $this->renderPartial('_view', [
+                        'model' => $model, 
+                        'pjax'=> true, 
+                    ]);
+            } else {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
-			if (\Yii::$app->getRequest()->getIsPjax()) {
-				return $this->renderPartial('_form', [
-					'model' => $model, 
-					'pjax'=> true, 
-				]);
-			} else {
-				return $this->render('create', [
-					'model' => $model,
-				]);
-			}
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return $this->renderPartial('_form', [
+                    'model' => $model, 
+                    'pjax'=> true, 
+                ]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
 
@@ -109,26 +109,26 @@ class EmailentityController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			if (\Yii::$app->getRequest()->getIsPjax()) {
-				return 
-					$this->renderPartial('_view', [
-							'model' => $model,
-							'pjax'=> true, 
-					]);
-			} else {
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return 
+                    $this->renderPartial('_view', [
+                            'model' => $model,
+                            'pjax'=> true, 
+                    ]);
+            } else {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
-			if (\Yii::$app->getRequest()->getIsPjax()) {
-				return $this->renderPartial('_form', [
-					'model' => $model,
-					'pjax'=> true, 
-				]);
-			} else {
-				return $this->render('update', [
-					'model' => $model,
-				]);
-			}
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return $this->renderPartial('_form', [
+                    'model' => $model,
+                    'pjax'=> true, 
+                ]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
 
@@ -140,18 +140,18 @@ class EmailentityController extends Controller
      */
     public function actionDelete($id)
     {
-		
+        
         $model = $this->findModel($id); $model->delete();
 
-		if (\Yii::$app->getRequest()->getIsPjax()) {
-			return \yii\bootstrap\Alert::widget([
-				'body' => "'{$model->getCompleteEmailname()}' wurde gelöscht",
-				'closeButton' => [],
-				'options' => ['class' => 'alert-success'],
-			]);
-		} else {
-			return $this->redirect(['index']);
-		}
+        if (\Yii::$app->getRequest()->getIsPjax()) {
+            return \yii\bootstrap\Alert::widget([
+                'body' => "'{$model->getCompleteEmailname()}' wurde gelöscht",
+                'closeButton' => [],
+                'options' => ['class' => 'alert-success'],
+            ]);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

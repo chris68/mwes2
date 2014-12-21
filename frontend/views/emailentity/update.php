@@ -15,7 +15,7 @@ $this->params['help'] = 'emailentity-update';
 
     <?= $this->render('_form', [
         'model' => $model,
-		'pjax' => FALSE,
+        'pjax' => FALSE,
     ]) ?>
 
 </div>

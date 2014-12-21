@@ -56,10 +56,10 @@ $this->execute($sql);
 
 $sql = <<<'EOT'
   select 
-	  setval('tbl_user_id_seq',99), 
-	  setval('tbl_emaildomain_id_seq',99),
-	  setval('tbl_emailentity_id_seq',99),
-	  '';
+      setval('tbl_user_id_seq',99), 
+      setval('tbl_emaildomain_id_seq',99),
+      setval('tbl_emailentity_id_seq',99),
+      '';
 EOT;
 $this->execute($sql);
 

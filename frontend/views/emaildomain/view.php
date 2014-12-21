@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="emaildomain-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-	
-	<p>
-		<?= Html::encode($model->description) ?>
-	</p>
+    
+    <p>
+        <?= Html::encode($model->description) ?>
+    </p>
 
     <p>
         <?= Html::a('Verwalten', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

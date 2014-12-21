@@ -14,9 +14,9 @@ $this->params['help'] = 'emailentity-view';
 ?>
 <div class="emailentity-view">
 
-	<?= $this->render('_view', [
-		'model' => $model,
-		'pjax' => FALSE,
-	]) ?>
+    <?= $this->render('_view', [
+        'model' => $model,
+        'pjax' => FALSE,
+    ]) ?>
 
 </div>

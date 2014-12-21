@@ -8,17 +8,17 @@ use yii\bootstrap\Collapse;
 ?>
 
 <?=
-	Collapse::widget([
-		'items' => [
-			[
-				'label' =>  '<span class="glyphicon glyphicon-collapse-down"></span> Detailsuche/-filter <span class="badge">'.$searchModel->getFilterStatus().'</span>',
-				'encode' => false,
-				'content' => $this->render('_search', ['model' => $searchModel]),
-			],
-		],
-		'options' => 
-		[
-			'style' => 'margin-bottom: 10px'
-		],
+    Collapse::widget([
+        'items' => [
+            [
+                'label' =>  '<span class="glyphicon glyphicon-collapse-down"></span> Detailsuche/-filter <span class="badge">'.$searchModel->getFilterStatus().'</span>',
+                'encode' => false,
+                'content' => $this->render('_search', ['model' => $searchModel]),
+            ],
+        ],
+        'options' => 
+        [
+            'style' => 'margin-bottom: 10px'
+        ],
    ]);
 ?>

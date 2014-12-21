@@ -13,20 +13,20 @@ use frontend\models\Emailentity;
 class EmailentitySearch extends Emailentity
 {
 
-	/**
-	 *
-	 * @var string Search in any of the fields
-	 */
-	public $any;
-	
+    /**
+     *
+     * @var string Search in any of the fields
+     */
+    public $any;
+    
     /**
      * @inheritdoc
      */
-	public function formName()
-	{
-		return 's';
-	}
-	
+    public function formName()
+    {
+        return 's';
+    }
+    
     /**
      * @inheritdoc
      */
@@ -45,10 +45,10 @@ class EmailentitySearch extends Emailentity
      */
     public function attributeLabels()
     {
-		return array_merge(parent::attributeLabels(),
-			[
-				'any' => 'Beliebiges Feld',
-			]);
+        return array_merge(parent::attributeLabels(),
+            [
+                'any' => 'Beliebiges Feld',
+            ]);
     }
 
     /**
@@ -89,19 +89,19 @@ class EmailentitySearch extends Emailentity
             ->andFilterWhere(['ilike', 'sortname', $this->sortname])
             ->andFilterWhere(['ilike', 'comment', $this->comment]);
 
-		if (!empty($this->any)) {
-			$query->andWhere('(name ilike :any or sortname ilike :any or comment ilike :any)', [':any' => ('%' . strtr($this->any, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
-		}
+        if (!empty($this->any)) {
+            $query->andWhere('(name ilike :any or sortname ilike :any or comment ilike :any)', [':any' => ('%' . strtr($this->any, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
+        }
 
-		return $dataProvider;
+        return $dataProvider;
     }
-	
-	public function getFilterStatus()
-	{
-		if (isset($this->emaildomain)) {
-			return $this->emaildomain->getCompleteDomainname();
-		} 
-		return 'Alle Adressen';
-	}
+    
+    public function getFilterStatus()
+    {
+        if (isset($this->emaildomain)) {
+            return $this->emaildomain->getCompleteDomainname();
+        } 
+        return 'Alle Adressen';
+    }
 }
 

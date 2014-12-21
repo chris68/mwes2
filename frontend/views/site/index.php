@@ -8,29 +8,29 @@ $this->title = \Yii::$app->name;
 ?>
 <div class="site-index">
 
-	<div class="jumbotron">
-		<h1>Mailwitch Email Services</h1>
+    <div class="jumbotron">
+        <h1>Mailwitch Email Services</h1>
 
-		<p class="lead"></p>
+        <p class="lead"></p>
 
-	</div>
+    </div>
 
-	<div class="body-content">
+    <div class="body-content">
 
-		<div class="row">
-			<div class="col-md-4">
-				<h2></h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h2></h2>
 
-			</div>
-			<div class="col-md-4">
-				<h2></h2>
+            </div>
+            <div class="col-md-4">
+                <h2></h2>
 
-			</div>
-			<div class="col-md-4">
-				<h2></h2>
+            </div>
+            <div class="col-md-4">
+                <h2></h2>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 </div>

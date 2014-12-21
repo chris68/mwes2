@@ -10,21 +10,21 @@ use frontend\models\Emaildomain;
 ?>
 
 <?php 
-	/* @var $form yii\bootstrap\ActiveForm */
-	$form = ActiveForm::begin([
-	'action' => ['index'],
-	'method' => 'get',
-	'id' => 'search_form',
+    /* @var $form yii\bootstrap\ActiveForm */
+    $form = ActiveForm::begin([
+    'action' => ['index'],
+    'method' => 'get',
+    'id' => 'search_form',
 ]); 
 ?>
 
-	<?= $form->field($model, 'sortname') ?>
+    <?= $form->field($model, 'sortname') ?>
 
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'comment') ?>
 
-	<?= $form->field($model, 'emaildomain_id')->dropDownList(['' => 'Alle Adressen']+[0 => 'Globale Adressen']+ArrayHelper::map(Emaildomain::find()->ownerScope()->orderBy('name')->all(),'id','name')) ?>
+    <?= $form->field($model, 'emaildomain_id')->dropDownList(['' => 'Alle Adressen']+[0 => 'Globale Adressen']+ArrayHelper::map(Emaildomain::find()->ownerScope()->orderBy('name')->all(),'id','name')) ?>
 
     <?= '' // $form->field($model, 'id') ?>
 

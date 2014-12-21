@@ -9,13 +9,13 @@ use yii\db\ActiveQuery;
  */
 class EmailentityQuery extends ActiveQuery
 {
-	/**
-	 * Scope for the owner
-	 */
-	public function ownerScope()
-	{
-		$this->andWhere("{{%emailentity}}.owner_id = :owner", [':owner' => \Yii::$app->user->id]);
-		return $this;
-	}
-	
+    /**
+     * Scope for the owner
+     */
+    public function ownerScope()
+    {
+        $this->andWhere("{{%emailentity}}.owner_id = :owner", [':owner' => \Yii::$app->user->id]);
+        return $this;
+    }
+    
 }

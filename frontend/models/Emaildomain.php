@@ -59,27 +59,27 @@ class Emaildomain extends \yii\db\ActiveRecord
         ];
     }
 
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * {@inheritdoc}
+     */
     public static function find()
     {
         return new EmaildomainQuery(get_called_class());
     }
-	
-	/**
-	 * {@inheritdoc}
-	 */
-	public function behaviors()
-	{
-		return [
-			'EnsureOwnership' => [
-				'class' => 'common\behaviors\EnsureOwnership',
-				'ownerAttribute' => 'owner_id',
-				'ensureOnFind' => false, // todo Currently we cannot assure it one find since that would block access to the global domain!
-			],
-		];
-	}
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'EnsureOwnership' => [
+                'class' => 'common\behaviors\EnsureOwnership',
+                'ownerAttribute' => 'owner_id',
+                'ensureOnFind' => false, // todo Currently we cannot assure it one find since that would block access to the global domain!
+            ],
+        ];
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -96,7 +96,7 @@ class Emaildomain extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Emailentity::className(), ['emaildomain_id' => 'id']);
     }
-	
+    
     /**
      * @return string The complete domain name like e.g. 'ct.mailwitch.com'
      */
@@ -104,16 +104,16 @@ class Emaildomain extends \yii\db\ActiveRecord
     {
         return $this->getResolvedDomainname().'mailwitch.com';
     }
-	
+    
     /**
      * @return string The resolved domain name like e.g. 'ct.mailwitch.com'
      */
     public function getResolvedDomainname()
     {
         if ($this->id === 0) {
-			return '';
-		} else {
-			return $this->name.'.';
-		}
+            return '';
+        } else {
+            return $this->name.'.';
+        }
     }
 }

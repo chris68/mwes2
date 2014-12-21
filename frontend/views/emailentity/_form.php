@@ -12,66 +12,66 @@ use frontend\models\Emaildomain;
 ?>
 
 <?php 
-	if ($pjax) {
-		Pjax::begin(['id' => 'item_'.($model->isNewRecord?'new':$model->id), 'enablePushState' => FALSE, ]);
-	}
+    if ($pjax) {
+        Pjax::begin(['id' => 'item_'.($model->isNewRecord?'new':$model->id), 'enablePushState' => FALSE, ]);
+    }
 /* @var $form yii\bootstrap\ActiveForm */
-	$form = ActiveForm::begin(['action' => $model->isNewRecord ? ['emailentity/create'] : ['emailentity/update', 'id' => $model->id] , 'options' => ['data-pjax' => true ]]); 
+    $form = ActiveForm::begin(['action' => $model->isNewRecord ? ['emailentity/create'] : ['emailentity/update', 'id' => $model->id] , 'options' => ['data-pjax' => true ]]); 
 ?>
 <div style="min-height: 12vh">
-	<div class="row">
-		<div class="col col-xs-12">
-			<div>
-				<?php if ($model->isNewRecord) : ?>
-				<span class="lead">Neuer Eintrag</span>
-				<?php else : ?>
-				<span class="lead"><?= Html::encode(Html::encode($model->sortname))?></span>
-				<span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
-				<?php endif; ?>
-				<span class="pull-right">
-					<?= '' // Html::resetButton('', ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
-					<?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
-				</span>
-				<?= $form->errorSummary($model) ?>
-				<div id ="pjax-notification-saving" style="display: none" class="alert alert-info">Die Änderungen werden gespeichert. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
-				<div id ="pjax-notification-error" style="display: none" class="alert alert-danger"></div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-11 col-xs-offset-1">
-			<fieldset>
-			<legend>Stammdaten</legend>
-			<?= $form->field($model, 'name')->textInput() ?>
-			<?= $form->field($model, 'sortname')->textInput() ?>
-			</fieldset>
-			<fieldset>
-			<legend>Kommentare, Adressen, Telefonnummern</legend>
-			<?= $form->field($model, 'comment')->textarea(['rows' => 3]) ?>
-			</fieldset>
-			<fieldset>
-			<legend>Adressumleitungen</legend>
-			<dl>
-			  <dt>default</dt>
-			  <dd>christoph.toussaint@gmail.com</dd>
-			  <dt>work</dt>
-			  <dd>christoph.toussaint@daimler.com</dd>
-			  <dt>home</dt>
-			  <dd>christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, </dd>
-			</dl>
-			</fieldset>
-			<fieldset>
-			<legend>Admin</legend>
-			<?= $form->field($model, 'emaildomain_id')->dropDownList(['' => '(nicht gesetzt)']+[0 => 'Globale Adressen']+ArrayHelper::map(Emaildomain::find()->ownerScope()->orderBy('name')->all(),'id','name')) ?>
-			<?= '' // $form->field($model, 'owner_id')->textInput() ?>
-			</fieldset>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col col-xs-12">
+            <div>
+                <?php if ($model->isNewRecord) : ?>
+                <span class="lead">Neuer Eintrag</span>
+                <?php else : ?>
+                <span class="lead"><?= Html::encode(Html::encode($model->sortname))?></span>
+                <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
+                <?php endif; ?>
+                <span class="pull-right">
+                    <?= '' // Html::resetButton('', ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
+                    <?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
+                </span>
+                <?= $form->errorSummary($model) ?>
+                <div id ="pjax-notification-saving" style="display: none" class="alert alert-info">Die Änderungen werden gespeichert. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
+                <div id ="pjax-notification-error" style="display: none" class="alert alert-danger"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-11 col-xs-offset-1">
+            <fieldset>
+            <legend>Stammdaten</legend>
+            <?= $form->field($model, 'name')->textInput() ?>
+            <?= $form->field($model, 'sortname')->textInput() ?>
+            </fieldset>
+            <fieldset>
+            <legend>Kommentare, Adressen, Telefonnummern</legend>
+            <?= $form->field($model, 'comment')->textarea(['rows' => 3]) ?>
+            </fieldset>
+            <fieldset>
+            <legend>Adressumleitungen</legend>
+            <dl>
+              <dt>default</dt>
+              <dd>christoph.toussaint@gmail.com</dd>
+              <dt>work</dt>
+              <dd>christoph.toussaint@daimler.com</dd>
+              <dt>home</dt>
+              <dd>christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, </dd>
+            </dl>
+            </fieldset>
+            <fieldset>
+            <legend>Admin</legend>
+            <?= $form->field($model, 'emaildomain_id')->dropDownList(['' => '(nicht gesetzt)']+[0 => 'Globale Adressen']+ArrayHelper::map(Emaildomain::find()->ownerScope()->orderBy('name')->all(),'id','name')) ?>
+            <?= '' // $form->field($model, 'owner_id')->textInput() ?>
+            </fieldset>
+        </div>
+    </div>
 </div>
 
 <?php 
     ActiveForm::end();
-	if ($pjax) {
-		Pjax::end();
-	}
+    if ($pjax) {
+        Pjax::end();
+    }
 ?>
