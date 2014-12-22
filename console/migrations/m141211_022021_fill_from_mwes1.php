@@ -6,7 +6,7 @@ use common\models\User;
 
 class m141211_022021_fill_from_mwes1 extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         // Establish connection before via port tunneling using: ssh -L 5433:localhost:5432 mailwitch@mailwitch.com
         $connection = new \yii\db\Connection([
@@ -68,7 +68,7 @@ class m141211_022021_fill_from_mwes1 extends Migration
         }
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->execute("DELETE FROM tbl_user where id >= 0");
     }
