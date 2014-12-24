@@ -39,6 +39,7 @@ class Emaildomain extends \yii\db\ActiveRecord
             [['owner_id'], 'default', 'value' => NULL],
             [['owner_id'], 'filter', 'filter' => 'intval', 'skipOnEmpty' => true],
             [['stickyownership'], 'boolean'],
+            [['stickyownership'], 'filter', 'filter' => 'boolval', 'skipOnEmpty' => true],
             [['name'], 'required'],
             [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9_-]+)$/i', 'message' => 'Der Name darf nur aus ASCII-Zeichen (ohne Umlaute, etc.), Ziffern und Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['name'], 'unique'],
