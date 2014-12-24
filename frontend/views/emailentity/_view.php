@@ -40,12 +40,10 @@ use yii\widgets\Pjax;
             <fieldset>
             <legend class="small">Adressumleitungen</legend>
             <dl>
-              <dt>default</dt>
-              <dd>christoph.toussaint@gmail.com</dd>
-              <dt>work</dt>
-              <dd>christoph.toussaint@daimler.com</dd>
-              <dt>home</dt>
-              <dd>christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, </dd>
+                <?php foreach ($model->displayemailmappings as $mapping) : ?>
+                <dt><?=$mapping->emailarea->name?><?=$mapping->locked?' (gesperrt)':''?></dt>
+                <dd><?=$mapping->target?></dd>
+                <?php endforeach  ?>
             </dl>
             </fieldset>
         </div>

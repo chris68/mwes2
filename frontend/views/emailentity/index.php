@@ -60,10 +60,10 @@ $(document).on('pjax:error', function (event, xhr, textStatus, errorThrown, opti
 });    
 // Catch the PJAX send/complete event and show/hide the saving box appropriately
 $(document).on('pjax:send', function() {
-  $('#pjax-notification-saving').show()
+  $('#pjax-notification-sending').show()
 })
 $(document).on('pjax:complete', function() {
-  $('#pjax-notification-saving').hide()
+  $('#pjax-notification-sending').hide()
 })
 js;
 $this->registerJs($script);

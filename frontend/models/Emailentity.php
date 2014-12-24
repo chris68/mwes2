@@ -16,17 +16,29 @@ use frontend\models\Emaildomain;
  * @property string $comment
  * @property integer $owner_id
  *
+ * @property Emailmapping[] $emailmappings
  * @property Emaildomain $emaildomain
  * @property User $owner
  */
 class Emailentity extends \yii\db\ActiveRecord
 {
     /**
+     *
+     * @var Emailmapping[]
+     */
+    public $x_emailmappings;
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%emailentity}}';
+    }
+
+    public function formName()
+    {
+        return parent::formName().'_'.(isset($this->id)?$this->id:'new');
     }
 
     /**
@@ -85,6 +97,81 @@ class Emailentity extends \yii\db\ActiveRecord
                 'ensureOnFind' => true,
             ],
         ];
+    }
+
+    function prepareExchange() {
+        if (!$this->isNewRecord) {
+            $this->x_emailmappings = Emailmapping::find()->where(['emailentity_id' => $this->id])->indexBy('emailarea_id')->all();
+        } else {
+            $this->x_emailmappings = [];
+        }
+        
+        foreach (\frontend\models\Emailarea::find()->all() as $emailarea) {
+            if (!isset($this->x_emailmappings[$emailarea->id])) {
+                $item = new Emailmapping();
+                $item->emailentity_id = $this->id;
+                $item->emailarea_id = $emailarea->id;
+
+               $this->x_emailmappings[$emailarea->id] = $item;
+            }
+        }
+        ksort($this->x_emailmappings); unset($this->x_emailmappings[255]);
+    }
+
+    function save($runValidation = true, $attributeNames = null)
+    {
+        // Todo add transaction! Abort transaction of $res is false
+        $res = parent::save($runValidation, $attributeNames);
+        if (isset($this->x_emailmappings)) {
+            foreach ($this->x_emailmappings as $x_mapping) {
+                $x_mapping->resolvedtarget = '';
+                $x_mapping->isvirtual = true;
+                //Yii::info(var_export($x_mapping,true));
+                if ($x_mapping->isActive()) {
+                    if ($x_mapping->isNewRecord) {
+                        $x_mapping->emailentity_id = $this->id;
+                    }
+                    $res = min($res,$x_mapping->save($runValidation));
+                } else {
+                    $x_mapping->delete();
+                }
+            }
+        }
+        return $res;
+    }
+
+    function load($data, $formName = null)
+    {
+        $res = parent::load($data, $formName);
+        if (isset($this->x_emailmappings)) {
+            $res = min($res,\yii\base\Model::loadMultiple($this->x_emailmappings, $data));
+        }
+        return $res;
+    }
+
+    function validate($attributeNames = null, $clearErrors = true)
+    {
+        $res = parent::validate($attributeNames, $clearErrors);
+        if (isset($this->x_emailmappings)) {
+            $res = min($res,\yii\base\Model::validateMultiple($this->x_emailmappings));
+        }
+        return $res;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmailmappings()
+    {
+        return $this->hasMany(Emailmapping::className(), ['emailentity_id' => 'id'])->orderBy('tbl_emailmapping.emailarea_id');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDisplayemailmappings()
+    {
+        return $this->hasMany(Emailmapping::className(), ['emailentity_id' => 'id'])->where('tbl_emailmapping.emailarea_id <> 255')->orderBy('tbl_emailmapping.emailarea_id');
     }
 
     /**

@@ -66,6 +66,40 @@ class m141211_022021_fill_from_mwes1 extends Migration
             ]);
             
         }
+
+        // Transfer the email areas
+        $command = $connection->createCommand('SELECT * FROM EmailAreas where ID >= 0');
+        $rs = $command->queryAll();
+        //print_r($rs);
+        foreach ($rs as $r) {
+            $this->insert('tbl_emailarea', [
+                'id' => $r['id'],
+                'name' => $r['name'],
+                'description' => $r['description'],
+            ]);
+
+        }
+
+        // Transfer the email mappings
+        $command = $connection->createCommand("SELECT EmailMappings.*,coalesce((SELECT concat_with_comma(ResolvedRecipientAlias) FROM RecipientAliases
+      WHERE RecipientAliases.EmailMapping_Ref = EmailMappings.ID),'') as target FROM EmailMappings where ID >= 0");
+        $rs = $command->queryAll();
+        //print_r($rs);
+        foreach ($rs as $r) {
+            $this->insert('tbl_emailmapping', [
+                'id' => $r['id'],
+                'emailentity_id' => $r['emailentity_ref'],
+                'emailarea_id' => $r['emailarea_ref'],
+                'target' => $r['target'],
+                'resolvedtarget' => $r['target'],
+                'preferredemailaddress' => $r['preferredemailaddress'],
+                'targetformula' => $r['targetformula'],
+                'senderbcc' => $r['senderbcc'],
+                'isvirtual' => $r['isvirtual'],
+            ]);
+
+        }
+
     }
 
     public function safeDown()

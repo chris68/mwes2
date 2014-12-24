@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Emailentity;
 use frontend\models\EmailentitySearch;
+use frontend\models\Emailmapping;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -36,13 +37,29 @@ class EmailentityController extends Controller
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query = $dataProvider->query->ownerScope();
-        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC,];
+        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
+        // $dataProvider->query = $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 20;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Displays an empty screen
+     * @return mixed
+     */
+    public function actionEmpty()
+    {
+        if (\Yii::$app->getRequest()->getIsPjax()) {
+            return '<div></div>';
+        }
+        else {
+            return $this->renderContent('');
+        }
     }
 
     /**
@@ -74,7 +91,19 @@ class EmailentityController extends Controller
         $model = new Emailentity();
         $model->emaildomain_id = $emaildomain_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model->prepareExchange();
+
+        $valid = false;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $valid = $model->validate();
+
+            if ($valid) {
+                $model->save(false);
+            }
+        }
+
+        if ($valid) {
             if (\Yii::$app->getRequest()->getIsPjax()) {
                 return 
                     $this->renderPartial('_view', [
@@ -107,8 +136,20 @@ class EmailentityController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->prepareExchange();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $valid = false;
+
+        if ($model->load(Yii::$app->request->post())) {
+            $valid = $model->validate();
+
+            if ($valid) {
+                //Yii::info(var_export($model->x_emailmappings,true));
+                $model->save(false);
+            }
+        }
+
+        if ($valid) {
             if (\Yii::$app->getRequest()->getIsPjax()) {
                 return 
                     $this->renderPartial('_view', [

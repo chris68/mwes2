@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Tabs;
 use yii\widgets\Pjax;
 use frontend\models\Emaildomain;
 
@@ -16,7 +17,7 @@ use frontend\models\Emaildomain;
         Pjax::begin(['id' => 'item_'.($model->isNewRecord?'new':$model->id), 'enablePushState' => FALSE, ]);
     }
 /* @var $form yii\bootstrap\ActiveForm */
-    $form = ActiveForm::begin(['action' => $model->isNewRecord ? ['emailentity/create'] : ['emailentity/update', 'id' => $model->id] , 'options' => ['data-pjax' => true ]]); 
+    $form = ActiveForm::begin(['action' => $model->isNewRecord ? ['emailentity/create'] : ['emailentity/update', 'id' => $model->id] , 'options' => ['data-pjax' => true ], 'enableClientValidation' => false]);
 ?>
 <div style="min-height: 12vh">
     <div class="row">
@@ -29,11 +30,11 @@ use frontend\models\Emaildomain;
                 <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
                 <?php endif; ?>
                 <span class="pull-right">
-                    <?= '' // Html::resetButton('', ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
+                    <?= Html::a('', $model->isNewRecord?['emailentity/empty']:['emailentity/view', 'id' => $model->id], ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
                     <?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
                 </span>
-                <?= $form->errorSummary($model) ?>
-                <div id ="pjax-notification-saving" style="display: none" class="alert alert-info">Die Änderungen werden gespeichert. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
+                <?= $form->errorSummary(array_merge(['' => $model],$model->x_emailmappings)) ?>
+                <div id ="pjax-notification-sending" style="display: none" class="alert alert-info">Die Änderungen werden zum Server geschickt. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
                 <div id ="pjax-notification-error" style="display: none" class="alert alert-danger"></div>
             </div>
         </div>
@@ -51,14 +52,27 @@ use frontend\models\Emaildomain;
             </fieldset>
             <fieldset>
             <legend>Adressumleitungen</legend>
-            <dl>
-              <dt>default</dt>
-              <dd>christoph.toussaint@gmail.com</dd>
-              <dt>work</dt>
-              <dd>christoph.toussaint@daimler.com</dd>
-              <dt>home</dt>
-              <dd>christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, christoph.toussaint@daimler.com, </dd>
-            </dl>
+            <?php
+            if(isset($model->emailmappings)) {
+                $items = [];
+                foreach ($model->x_emailmappings as $mapping) {
+                    $items[$mapping->emailarea_id] = [
+                        'label' => ($mapping->isActive()?($mapping->locked?'<s>':'<strong>'):'(').$mapping->emailarea->name.($mapping->isActive()?($mapping->locked?'</s>':'</strong>'):')'),
+                        'encode' => false,
+                        'content' => $this->render('_formmapping', array('model'=>$mapping, 'form'=> $form)),
+                    ];
+                }
+                echo Tabs::widget(
+                [
+                    'items' => $items,
+                    'navType' => 'nav-pills',
+                    'itemOptions' => [
+                        'style' => 'margin:15px',
+                    ]
+                ]);
+            }
+
+            ?>
             </fieldset>
             <fieldset>
             <legend>Admin</legend>
