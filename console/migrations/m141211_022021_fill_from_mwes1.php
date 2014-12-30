@@ -92,9 +92,9 @@ class m141211_022021_fill_from_mwes1 extends Migration
                 'emailarea_id' => $r['emailarea_ref'],
                 'target' => $r['target'],
                 'resolvedtarget' => $r['target'],
-                'preferredemailaddress' => $r['preferredemailaddress'],
-                'targetformula' => $r['targetformula'],
-                'senderbcc' => $r['senderbcc'],
+                //'preferredemailaddress' => $r['preferredemailaddress'],
+                //'targetformula' => $r['targetformula'],
+                //'senderbcc' => $r['senderbcc'],
                 'isvirtual' => $r['isvirtual'],
             ]);
 
