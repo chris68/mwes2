@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model frontend\models\Emailentity */
 
 $this->title = 'Adresse anlegen';
-$this->params['breadcrumbs'][] = ['label' => 'Adressen', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Adressen';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="emailentity-create">

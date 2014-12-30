@@ -11,7 +11,7 @@ use common\models\User;
  * @property integer $id
  * @property string $name
  * @property integer $owner_id
- * @property boolean $stickyownership
+ * @property boolean $stickyownership Are all entities in the domain forced to the same ownership as the mothering domain (not used yet)
  * @property string $description
  *
  * @property User $owner
@@ -35,13 +35,13 @@ class Emaildomain extends \yii\db\ActiveRecord
         return [
             [['name', 'description'], 'string'],
             [['name'], 'filter', 'filter' => 'mb_strtolower', 'skipOnEmpty' => true],
-            [['owner_id'], 'integer'],
-            [['owner_id'], 'default', 'value' => NULL],
-            [['owner_id'], 'filter', 'filter' => 'intval', 'skipOnEmpty' => true],
-            [['stickyownership'], 'boolean'],
-            [['stickyownership'], 'filter', 'filter' => 'boolval', 'skipOnEmpty' => true],
+
+            // Not yet used
+            //[['stickyownership'], 'boolean'],
+            //[['stickyownership'], 'filter', 'filter' => 'boolval', 'skipOnEmpty' => true],
+
             [['name'], 'required'],
-            [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9_-]+)$/i', 'message' => 'Der Name darf nur aus ASCII-Zeichen (ohne Umlaute, etc.), Ziffern und Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
+            [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9_-]+)$/i', 'message' => 'Der Name darf nur aus ASCII-Zeichen (ohne Umlaute, etc.) und Ziffern sowie Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['name'], 'unique'],
         ];
     }
@@ -77,7 +77,7 @@ class Emaildomain extends \yii\db\ActiveRecord
             'EnsureOwnership' => [
                 'class' => 'common\behaviors\EnsureOwnership',
                 'ownerAttribute' => 'owner_id',
-                'ensureOnFind' => false, // todo Currently we cannot assure it one find since that would block access to the global domain!
+                'ensureOnFind' => false, // todo Currently we cannot assure it on find since that would block access to the global domain!
             ],
         ];
     }
@@ -107,7 +107,7 @@ class Emaildomain extends \yii\db\ActiveRecord
     }
     
     /**
-     * @return string The resolved domain name like e.g. 'ct.mailwitch.com'
+     * @return string The resolved domain name like e.g. 'ct'
      */
     public function getResolvedDomainname()
     {
