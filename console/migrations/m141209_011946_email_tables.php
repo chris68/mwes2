@@ -63,10 +63,10 @@ CREATE TABLE tbl_emailmapping
     emailarea_id                                          int NOT NULL,
     target                                                text NOT NULL,
     resolvedtarget                                        text NOT NULL,
-    preferredemailaddress                                 text DEFAULT NULL,
+    preferredemailaddress                                 text,
     targetformula                                         text
       check (trim(targetformula) = targetformula and targetformula <> ''), -- garantueed to be not empty and trimmed
-    senderbcc                                             text DEFAULT NULL,
+    senderbcc                                             text,
     isvirtual                                             boolean NOT NULL DEFAULT TRUE,
     locked                                                boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
