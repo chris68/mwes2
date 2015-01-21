@@ -17,6 +17,7 @@ use frontend\models\Emaildomain;
     'id' => 'search_form',
 ]); 
 ?>
+    <?= $form->errorSummary($model) ?>
 
     <?= $form->field($model, 'sortname') ?>
 
