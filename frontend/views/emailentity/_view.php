@@ -40,7 +40,7 @@ use yii\widgets\Pjax;
             <fieldset>
             <legend class="small">Adressumleitungen</legend>
             <dl>
-                <?php foreach ($model->displayemailmappings as $mapping) : ?>
+                <?php foreach ($model->emailmappings as $mapping) : ?>
                 <dt><?=$mapping->emailarea->name?><?=$mapping->locked?' (gesperrt)':''?></dt>
                 <dd><?=$mapping->target?></dd>
                 <?php endforeach  ?>

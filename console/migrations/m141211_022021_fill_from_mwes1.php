@@ -3,6 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 use common\models\User;
+use frontend\models\Emailentity;
 
 class m141211_022021_fill_from_mwes1 extends Migration
 {
@@ -19,7 +20,7 @@ class m141211_022021_fill_from_mwes1 extends Migration
         $connection->open();
         
         // Transfer the users using the model class
-        $command = $connection->createCommand('SELECT * FROM Users where ID >= 0');
+        $command = $connection->createCommand('SELECT * FROM Users where ID >= 100');
         $rs = $command->queryAll();
         //print_r($rs);
         foreach ($rs as $r) {
@@ -37,7 +38,7 @@ class m141211_022021_fill_from_mwes1 extends Migration
         }
         
         // Transfer the email domains
-        $command = $connection->createCommand('SELECT * FROM EmailDomains where ID >= 0');
+        $command = $connection->createCommand('SELECT * FROM EmailDomains where ID >= 100');
         $rs = $command->queryAll();
         //print_r($rs);
         foreach ($rs as $r) {
@@ -52,7 +53,7 @@ class m141211_022021_fill_from_mwes1 extends Migration
         }
 
         // Transfer the email entities
-        $command = $connection->createCommand('SELECT * FROM EmailEntities where ID >= 0');
+        $command = $connection->createCommand('SELECT * FROM EmailEntities where ID >= 100');
         $rs = $command->queryAll();
         //print_r($rs);
         foreach ($rs as $r) {
@@ -64,25 +65,17 @@ class m141211_022021_fill_from_mwes1 extends Migration
                 'owner_id' => $r['owner_ref'],
                 'comment' => $r['comment'],
             ]);
-            
-        }
-
-        // Transfer the email areas
-        $command = $connection->createCommand('SELECT * FROM EmailAreas where ID >= 0');
-        $rs = $command->queryAll();
-        //print_r($rs);
-        foreach ($rs as $r) {
-            $this->insert('tbl_emailarea', [
-                'id' => $r['id'],
-                'name' => $r['name'],
-                'description' => $r['description'],
-            ]);
-
         }
 
         // Transfer the email mappings
-        $command = $connection->createCommand("SELECT EmailMappings.*,coalesce((SELECT concat_with_comma(ResolvedRecipientAlias) FROM RecipientAliases
-      WHERE RecipientAliases.EmailMapping_Ref = EmailMappings.ID),'') as target FROM EmailMappings where ID >= 0");
+        $command = $connection->createCommand(
+            "SELECT
+                EmailMappings.*,
+                coalesce((SELECT concat_with_comma(ResolvedRecipientAlias) FROM RecipientAliases
+                    WHERE RecipientAliases.EmailMapping_Ref = EmailMappings.ID),'') as resolvedtarget,
+                coalesce((SELECT concat_with_comma(RecipientAlias) FROM RecipientAliases
+                    WHERE RecipientAliases.EmailMapping_Ref = EmailMappings.ID),'') as target
+                FROM EmailMappings where ID >= 100 and EmailArea_Ref < 255");
         $rs = $command->queryAll();
         //print_r($rs);
         foreach ($rs as $r) {
@@ -90,20 +83,44 @@ class m141211_022021_fill_from_mwes1 extends Migration
                 'id' => $r['id'],
                 'emailentity_id' => $r['emailentity_ref'],
                 'emailarea_id' => $r['emailarea_ref'],
-                'target' => $r['target'],
-                'resolvedtarget' => $r['target'],
+                'resolvedaddress' => '',
+                'target' => $r['target'].($r['isvirtual']?',':''),
+                'resolvedtarget' => $r['resolvedtarget'].($r['isvirtual']?',':''),
                 //'preferredemailaddress' => $r['preferredemailaddress'],
                 //'targetformula' => $r['targetformula'],
                 //'senderbcc' => $r['senderbcc'],
                 'isvirtual' => $r['isvirtual'],
             ]);
-
         }
 
+$sql = <<<'EOT'
+  select
+      setval('tbl_user_id_seq', (select max(id) from tbl_user)),
+      setval('tbl_emaildomain_id_seq',(select max(id) from tbl_emaildomain)),
+      setval('tbl_emailentity_id_seq',(select max(id) from tbl_emailentity)),
+      setval('tbl_emailmapping_id_seq',(select max(id) from tbl_emailmapping)),
+      '';
+EOT;
+$this->execute($sql);
+
+        foreach (Emailentity::find()->where('id >= 100')->all() as $e) {
+            if (!$e->saveDeep()) {
+                $e->saveDeep(false);
+                echo "\n\n ==== Validation failed for the following email entity:\n\n";
+                var_dump($e);
+                foreach ($e->emailmappings as $m) {
+                    var_dump($m);
+                }
+                echo "\n\n ==== \n\n";
+            }
+        }
     }
 
     public function safeDown()
     {
-        $this->execute("DELETE FROM tbl_user where id >= 0");
+        $this->execute("DELETE FROM tbl_user where id >= 100");
+        $this->execute("DELETE FROM tbl_emailmapping where id >= 100");
+        $this->execute("DELETE FROM tbl_emailentity where id >= 100");
+        $this->execute("DELETE FROM tbl_emaildomain where id >= 100");
     }
 }

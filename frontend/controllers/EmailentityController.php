@@ -36,9 +36,9 @@ class EmailentityController extends Controller
     {
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query = $dataProvider->query->ownerScope();
+        $dataProvider->query->ownerScope();
         // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
-        // $dataProvider->query = $dataProvider->query->joinWith('emailmappings');
+        // $dataProvider->query->joinWith('emailmappings');
         $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 20;
 
@@ -95,15 +95,16 @@ class EmailentityController extends Controller
 
         $valid = false;
 
-        if ($model->load(Yii::$app->request->post())) {
-            $valid = $model->validate();
+        if ($model->loadDeep(Yii::$app->request->post())) {
+            $valid = $model->validateDeep();
 
             if ($valid) {
-                $model->save(false);
+                $model->saveDeep(false);
             }
         }
 
         if ($valid) {
+            $model->refresh(); // Make sure that the model is reloaded and only the relevant mappings are included
             if (\Yii::$app->getRequest()->getIsPjax()) {
                 return 
                     $this->renderPartial('_view', [
@@ -140,16 +141,16 @@ class EmailentityController extends Controller
 
         $valid = false;
 
-        if ($model->load(Yii::$app->request->post())) {
-            $valid = $model->validate();
+        if ($model->loadDeep(Yii::$app->request->post())) {
+            $valid = $model->validateDeep();
 
             if ($valid) {
-                //Yii::info(var_export($model->x_emailmappings,true));
-                $model->save(false);
+                $model->saveDeep(false);
             }
         }
 
         if ($valid) {
+            $model->refresh(); // Make sure that the model is reloaded and only the relevant mappings are included
             if (\Yii::$app->getRequest()->getIsPjax()) {
                 return 
                     $this->renderPartial('_view', [

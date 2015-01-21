@@ -33,7 +33,7 @@ use frontend\models\Emaildomain;
                     <?= Html::a('', $model->isNewRecord?['emailentity/empty']:['emailentity/view', 'id' => $model->id], ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
                     <?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
                 </span>
-                <?= $form->errorSummary(array_merge(['' => $model],$model->x_emailmappings)) ?>
+                <?= $form->errorSummary(array_merge(['' => $model],$model->emailmappings)) ?>
                 <div id ="pjax-notification-sending" style="display: none" class="alert alert-info">Die Änderungen werden zum Server geschickt. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
                 <div id ="pjax-notification-error" style="display: none" class="alert alert-danger"></div>
             </div>
@@ -55,7 +55,7 @@ use frontend\models\Emaildomain;
             <?php
             if(isset($model->emailmappings)) {
                 $items = [];
-                foreach ($model->x_emailmappings as $mapping) {
+                foreach ($model->emailmappings as $mapping) {
                     $items[$mapping->emailarea_id] = [
                         'label' => ($mapping->isActive()?($mapping->locked?'<s>':'<strong>'):'(').$mapping->emailarea->name.($mapping->isActive()?($mapping->locked?'</s>':'</strong>'):')'),
                         'encode' => false,

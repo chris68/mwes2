@@ -212,4 +212,14 @@ class User extends ActiveRecord implements IdentityInterface
             $this->username = \Yii::t('common','Guest access');
         }
     }
+
+    /**
+     * Generates a system password so that the account can only be accessed by resetting the password
+     */
+    public function generateSystemPassword()
+    {
+        $this->password_hash = ''; // Blank entry denies all logins so it is safe to set it to blank
+        $this->password_reset_token = '';  // Blank entry is never valid token so it is safe to set it to blank
+        $this->generateAuthKey(); // Auth key needs to be generated since it just compared for equality AND blank values are accepted!
+    }
 }

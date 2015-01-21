@@ -7,6 +7,7 @@
 
 namespace common\behaviors;
 
+use Yii;
 use yii\base\Behavior;
 use yii\base\Event;
 use yii\db\ActiveRecord;
@@ -39,17 +40,17 @@ class EnsureOwnership extends Behavior {
     }
 
     /**
-     * Set the owner id to the current user upon object creation
+     * Set an empty owner id to the current user upon object creation
      * Checks if owner id fits to current user upon object update
      *
      * @param yii\base\Event $event event parameter
      */
     public function beforeSave($event) {
         if ($this->owner->getIsNewRecord()) {
-            $this->owner->{$this->ownerAttribute} = \Yii::$app->user->getId();
+            $this->owner->{$this->ownerAttribute} = Yii::$app->user->getId();
         } else {
-            if ($this->owner->{$this->ownerAttribute} <> \Yii::$app->user->getId())
-                throw new HttpException(403, \Yii::t('common','You are not authorized to perform this action'));
+            if ($this->owner->{$this->ownerAttribute} !== Yii::$app->user->getId())
+                throw new HttpException(403, Yii::t('common','You are not authorized to perform this action'));
             
         }
     }
@@ -60,8 +61,8 @@ class EnsureOwnership extends Behavior {
      * @param yii\base\Event $event event parameter
      */
     public function beforeDelete($event) {
-        if ($this->owner->{$this->ownerAttribute} <> \Yii::$app->user->getId()) {
-            throw new HttpException(403, \Yii::t('common','You are not authorized to perform this action'));
+        if ($this->owner->{$this->ownerAttribute} !== Yii::$app->user->getId()) {
+            throw new HttpException(403, Yii::t('common','You are not authorized to perform this action'));
         }
     }
     
@@ -71,8 +72,8 @@ class EnsureOwnership extends Behavior {
      * @param yii\base\Event $event event parameter
      */
     public function afterFind($event) {
-        if ($this->ensureOnFind && $this->owner->{$this->ownerAttribute} <> \Yii::$app->user->getId()) {
-            throw new HttpException(403, \Yii::t('common','You are not authorized to perform this action'));
+        if ($this->ensureOnFind && $this->owner->{$this->ownerAttribute} !== Yii::$app->user->getId()) {
+            throw new HttpException(403, Yii::t('common','You are not authorized to perform this action'));
         }
     }
 }

@@ -10,8 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $emailentity_id
  * @property integer $emailarea_id
+ * @property string $resolvedaddress The calculated resolved email address (e.g. chris+work@cs.mailwitch.com)
  * @property string $target The list of email addresses in the target with all the surrounding text like e.g. Max Mustermann <max.mustermann@gmail.com>; also the short form like .main, +work, and just max.mustermann is supported here
- * @property string $resolvedtarget The resolved list of just the email addresses (fully qualified) without any surronding text
+ * @property string $resolvedtarget The calculated resolved list of just the email addresses (fully qualified) without any surronding text
  * @property string $preferredemailaddress  For future use with http://www.postfix.org/relocated.5.html (not used yet)
  * @property string $targetformula Formula to automatically calculate the target (not used yet)
  * @property string $senderbcc For future use with http://www.postfix.org/postconf.5.html#sender_bcc_maps (not used yet)
@@ -23,12 +24,6 @@ use Yii;
  */
 class Emailmapping extends \yii\db\ActiveRecord
 {
-    /**
-     *
-     * @var Emailentitiy
-     */
-    public $x_emailentity;
-
     /**
      * @inheritdoc
      */
@@ -81,6 +76,12 @@ class Emailmapping extends \yii\db\ActiveRecord
         ];
     }
 
+    function save($runValidation = true, $attributeNames = null)
+    {
+        $this->setResolvedaddress($this->getResolvedaddress());
+        return parent::save($runValidation, $attributeNames);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -101,14 +102,22 @@ class Emailmapping extends \yii\db\ActiveRecord
         return $this->target !== NULL && $this->target !== '';
     }
 
+    public function getResolvedaddress() {
+        return $this->emailentity->name.$this->emailarea->resolvedname.'@'.$this->emailentity->getCompleteDomainname();
+    }
+
+    public function setResolvedaddress($value) {
+        $this->setAttribute('resolvedaddress', $value);
+    }
+
     /**
      * Validator to check if the comma separated list of email adresses in target is valid
-     * Fills in resolvedtarget and isvirtual
+     * Also fills in resolvedtarget and isvirtual
      */
     public function resolveTargetEmailList($attribute, $params)
     {
         $items = array_map('trim',str_getcsv($this->target));
-        $this->isvirtual = (count($items) === 1);
+        $this->isvirtual = (count($items) !== 1);
         $resolveditems = [];
         foreach ($items as $i => $item) {
             if (mb_substr($item,-1) === '>') {
@@ -125,14 +134,14 @@ class Emailmapping extends \yii\db\ActiveRecord
             }
 
             if (mb_strpos($resolveditems[$i],'.') === 0) {
-                if (count($this->x_emailentity->getErrors('name')) === 0) {
-                    $resolveditems[$i] = $this->x_emailentity->name.$resolveditems[$i];
+                if (count($this->emailentity->getErrors('name')) === 0) {
+                    $resolveditems[$i] = $this->emailentity->name.$resolveditems[$i];
                 } else {
                     $this->addError('target', "Kurzadressen wie '.work', '.home', etc. können erst gewandelt und geprüft werden, nachdem der Emailname korrekt gesetzt wurde");
                 }
             } elseif (mb_strpos($resolveditems[$i],'+') === 0) {
-                if (count($this->x_emailentity->getErrors('name')) === 0) {
-                    $resolveditems[$i] = $this->x_emailentity->name.$resolveditems[$i];
+                if (count($this->emailentity->getErrors('name')) === 0) {
+                    $resolveditems[$i] = $this->emailentity->name.$resolveditems[$i];
                 } else {
                     $this->addError('target', "Kurzadressen wie '+work', '+home', etc. können erst gewandelt und geprüft werden, nachdem der Emailname korrekt gesetzt wurde");
                 }
@@ -140,8 +149,8 @@ class Emailmapping extends \yii\db\ActiveRecord
 
             if ($resolveditems[$i] !== '') {
                 if (mb_strpos($resolveditems[$i],'@') === false) {
-                    if (count($this->x_emailentity->getErrors('emaildomain_id')) === 0) {
-                        $resolveditems[$i] = $resolveditems[$i].'@'.$this->x_emailentity->getCompleteDomainname();
+                    if (count($this->emailentity->getErrors('emaildomain_id')) === 0) {
+                        $resolveditems[$i] = $resolveditems[$i].'@'.$this->emailentity->getCompleteDomainname();
                     } else {
                         $this->addError('target', "Rumpfadressen (ohne @) können erst gewandelt und geprüft werden, nachdem das Adressbuch korrekt gesetzt wurde");
                     }

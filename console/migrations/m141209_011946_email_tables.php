@@ -2,11 +2,40 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
+use common\models\User;
 
 class m141209_011946_email_tables extends Migration
 {
     public function safeUp()
     {
+        $user = new User();
+        $user->id = 0;
+        $user->username = 'root';
+        $user->email = 'root@mailwitch.com';
+        $user->generateSystemPassword();
+        $user->save();
+
+        $user = new User();
+        $user->id = 1;
+        $user->username = 'postmaster';
+        $user->email = 'postmaster@mailwitch.com';
+        $user->generateSystemPassword();
+        $user->save();
+
+        $user = new User();
+        $user->id = 2;
+        $user->username = 'webmaster';
+        $user->email = 'webmaster@mailwitch.com';
+        $user->generateSystemPassword();
+        $user->save();
+
+        $user = new User();
+        $user->id = 3;
+        $user->username = 'hostmaster';
+        $user->email = 'hostmaster@mailwitch.com';
+        $user->generateSystemPassword();
+        $user->save();
+
 $sql = <<<'EOT'
 CREATE TABLE tbl_emaildomain
 (
@@ -23,18 +52,39 @@ CREATE TABLE tbl_emaildomain
 ) WITH OIDS;
 EOT;
 $this->execute($sql);
+$this->insert('tbl_emaildomain',['id' => 0, 'name'=>'main','description'=>'The global domain', 'owner_id' => 0]);
+$this->insert('tbl_emaildomain',['id' => 1, 'name'=>'guests','description'=>'Temporary guest acccounts', 'owner_id' => 0]);
+$this->insert('tbl_emaildomain',['id' => 2, 'name'=>'root','description'=>'Special email addresses', 'owner_id' => 0]);
 
 $sql = <<<'EOT'
 CREATE TABLE tbl_emailarea
 (
     id                                                    int NOT NULL,
     name                                                  text NOT NULL check ((name)=lower(name)),
+    resolvedname                                          text NOT NULL check ((resolvedname)=lower(resolvedname)),
     description                                           text NOT NULL DEFAULT '',
     PRIMARY KEY (id),
-    UNIQUE (name) -- Name must be unique
+    UNIQUE (name),
+    UNIQUE (resolvedname)
 ) WITH OIDS;
 EOT;
 $this->execute($sql);
+
+$this->insert('tbl_emailarea',['id' => 0, 'name'=>'main','resolvedname'=>'', 'description'=>'Main account']);
+$this->insert('tbl_emailarea',['id' => 1, 'name'=>'work','resolvedname'=>'+work', 'description'=>'Work account']);
+$this->insert('tbl_emailarea',['id' => 2, 'name'=>'home','resolvedname'=>'+home', 'description'=>'Home account']);
+$this->insert('tbl_emailarea',['id' => 3, 'name'=>'extra1','resolvedname'=>'+extra1', 'description'=>'Extra account 1']);
+$this->insert('tbl_emailarea',['id' => 4, 'name'=>'extra2','resolvedname'=>'+extra2', 'description'=>'Extra account 2']);
+$this->insert('tbl_emailarea',['id' => 5, 'name'=>'extra3','resolvedname'=>'+extra3', 'description'=>'Extra account 3']);
+$this->insert('tbl_emailarea',['id' => 255, 'name'=>'all','resolvedname'=>'+all', 'description'=>'All accounts']);
+$this->insert('tbl_emailarea',['id' => 256, 'name'=>'all-dot','resolvedname'=>'.all', 'description'=>'All accounts (dot style)']);
+$this->insert('tbl_emailarea',['id' => 256+1, 'name'=>'work-dot','resolvedname'=>'.work', 'description'=>'Work account (dot style)']);
+$this->insert('tbl_emailarea',['id' => 256+2, 'name'=>'home-dot','resolvedname'=>'.home', 'description'=>'Home account (dot style)']);
+$this->insert('tbl_emailarea',['id' => 256+3, 'name'=>'extra1-dot','resolvedname'=>'.extra1', 'description'=>'Extra account 1 (dot style)']);
+$this->insert('tbl_emailarea',['id' => 256+4, 'name'=>'extra2-dot','resolvedname'=>'.extra2', 'description'=>'Extra account 2 (dot style)']);
+$this->insert('tbl_emailarea',['id' => 256+5, 'name'=>'extra3-dot','resolvedname'=>'.extra3', 'description'=>'Extra account 3 (dot style)']);
+
+
 $sql = <<<'EOT'
 CREATE TABLE tbl_emailentity
 (
@@ -42,7 +92,7 @@ CREATE TABLE tbl_emailentity
       CONSTRAINT SystemIDsOnlyForRootInSystemDomains CHECK (id<100 AND owner_id = 0 AND emaildomain_id <100 OR id>=100),
     emaildomain_id                                        int NOT NULL,
     name                                                  text NOT NULL check ((name)=lower(name)),
-    sortname                                              text NOT NULL,
+    sortname                                              text NOT NULL DEFAULT '',
     comment                                               text NOT NULL DEFAULT '',
     owner_id                                              int NOT NULL,
     PRIMARY KEY (id),
@@ -61,6 +111,7 @@ CREATE TABLE tbl_emailmapping
     emailentity_id                                        int NOT NULL
       CONSTRAINT NoRealMappingsForSystemEmailEntities CHECK (emailentity_id>=100 or emailarea_id = 255),
     emailarea_id                                          int NOT NULL,
+    resolvedaddress                                       text NOT NULL check ((resolvedaddress)=lower(resolvedaddress)),
     target                                                text NOT NULL,
     resolvedtarget                                        text NOT NULL,
     preferredemailaddress                                 text,
@@ -108,5 +159,7 @@ $sql = <<<'EOT'
 DROP TABLE tbl_emaildomain CASCADE;
 EOT;
 $this->execute($sql);
+
+$this->execute("DELETE FROM tbl_user");
     }
 }

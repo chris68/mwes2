@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use common\models\User;
 use frontend\models\Emaildomain;
+use frontend\models\Emailarea;
 
 /**
  * This is the model class for table "{{%emailentity}}".
@@ -22,12 +23,6 @@ use frontend\models\Emaildomain;
  */
 class Emailentity extends \yii\db\ActiveRecord
 {
-    /**
-     *
-     * @var Emailmapping[]
-     */
-    public $x_emailmappings;
-
     /**
      * @inheritdoc
      */
@@ -50,7 +45,7 @@ class Emailentity extends \yii\db\ActiveRecord
             [['emaildomain_id', 'owner_id'], 'integer'],
             [['emaildomain_id', 'owner_id'], 'default', 'value' => NULL],
             [['emaildomain_id', 'owner_id'], 'filter', 'filter' => 'intval', 'skipOnEmpty' => true],
-            [['emaildomain_id', 'name', 'sortname'], 'required'],
+            [['emaildomain_id', 'name', ], 'required'],
             [['name', 'sortname', 'comment'], 'string'],
             [['name', 'sortname', 'comment'], 'trim'],
             [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9._-]+)$/i', 'message' => 'Der Emailname darf nur aus ASCII-Zeichen (ohne Umlaute, etc.) und Ziffern sowie Punkten, Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
@@ -60,7 +55,9 @@ class Emailentity extends \yii\db\ActiveRecord
             [['emaildomain_id'], 
                 'exist', 'targetAttribute' => 'id', 'targetClass' => Emaildomain::className(), 
                 'filter' => function ($query) {return $query->linkScope();}, 
-                'message' => 'Sie dürfen keine Emailnamen in dem Adressbuch anlegen'],
+                'message' => 'Sie dürfen keine Emailnamen in dem Adressbuch anlegen',
+                'when' => function($model) { return isset(Yii::$app->user); }, // Check only if user component in use!
+            ]
         ];
     }
 
@@ -92,54 +89,106 @@ class Emailentity extends \yii\db\ActiveRecord
      */
     public function behaviors()
     {
-        return [
-            'EnsureOwnership' => [
-                'class' => 'common\behaviors\EnsureOwnership',
-                'ownerAttribute' => 'owner_id',
-                'ensureOnFind' => true,
-            ],
-        ];
+        if (isset(Yii::$app->user)) {
+            return [
+                'EnsureOwnership' => [
+                    'class' => 'common\behaviors\EnsureOwnership',
+                    'ownerAttribute' => 'owner_id',
+                    'ensureOnFind' => true,
+                ],
+            ];
+        } else {
+            return [];
+        }
     }
 
+    /**
+     * Prepare the model for form exchange by adding the areas which do not exist yet
+     * This will override the population of the relation 'emailmappings'
+     */
     function prepareExchange() {
         if (!$this->isNewRecord) {
-            $this->x_emailmappings = Emailmapping::find()->where(['emailentity_id' => $this->id])->indexBy('emailarea_id')->all();
+            $emailmappings = $this->getEmailmappings()->findFor('emailentities', $this);
         } else {
-            $this->x_emailmappings = [];
+            $emailmappings = [];
         }
         
-        foreach (\frontend\models\Emailarea::find()->all() as $emailarea) {
-            if (!isset($this->x_emailmappings[$emailarea->id])) {
+        foreach (Emailarea::find()->where('id < 255')->all() as $emailarea) {
+            if (!isset($emailmappings[$emailarea->id])) {
                 $item = new Emailmapping();
                 $item->emailentity_id = $this->id;
                 $item->emailarea_id = $emailarea->id;
 
-               $this->x_emailmappings[$emailarea->id] = $item;
+               $emailmappings[$emailarea->id] = $item;
             }
-            $this->x_emailmappings[$emailarea->id]->x_emailentity = $this;
+
+            // Make sure that the backlink always points to the correct and same object!
+            $emailmappings[$emailarea->id]->populateRelation('emailentity',$this);
         }
 
-        ksort($this->x_emailmappings); unset($this->x_emailmappings[255]);
+        ksort($emailmappings);
+        $this->populateRelation('emailmappings', $emailmappings);
     }
 
-    function save($runValidation = true, $attributeNames = null)
+    private function _adjustInternalMappings() {
+        // Delete the existing system generated mappings (all have id >= 255)
+        Emailmapping::deleteAll(['and', ['=', 'emailentity_id', $this->id],['>=', 'emailarea_id', 255]]);
+
+        // Generate the all mapping
+        $all_mapping = new Emailmapping();
+        $all_mapping->emailarea_id = 255;
+        $all_mapping->emailentity_id = $this->id;
+        $all_mapping->isvirtual = true;
+        $all_mapping->target = '';
+        $all_mapping->resolvedtarget = '';
+
+        foreach ($this->emailmappings as $mapping) {
+            if ($mapping->isActive() && !$mapping->locked) {
+                $all_mapping->target .= ('+'.$mapping->emailarea->name.', ');
+                $all_mapping->resolvedtarget .= ($mapping->resolvedaddress.', ');
+            }
+        }
+        $all_mapping->save(false);
+
+        // Generate the new dot all mapping
+        $dot_all_mapping = new Emailmapping();
+        $dot_all_mapping->emailarea_id = 256;
+        $dot_all_mapping->emailentity_id = $this->id;
+        $dot_all_mapping->isvirtual = true;
+        $dot_all_mapping->target = ('+'.$all_mapping->emailarea->name.', ');
+        $dot_all_mapping->resolvedtarget = ($all_mapping->resolvedaddress.', ');
+        $dot_all_mapping->save(false);
+
+        // Generate new dot mappings for the rest of the mappings
+        foreach ($this->emailmappings as $mapping) {
+            if ($mapping->isActive() && $mapping->emailarea_id !== 0) {
+                $dot_mapping = new Emailmapping();
+                $dot_mapping->emailarea_id = 256+$mapping->emailarea_id;
+                $dot_mapping->emailentity_id = $this->id;
+                $dot_mapping->isvirtual = true;
+                $dot_mapping->target = ('+'.$mapping->emailarea->name.', ');
+                $dot_mapping->resolvedtarget = ($mapping->resolvedaddress.', ');
+                $dot_mapping->save(false);
+            }
+        }
+    }
+
+    function saveDeep($runValidation = true, $attributeNames = null)
     {
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $res = parent::save($runValidation, $attributeNames);
-            if (isset($this->x_emailmappings)) {
-                foreach ($this->x_emailmappings as $x_mapping) {
-                    //Yii::info(var_export($x_mapping,true));
-                    if ($x_mapping->isActive()) {
-                        if ($x_mapping->isNewRecord) {
-                            $x_mapping->emailentity_id = $this->id;
-                        }
-                        $res = min($res,$x_mapping->save($runValidation));
-                    } else {
-                        $x_mapping->delete();
+            foreach ($this->emailmappings as $mapping) {
+                if ($mapping->isActive()) {
+                    if ($mapping->isNewRecord) {
+                        $mapping->emailentity_id = $this->id;
                     }
+                    $res = min($res,$mapping->save($runValidation));
+                } else {
+                    $mapping->delete();
                 }
             }
+            $this->_adjustInternalMappings();
             if ($res) {
                 $transaction->commit();
             } else {
@@ -152,38 +201,33 @@ class Emailentity extends \yii\db\ActiveRecord
         return $res;
     }
 
-    function load($data, $formName = null)
+    function loadDeep($data, $formName = null)
     {
-        $res = parent::load($data, $formName);
-        if (isset($this->x_emailmappings)) {
-            $res = min($res,\yii\base\Model::loadMultiple($this->x_emailmappings, $data));
+        $res = $this->load($data, $formName);
+        if (isset($this->emailmappings)) {
+            $res = min($res,\yii\base\Model::loadMultiple($this->emailmappings, $data));
         }
         return $res;
     }
 
-    function validate($attributeNames = null, $clearErrors = true)
+    function validateDeep($attributeNames = null, $clearErrors = true)
     {
-        $res = parent::validate($attributeNames, $clearErrors);
-        if (isset($this->x_emailmappings)) {
-            $res = min($res,\yii\base\Model::validateMultiple($this->x_emailmappings));
+        $res = $this->validate($attributeNames, $clearErrors);
+        if (isset($this->emailmappings)) {
+            $res = min($res,\yii\base\Model::validateMultiple($this->emailmappings));
         }
         return $res;
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * Get the mappings relevant for display and entry (i.e. only the one below 255)
+     * Index the resulting array by the area id (for faster access)
+     *
+     * @return \yii\db\ActiveQuery 
      */
     public function getEmailmappings()
     {
-        return $this->hasMany(Emailmapping::className(), ['emailentity_id' => 'id'])->orderBy('tbl_emailmapping.emailarea_id');
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDisplayemailmappings()
-    {
-        return $this->hasMany(Emailmapping::className(), ['emailentity_id' => 'id'])->where('tbl_emailmapping.emailarea_id <> 255')->orderBy('tbl_emailmapping.emailarea_id');
+        return $this->hasMany(Emailmapping::className(), ['emailentity_id' => 'id'])->where('{{%emailmapping}}.emailarea_id < 255')->orderBy('{{%emailmapping}}.emailarea_id')->indexBy('emailarea_id');
     }
 
     /**

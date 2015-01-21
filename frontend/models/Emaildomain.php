@@ -43,6 +43,7 @@ class Emaildomain extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9_-]+)$/i', 'message' => 'Der Name darf nur aus ASCII-Zeichen (ohne Umlaute, etc.) und Ziffern sowie Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['name'], 'unique'],
+            [['name'], 'validateDomainnamechange'],
         ];
     }
 
@@ -73,13 +74,17 @@ class Emaildomain extends \yii\db\ActiveRecord
      */
     public function behaviors()
     {
-        return [
-            'EnsureOwnership' => [
-                'class' => 'common\behaviors\EnsureOwnership',
-                'ownerAttribute' => 'owner_id',
-                'ensureOnFind' => false, // todo Currently we cannot assure it on find since that would block access to the global domain!
-            ],
-        ];
+        if (isset(Yii::$app->user)) {
+            return [
+                'EnsureOwnership' => [
+                    'class' => 'common\behaviors\EnsureOwnership',
+                    'ownerAttribute' => 'owner_id',
+                    'ensureOnFind' => false, // todo Currently we cannot assure it on find since that would block access to the global domain!
+                ],
+            ];
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -115,6 +120,17 @@ class Emaildomain extends \yii\db\ActiveRecord
             return '';
         } else {
             return $this->name.'.';
+        }
+    }
+    /**
+     * Validator to check if a change of the domain name is valid
+     */
+    public function validateDomainnamechange($attribute, $params)
+    {
+        if (!$this->isNewRecord && count($this->getDirtyAttributes(['name']))!==0 ) {
+            if (count($this->emailentities) !== 0) {
+                $this->addError('name', "Sie dürfen den Namen nur ändern, wenn das Adressbuch leer ist");
+            }
         }
     }
 }

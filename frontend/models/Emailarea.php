@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $resolvedname
  * @property string $description
  *
  */
