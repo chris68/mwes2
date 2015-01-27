@@ -50,7 +50,7 @@ git clone https://github.com/chris68/mwes2 /home/mailwitch/mwes2$suffix
 sudo composer self-update
 composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
 composer create-project -d /home/mailwitch/mwes2$suffix 
-fi
+
 /home/mailwitch/mwes2$suffix/init --env=$env
 /home/mailwitch/mwes2$suffix/yii migrate
 if [ "$stage" == "yes" ]; then
