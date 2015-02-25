@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * EmailentityController implements the CRUD actions for Emailentity model.
@@ -74,6 +75,29 @@ class EmailentityController extends Controller
         $dataProvider->pagination->pageSize = 0;
 
         return $this->render('print', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * Export all Emailentity models.
+     * @return mixed
+     */
+    public function actionExport()
+    {
+        $searchModel = new EmailentitySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->ownerScope();
+        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
+        // $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
+        $dataProvider->pagination->pageSize = 0;
+
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->setDownloadHeaders("addresses.csv","text/csv");
+        
+        return $this->renderPartial('export', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

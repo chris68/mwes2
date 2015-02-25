@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
     <div class="form-group">
         <?= Html::a('Drucken', Url::toRoute(array_replace_recursive(['print'], Yii::$app->getRequest()->get())), ['target' => '_blank']) ?>
+        <?= Html::a('Export', Url::toRoute(array_replace_recursive(['export'], Yii::$app->getRequest()->get())), ['target' => '_blank']) ?>
     </div>
 
     <?= $this->render('_searchsection', ['searchModel' => $searchModel]); ?>
