@@ -49,6 +49,27 @@ class EmailentityController extends Controller
     }
 
     /**
+     * Prints all Emailentity models.
+     * @return mixed
+     */
+    public function actionPrint()
+    {
+        $this->layout = 'print';
+        $searchModel = new EmailentitySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->ownerScope();
+        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
+        // $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
+        $dataProvider->pagination->pageSize = 0;
+
+        return $this->render('print', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
      * Displays an empty screen
      * @return mixed
      */

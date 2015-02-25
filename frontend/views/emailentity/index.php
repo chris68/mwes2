@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
@@ -16,6 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
     <div class="col-lg-6">
         
+    <div class="form-group">
+        <?= Html::a('Drucken', Url::toRoute(array_replace_recursive(['print'], Yii::$app->getRequest()->get())), ['target' => '_blank']) ?>
+    </div>
+
     <?= $this->render('_searchsection', ['searchModel' => $searchModel]); ?>
 
     <div class="form-group">
