@@ -20,7 +20,8 @@ use yii\widgets\Pjax;
             <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
             <span class="pull-right">
             <?= Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id], ['title' => 'Editieren']) ?>
-            <?= Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
+            &nbsp;
+            <?= Html::a('<span class="glyphicon glyphicon-trash""></span>', ['delete', 'id' => $model->id], [
                 'title' => 'Löschen',
                 // todo data attribute currently does not play nice with pjax (see github.com/yiisoft/yii2/issues/2505)
                 // 'data' => [

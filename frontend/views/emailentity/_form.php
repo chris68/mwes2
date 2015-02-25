@@ -31,6 +31,7 @@ use frontend\models\Emaildomain;
                 <?php endif; ?>
                 <span class="pull-right">
                     <?= Html::a('', $model->isNewRecord?['emailentity/empty']:['emailentity/view', 'id' => $model->id], ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
+                    &nbsp;
                     <?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
                 </span>
                 <?= $form->errorSummary(array_merge(['' => $model],$model->emailmappings)) ?>
