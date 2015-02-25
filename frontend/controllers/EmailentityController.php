@@ -180,20 +180,39 @@ class EmailentityController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $confirmed = false)
     {
-        
-        $model = $this->findModel($id); $model->delete();
+        $confirmed = boolval($confirmed);
 
-        if (\Yii::$app->getRequest()->getIsPjax()) {
-            return \yii\bootstrap\Alert::widget([
-                'body' => "'{$model->getCompleteEmailname()}' wurde gelöscht",
-                'closeButton' => [],
-                'options' => ['class' => 'alert-success'],
-            ]);
+        $model = $this->findModel($id); 
+
+        if ($confirmed === true) {
+            $model->delete();
+
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return \yii\bootstrap\Alert::widget([
+                    'body' => "'{$model->getCompleteEmailname()}' wurde gelöscht",
+                    'closeButton' => [],
+                    'options' => ['class' => 'alert-success'],
+                ]);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
-            return $this->redirect(['index']);
+            if (\Yii::$app->getRequest()->getIsPjax()) {
+                return $this->renderPartial('_delete', [
+                    'model' => $model,
+                    'pjax'=> true,
+                ]);
+            } else {
+                return $this->render('delete', [
+                    'model' => $model,
+                    'pjax'=> false,
+                ]);
+            }
+            
         }
+
     }
 
     /**
