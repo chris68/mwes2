@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\EmailentitySearch */
