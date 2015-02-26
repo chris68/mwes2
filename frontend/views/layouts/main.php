@@ -55,6 +55,8 @@ AppAsset::register($this);
                         ['label' => 'Globale Adressen', 'url' => ['/emailentity/index', 's[emaildomain_id]' => 0]],
                         ['label' => 'Adressbücher', 'url' => ['/emaildomain/index']],
                         ['label' => 'Absenderadressen', 'url' => ['/']],
+                        '<li class="divider"></li>',
+                        ['label' => 'Nutzerdaten', 'url' => ['/site/userdata']],
                     ],
                 ],
                 ['linkOptions' => ['target' => '_blank'], 'label' => 'Hilfe', 'url' => ['/site/help'.(isset($this->params['help']) ? ('#'.$this->params['help']) : ''), ],],
