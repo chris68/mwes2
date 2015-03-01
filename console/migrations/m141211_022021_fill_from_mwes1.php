@@ -4,6 +4,7 @@ use yii\db\Schema;
 use yii\db\Migration;
 use common\models\User;
 use frontend\models\Emailentity;
+use frontend\models\Emailmapping;
 
 class m141211_022021_fill_from_mwes1 extends Migration
 {
@@ -114,6 +115,34 @@ $this->execute($sql);
                 echo "\n\n ==== \n\n";
             }
         }
+        // Transfer the foreign email acounts
+        // Must be after the saving of the emailentities since ony then resolvedaddress is calculated!
+        $command = $connection->createCommand(
+            "SELECT
+                ForeignEmailAccounts.*
+                FROM ForeignEmailAccounts where ConfirmationLevel = 0");
+        $rs = $command->queryAll();
+        //print_r($rs);
+        foreach ($rs as $r) {
+            $alias = Emailmapping::findOne([
+                'resolvedaddress' => $r['canonicalsenderalias'],
+            ]);
+            $this->insert('tbl_foreignemailaccount', [
+                'id' => $r['id'],
+                'emailaddress' => $r['emailaddress'],
+                'confirmationlevel' =>  $r['confirmationlevel'],
+                'owner_id' => $r['owner_ref'],
+                'senderalias_id' => is_null($alias)?NULL:$alias->id,
+                'confirmation_token' => NULL
+            ]);
+        }
+
+$sql = <<<'EOT'
+  select
+      setval('tbl_foreignemailaccount_id_seq',(select max(id) from tbl_foreignemailaccount)),
+      '';
+EOT;
+$this->execute($sql);
     }
 
     public function safeDown()

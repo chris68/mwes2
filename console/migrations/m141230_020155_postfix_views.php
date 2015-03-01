@@ -17,6 +17,17 @@ CREATE OR REPLACE VIEW PostfixRecipientAliases AS
 EOT;
 $this->execute($sql);
 
+$sql = <<<'EOT'
+CREATE OR REPLACE VIEW PostfixSenderAliases AS
+  SELECT
+    f.emailaddress as source,
+    e.resolvedaddress as target
+  FROM tbl_foreignemailaccount f join tbl_emailmapping e on f.senderalias_id = e.id
+  WHERE confirmationlevel = 0;
+EOT;
+$this->execute($sql);
+
+
 
     }
 
@@ -24,6 +35,11 @@ $this->execute($sql);
     {
 $sql = <<<'EOT'
 DROP VIEW PostfixRecipientAliases;
+EOT;
+
+$this->execute($sql);
+$sql = <<<'EOT'
+DROP VIEW PostfixSenderAliases;
 EOT;
 $this->execute($sql);
     }
