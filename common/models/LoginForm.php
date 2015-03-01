@@ -54,7 +54,11 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+
+            if (isset($user) && ($user->password_hash === '')) {
+                // Due to the migration from mwes1 to mwes2 the password has been set to null
+                $this->addError('password', 'Um sich nach der Systemumstellung anzumelden, müssen Sie zuerst ihr Passwort zurücksetzen');
+            } else if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError('password', \Yii::t('common','Incorrect username or password.'));
             }
         }
