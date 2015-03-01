@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>Dies ermöglicht Ihnen eine Art Online-Adressbuch im Internet zu pflegen, in dem Sie für alle Bekannten solche Adressen als Weiterleitung zu deren eigentlichen Emailadressen anlegen. Sie können dann von überall eine Mail an diese leicht zu merkenden Adressen schreiben und Mailwitch wird die Mail an die hinterlegten eigentlichen Empfänger weiterleiten.</p>
 
-    <p>Damit brauchen Sie nie mehr lokale Adressbücher zu pflegen - und das Beste ist: Sie können über ein ausgekügeltes Berechtigungskonzept diese Adressbücher sogar mit anderen Leuten gemeinsam nutzen!</p>
+    <p>Damit brauchen Sie nie mehr lokale Adressbücher zu pflegen, sondern können ihre Mail einfach an die entsprechenden leicht zu merkenden Mailwitch-Weiterleitungsadressen schicken.</p>
     <h4>
         Die Plattform "Mailwitch Email Services"
     </h4>
