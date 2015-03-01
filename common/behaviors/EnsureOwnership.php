@@ -21,7 +21,7 @@ class EnsureOwnership extends Behavior {
     public $ensureOnFind = true;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function events()
     {
