@@ -42,7 +42,7 @@ AppAsset::register($this);
                 $emaildomains[] = ['label' =>  $domain->name, 'url' => ['/emailentity/index', 's[emaildomain_id]' => $domain->id ]];
             }
             $menuItems = [
-                ['label' => \Yii::t('base','Home'), 'url' => ['/site/index']],
+                ['label' => \Yii::t('base','Home'), 'url' => Yii::$app->homeUrl],
                 [
                     'label' => 'Adressbücher', 
                     'visible' => !Yii::$app->user->isGuest,
