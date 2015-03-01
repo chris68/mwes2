@@ -1,9 +1,4 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace common\behaviors;
 
@@ -26,8 +21,7 @@ class EnsureOwnership extends Behavior {
     public $ensureOnFind = true;
 
     /**
-     * Declares event handlers for the [[owner]]'s events.
-     * @return array events (array keys) and the corresponding event handler methods (array values).
+     * {@inheritDoc}
      */
     public function events()
     {
