@@ -29,6 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
         Alle Objekte (Adressen, Adressbücher, aber auch Nutzer) können JEDERZEIT und ohne Begründung und ohne Vorankündigung von dem Betreiber oder einem von Betreiber ernannten Moderator gelöscht werden. Dies wird vor allem dann geschehen, wenn die Nutzungsbedingungen verletzt wurden.
     </p>
     
+    <h4>Nutzerlöschung bei Nichtnutzung</h4>
+    <p>
+        <b>Automatisch gelöscht werden standardmäßig alle Nutzer, die sich mehr als ein Jahr nicht einloggt haben.</b>
+    </p>
+    
     <h4>Einstellung des Services</h4>
     <p>
         Den Service gibt es nun schon seit einigen Jahren. Wir beabsichtigen diesen auch in Zukunft anzubieten, aber aus rechtlichen Gründen müssen wir klarstellen: Der gesamte Service kann JEDERZEIT und ohne Begründung und ohne Vorankündigung von dem Betreiber eingestellt werden.
@@ -39,10 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <h4>Änderung der Nutzungsbedingung</h4>
     <p>
-        Alle Änderungen dieser Nutzungsbedingungen werden hier veröffentlicht und mit dem in bei Veröffentlichung angegebenen Gültigkeitdatum gültig. Wir werden Ihnen eine Benachrichtigungsmail an Ihre Standard Emailadresse aus dem Nutzerprofil schicken und Sie zudem auf der Startseite auf die Änderungen hinweisen. Wenn Sie mit den Änderungen nicht einverstanden sind, dann dürfen Sie den Service nicht weiter nutzen.
+        Alle Änderungen dieser Nutzungsbedingungen werden hier veröffentlicht und mit dem angegebenen Gültigkeitdatum gültig. Wir werden Ihnen eine Benachrichtigungsmail an Ihre Standard Emailadresse aus dem Nutzerprofil schicken und Sie zudem auf der Startseite auf die Änderungen hinweisen. Wenn Sie mit den Änderungen nicht einverstanden sind, dann dürfen Sie den Service nicht weiter nutzen.
     </p>
 
     <p>
-        (Stand 06.10.2014; gültig ab 06.10.2014)
+        (Stand 01.03.2015; gültig ab 01.03.2015)
     </p>
 </div>
