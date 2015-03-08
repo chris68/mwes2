@@ -48,7 +48,7 @@ git clone https://github.com/chris68/mwes2 /home/mailwitch/mwes2$suffix
 # psql postgres #create the database (see migration)
 # psql postgres #CREATE DATABASE mwes2_dev WITH TEMPLATE mwes2; (for Development test)
 sudo composer self-update
-composer global require "fxp/composer-asset-plugin:1.0.0-beta4"
+composer global require "fxp/composer-asset-plugin:1.0.0"
 composer create-project -d /home/mailwitch/mwes2$suffix 
 
 /home/mailwitch/mwes2$suffix/init --env=$env
