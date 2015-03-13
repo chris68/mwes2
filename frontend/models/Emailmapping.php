@@ -76,6 +76,17 @@ class Emailmapping extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function find()
+    {
+        return new EmailmappingQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
     function save($runValidation = true, $attributeNames = null)
     {
         $this->setResolvedaddress($this->getResolvedaddress());

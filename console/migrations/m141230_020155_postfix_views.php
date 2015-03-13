@@ -23,7 +23,7 @@ CREATE OR REPLACE VIEW PostfixSenderAliases AS
     f.emailaddress as source,
     e.resolvedaddress as target
   FROM tbl_foreignemailaccount f join tbl_emailmapping e on f.senderalias_id = e.id
-  WHERE confirmationlevel = 0;
+  WHERE confirmation_level = 0;
 EOT;
 $this->execute($sql);
 

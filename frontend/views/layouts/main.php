@@ -54,7 +54,7 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => 'Globale Adressen', 'url' => ['/emailentity/index', 's[emaildomain_id]' => 0]],
                         ['label' => 'Adressbücher', 'url' => ['/emaildomain/index']],
-                        ['label' => 'Absenderadressen', 'url' => ['/']],
+                        ['label' => 'Absenderadressen', 'url' => ['/foreignemailaccount']],
                         '<li class="divider"></li>',
                         ['label' => 'Nutzerdaten', 'url' => ['/site/userdata']],
                     ],

@@ -133,14 +133,14 @@ CREATE TABLE tbl_foreignemailaccount
 (
          id                                                    serial NOT NULL,
          emailaddress                                          text NOT NULL,
-         confirmationlevel                                     int NOT NULL 
-           CONSTRAINT ConfirmedOrOwnerRequest CHECK (confirmationlevel=0 or confirmationlevel=owner_id ), -- 0 if confirmed otherwise the owner_id of the requester
+         confirmation_level                                     int NOT NULL
+           CONSTRAINT ConfirmedOrOwnerRequest CHECK (confirmation_level=0 or confirmation_level=owner_id ), -- 0 if confirmed otherwise the owner_id of the requester
          owner_id                                              int NOT NULL
            CONSTRAINT NoForeignEmailAccountsForRoot CHECK (owner_id<>0),
          senderalias_id                                        int,
          confirmation_token                                    text DEFAULT NULL,
          PRIMARY KEY (ID),
-         UNIQUE (emailAddress, confirmationlevel), -- actual key
+         UNIQUE (emailAddress, confirmation_level), -- actual key
          FOREIGN KEY (owner_id) REFERENCES tbl_user (id) ON UPDATE CASCADE ON DELETE CASCADE,
          FOREIGN KEY (senderalias_id) REFERENCES tbl_emailmapping (id) ON UPDATE CASCADE ON DELETE set null
 ) WITH OIDS;

@@ -130,7 +130,7 @@ $this->execute($sql);
             $this->insert('tbl_foreignemailaccount', [
                 'id' => $r['id'],
                 'emailaddress' => $r['emailaddress'],
-                'confirmationlevel' =>  $r['confirmationlevel'],
+                'confirmation_level' =>  $r['confirmationlevel'],
                 'owner_id' => $r['owner_ref'],
                 'senderalias_id' => is_null($alias)?NULL:$alias->id,
                 'confirmation_token' => NULL
