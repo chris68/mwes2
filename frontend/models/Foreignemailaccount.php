@@ -188,7 +188,7 @@ class Foreignemailaccount extends \yii\db\ActiveRecord
             // this handler is an anonymous function
             $this->on(self::EVENT_BEFORE_UPDATE, function ($event) {
                 // Delete possibly existing other records for the same email address with confirmation level 0
-                self::deleteAll('emailaddress=:e and confirmation_level = 0',[':e' => $this->emailaddress]);
+                self::deleteAll('emailaddress=:e and confirmation_level = 0 and id <> :id',[':e' => $this->emailaddress, ':id' => $this->id]);
             });
             return true;
         } else {
