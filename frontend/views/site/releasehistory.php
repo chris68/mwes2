@@ -19,14 +19,22 @@ $this->params['breadcrumbs'][] = $this->title;
         Umstellung auf das neue Webframwork Yii 2.0
     </p>
     <ul>
-        <li>Die Applikation wurde auf das Framework Yii2 umgestellt (quasi Neuimplementierung). Folgende Sachen wurden hierbei nicht aus der Version 1 übernommen, weil es kaum genutzt wurden:</li>
-        <ul>
-            <li>Das komplette Berechtigungskonzept: man sieht daher jetzt immer nur noch seine eigenen Adressen/Adressbücher</li>
-            <li>Tags: Man kann diese einfach z.B. durch #&lt;tag&gt;-Einträge in dem Kommentarfeld emulieren (z.B. #freunde); das klappt dann auch bei der Suche</li>
-            <li>Die Adresssuchhilfe/automatische Erweiterung beim Erstellen von Zieladressen (wird wahrscheinlich später in einer Folgerelease wieder implementert)</li>
-            <li>Das automatische Errechnen von Zieladressen in dem Expertenfeld "Formel für Zieladresse"</li>
-            <li>Die Absenderblindkope</li>
-        </ul>
+        <li>Die Applikation wurde auf das Framework Yii2 umgestellt (quasi Neuimplementierung).</li>
+        <li>Folgende Sachen wurden mangels Nutzung <b>nicht</b> aus der Version 1 übernommen:
+            <ul>
+                <li>Das komplette Berechtigungskonzept: man sieht daher jetzt immer nur noch seine eigenen Adressen/Adressbücher</li>
+                <li>Tags: Man kann diese einfach z.B. durch #&lt;tag&gt;-Einträge in dem Kommentarfeld emulieren (z.B. #freunde); das klappt dann auch bei der Suche</li>
+                <li>Die Adresssuchhilfe/automatische Erweiterung beim Erstellen von Zieladressen (wird wahrscheinlich später in einer Folgerelease wieder implementert)</li>
+                <li>Das automatische Errechnen von Zieladressen in dem Expertenfeld "Formel für Zieladresse"</li>
+                <li>Die Absenderblindkope</li>
+                <li>Mehrsprachigkeit: die Plattform gibt es nun nur noch in Deutsch</li>
+            </ul>
+        </li>
+        <li>Das Plus-Zeichen (+) ist nun der Trenner für die Kontenarten
+            <ul>
+                <li>Die Arbeitsadresse von Markus Meier wäre dann z.B. markus.meier+work@mailwitch.com (anstatt markus.meier.work@mailwitch.com wie früher)</li>
+                <li>Die alte Methode mit dem Punkt als Trenner wird ca. noch ein Jahr unterstützt und wird dann auslaufen</li>
+            </ul>
         <li>Auf dem Mailserver selbst wurden Spamabwehrmethoden wie Blacklisting und Greylisting implementiert, um der Spamflut Herr zu werden</li>
     </ul>    
     <h3>
