@@ -1,0 +1,111 @@
+
+
+###################################
+##### Mailwitch configuration #####
+###################################
+
+# See http://www.postfix.org/postconf.5.html
+
+### Basic administrative settings ###
+
+# Biff notifications not necessary
+biff = no
+
+# No size limit for the mailboxes
+mailbox_size_limit = 0
+
+# Limit the number of concurrent processes; otherwise large mail distribution list will crash the system due to resource/memory limitations, i.e.
+# the number of required sockets will be too high (netstat -uxpen) and the required memory will be to high
+# default_process_limit = 100
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+
+### Domain/host related settings ###
+
+# Destination must be empty so that virtual mail rewrite/delivery works
+mydestination = localhost
+
+# My domain and hostname should be mailwitch.com
+mydomain = mailwitch.com
+myhostname = mailwitch.com
+
+# Special authorities for the host only (note: setting will not be used, since we set the actual value below)
+mynetworks_style = host
+# Since the default values of mynetworks_style yield to strange results, we simply set it to localhost!
+mynetworks = 127.0.0.0/8
+
+# If mail is sent from localhost then $mydomain should be appended
+myorigin = $mydomain
+
+virtual_alias_domains = regexp:/etc/postfix/mailwitch/virtual_alias_domains.regexp
+
+### Basic mapping relevant settings ###
+
+# The recipient delimiter for splitting up mail like foo+bar@mailwitch.com
+recipient_delimiter = +
+# Currently, foo+bar@mailwitch.com should not be expanded (maybe we might use this later)
+ #propagate_unmatched_extensions =
+
+# Do not append a domain to mails without missing/incomplete domains
+append_dot_mydomain = no
+
+# Turn on canonical address rewriting for all mail (regardless where it is coming from)
+local_header_rewrite_clients = static:all
+
+### Relevant mappings ###
+
+# Alias maps is not used
+alias_maps = 
+
+recipient_canonical_maps =
+    # SRS unwrapping & domain forwarding
+    regexp:/etc/postfix/mailwitch/recipient_canonical_maps.regexp,
+    # Non virtual recipient redirects from the users
+    pgsql:/etc/postfix/mailwitch/recipient_canonical_maps.pgsql
+
+sender_canonical_maps =
+    # Sender redirects from the users
+    pgsql:/etc/postfix/mailwitch/sender_canonical_maps.pgsql
+
+virtual_alias_maps =
+    # Important direct redirects
+    regexp:/etc/postfix/mailwitch/virtual_alias_maps.regexp,
+    # All (virtual and non virtual) recipient redirects from the users
+    pgsql:/etc/postfix/mailwitch/virtual_alias_maps.pgsql
+
+# Canonical address rewrite only for envelope senders (this enables us the rewrite the envelope senders addresses differently from the rest)
+canonical_classes = envelope_sender
+# Rewrite the envelope sender addresses (eventually the srs wrapping of the addresses)
+canonical_maps =
+    # SRS wrapping
+    regexp:/etc/postfix/mailwitch/envelope_sender_canonical_maps.regexp
+
+# Relocated maps (currently not used yet)
+relocated_maps = 
+    # ,work (Currently not used)
+    regexp:/etc/postfix/mailwitch/relocated_maps.regexp
+
+
+## Virtual mailbox (no longer used/necessary) ##
+
+# The user und group (mailwitch:mailwitch) for virtual mail  
+#virtual_gid_maps = static:1001
+#virtual_uid_maps = static:1001
+# Base directory for delivery 
+#virtual_mailbox_base = /var/opt/mailwitch/vmail
+# 
+#virtual_mailbox_maps = regexp:/etc/postfix/mailwitch/mw_virtual_mailbox.regexp
+
+
+## SMTPD restrictions  (preliminary test for smtpd restrictions) ##
+smtpd_restriction_classes = RC_check_sender_access
+RC_check_sender_access = check_sender_access hash:/etc/postfix/mailwitch/_sender_access.hash
+# smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination, check_recipient_access hash:/etc/postfix/mailwitch/_recipient_access_per_user.hash
+
+
+## Debugging ##
+
+# Uncomment to enable debugging and restrict to localhost (i.e. especially do not allow traffic from the external ones)
+#debug_peer_list = 127.0.0.1
+#inet_interfaces = 127.0.0.1

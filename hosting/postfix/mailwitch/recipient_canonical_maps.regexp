@@ -1,0 +1,7 @@
+## Unwrap the mailwitch srs schema ##
+# Change <email name>@<internet domain>.mailwitch.com to <email name>@<internet domain>
+/^(.*)@(.*)\.(.*)\.mailwitch\.com$/  ${1}@${2}.${3}
+
+# Change the forward domains (including subdomains) to mailwitch.com (so that testing is possible)
+
+/^(.*(@|\.))h2397470\.stratoserver\.net$/ ${1}mailwitch.com

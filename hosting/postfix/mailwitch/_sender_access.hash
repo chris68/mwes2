@@ -1,0 +1,4 @@
+#### All users that are allowed as senders (preliminary test for smtpd restrictions)
+
+christoph.toussaint@gmail.com	OK
+spam.com			PREPEND Subject: SPAM

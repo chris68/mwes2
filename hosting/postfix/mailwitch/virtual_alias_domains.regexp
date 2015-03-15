@@ -1,0 +1,7 @@
+## All mail for mailwitch with all subdomains is ok
+/^mailwitch\.com$/                  ok
+/^(.*)\.mailwitch\.com$/            ok
+
+# All mail for the server with all subdomains is ok
+/^h2397470\.stratoserver\.net$/                  ok
+/^(.*)\.h2397470\.stratoserver\.net$/            ok

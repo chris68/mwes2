@@ -1,0 +1,9 @@
+## Unwrap the mailwitch srs schema ##
+# Change <email name>@<internet domain> to <email name>@<internet domain>.mailwitch.com
+# HOWEVER, the wrapping must be done only for valid email addresses (i.e. *@*.*), i.e. not postmaster@localhost, etc.
+# Otherwise the empty address (return-path: <>) would be wrapped to ".mailwitch.com", expanded to .mailwitch.com@mailwitch.com and and then bounce forever
+if /^(.*)@(.*)\.(.*)$/
+if !/^(.*)(@|\.)mailwitch\.com$/
+/^(.*)@(.*)$/  ${1}@${2}.mailwitch.com
+endif
+endif

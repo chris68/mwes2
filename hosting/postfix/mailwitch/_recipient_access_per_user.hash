@@ -1,0 +1,4 @@
+#### See page 148; restrictions based on users  (preliminary test for smtpd restrictions)
+
+christoph.toussaint@gmail.com	RC_check_sender_access, PERMIT
+christoph.toussaint@web.de		RC_check_sender_access, REJECT
