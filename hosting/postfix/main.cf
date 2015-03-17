@@ -143,9 +143,9 @@ smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, per
 #virtual_mailbox_maps = regexp:/etc/postfix/mailwitch/mw_virtual_mailbox.regexp
 
 
-## SMTPD restrictions  (preliminary test for smtpd restrictions) ##
-smtpd_restriction_classes = RC_check_sender_access
-RC_check_sender_access = check_sender_access hash:/etc/postfix/mailwitch/_sender_access.hash
+## SMTPD restrictions  (preliminary test for smtpd restrictions; not used yet) ##
+# smtpd_restriction_classes = RC_check_sender_access
+# RC_check_sender_access = check_sender_access hash:/etc/postfix/mailwitch/_sender_access.hash
 # smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination, check_recipient_access hash:/etc/postfix/mailwitch/_recipient_access_per_user.hash
 
 
