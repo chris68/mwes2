@@ -14,6 +14,10 @@ biff = no
 # No size limit for the mailboxes
 mailbox_size_limit = 0
 
+# Rather high size limit for messages but no limit for virtual mailbox
+message_size_limit = 52428800
+virtual_mailbox_limit = 0
+
 # Limit the number of concurrent processes; otherwise large mail distribution list will crash the system due to resource/memory limitations, i.e.
 # the number of required sockets will be too high (netstat -uxpen) and the required memory will be to high
 # default_process_limit = 100
@@ -86,6 +90,44 @@ relocated_maps =
     # ,work (Currently not used)
     regexp:/etc/postfix/mailwitch/relocated_maps.regexp
 
+### Spam rejection ###
+
+# Rejection codes: make the rejection permenant
+unknown_address_reject_code      = 554
+unknown_hostname_reject_code     = 554
+unknown_client_reject_code       = 554
+
+# We want the other side to say hello
+smtpd_helo_required = yes
+
+# Helo restrictions
+smtpd_helo_restrictions =
+    # Allow localhost, etc.
+    permit_mynetworks,
+    # Reject if not a welformed hostname in helo
+    reject_invalid_helo_hostname,
+    # Reject if not a real hostname in helo
+    reject_non_fqdn_helo_hostname,
+    # Reject if the helo hostname does not have a dns a/mx record
+    reject_unknown_helo_hostname,
+    permit
+
+# Client restrictions
+smtpd_client_restrictions =
+    # Allow localhost, etc.
+    permit_mynetworks,
+    # Reject if the other party talks to fast
+    reject_unauth_pipelining,
+    # Reject if the reverse dns and the ip do not fit
+    reject_unknown_client_hostname,
+    ## Currently not really needed since greylisting not yet used; however, later we should bypass greylisting for those domains
+    ##  permit_dnswl_client swl.spamhaus.org,
+    # Reject according to spamhaus.org backlist
+    reject_rbl_client zen.spamhaus.org,
+    permit
+
+## Sender restrictions
+smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, permit
 
 ## Virtual mailbox (no longer used/necessary) ##
 
