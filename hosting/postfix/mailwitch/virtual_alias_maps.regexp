@@ -1,10 +1,10 @@
 # Virtual_Alias (virtual_aliases_maps)
 
 # Redirect postmaster,webmaster, hostmaster and root to local delivery
-/^postmaster@mailwitch\.com$/ root@localhost
-/^webmaster@mailwitch\.com$/ root@localhost
-/^hostmaster@mailwitch\.com$/ root@localhost
-/^root@mailwitch\.com$/ root@localhost
+/^postmaster@mailwitch\.com$/ mailwitch@localhost
+/^webmaster@mailwitch\.com$/ mailwitch@localhost
+/^hostmaster@mailwitch\.com$/ mailwitch@localhost
+/^root@mailwitch\.com$/ mailwitch@localhost
 
-# Make sure that prod_monit works even if mysql/postgresql is down; otherwise, we will not get system notification mails!
+# Make sure that prod_monit works even if postgresql is down; otherwise, we will not get system notification mails!
 /^prod_monit@mailwitch\.com$/ christoph.toussaint@gmail.com
