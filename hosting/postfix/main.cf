@@ -129,19 +129,8 @@ smtpd_client_restrictions =
     reject_rbl_client zen.spamhaus.org,
     permit
 
-## Sender restrictions
+# Sender restrictions
 smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, permit
-
-## Virtual mailbox (no longer used/necessary) ##
-
-# The user und group (mailwitch:mailwitch) for virtual mail  
-#virtual_gid_maps = static:1001
-#virtual_uid_maps = static:1001
-# Base directory for delivery 
-#virtual_mailbox_base = /var/opt/mailwitch/vmail
-# 
-#virtual_mailbox_maps = regexp:/etc/postfix/mailwitch/mw_virtual_mailbox.regexp
-
 
 ## SMTPD restrictions  (preliminary test for smtpd restrictions; not used yet) ##
 # smtpd_restriction_classes = RC_check_sender_access
