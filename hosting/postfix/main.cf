@@ -18,6 +18,9 @@ mailbox_size_limit = 0
 message_size_limit = 52428800
 virtual_mailbox_limit = 0
 
+# Need for local delivery
+mailbox_command = procmail -a "$EXTENSION"
+
 # Limit the number of concurrent processes; otherwise large mail distribution list will crash the system due to resource/memory limitations, i.e.
 # the number of required sockets will be too high (netstat -uxpen) and the required memory will be to high
 # default_process_limit = 100
