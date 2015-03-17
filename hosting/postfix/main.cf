@@ -51,8 +51,8 @@ virtual_alias_domains = regexp:/etc/postfix/mailwitch/virtual_alias_domains.rege
 
 # The recipient delimiter for splitting up mail like foo+bar@mailwitch.com
 recipient_delimiter = +
-# Currently, foo+bar@mailwitch.com should not be expanded (maybe we might use this later)
- #propagate_unmatched_extensions =
+# An unmatched foo+bar@mailwitch.com must not be expanded to foo+bar@gmail.com, etc. (raises also error "unreasonable virtual_alias_maps map nesting")
+propagate_unmatched_extensions =
 
 # Do not append a domain to mails without missing/incomplete domains
 append_dot_mydomain = no
