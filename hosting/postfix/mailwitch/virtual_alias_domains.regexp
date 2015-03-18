@@ -2,6 +2,9 @@
 /^mailwitch\.com$/                  ok
 /^(.*)\.mailwitch\.com$/            ok
 
+# All mail for pnauw is ok (due to double hosting)
+/^parke-nicht-auf-unseren-wegen\.de$/                  ok
+
 # All mail for the server with all subdomains is ok
 /^h2397470\.stratoserver\.net$/                  ok
 /^(.*)\.h2397470\.stratoserver\.net$/            ok
