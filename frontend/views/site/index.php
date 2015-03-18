@@ -11,26 +11,9 @@ $this->title = \Yii::$app->name;
     <div class="jumbotron">
         <h1>Mailwitch Email Services</h1>
 
-        <p class="lead"></p>
+        <p class="lead">Ein intelligenter Emailumleitungsservice.</p>
+        <p><small><a href="<?= Url::to(['site/about']) ?>">Hintergrundsinfos</a> &ndash; <a href="<?= Url::to(['site/help']) ?>">Hilfe</a></small></p>
 
     </div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-md-4">
-                <h2></h2>
-
-            </div>
-            <div class="col-md-4">
-                <h2></h2>
-
-            </div>
-            <div class="col-md-4">
-                <h2></h2>
-
-            </div>
-        </div>
-
-    </div>
 </div>
