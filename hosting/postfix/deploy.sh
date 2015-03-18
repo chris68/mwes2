@@ -30,3 +30,6 @@ chmod 664 /etc/postfix/mailwitch/*  || check_error
 
 # Build up the mappings db (currently not needed)
 #postmap /etc/postfix/mailwitch/*.hash || check_error
+
+echo "Postfix configuration deployed. Do not forget to edit/reconcile the configuration file via"
+echo "sudo nano /etc/postfix/main.cf"
