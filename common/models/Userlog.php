@@ -58,9 +58,9 @@ class Userlog extends \yii\db\ActiveRecord
 
     /**
      * Create a log entry
-     * @param type $event The event
-     * @param type $log The log message
-     * @param type $user The user; if null the currently logged in user will be taken
+     * @param string $event The event
+     * @param string $log The log message
+     * @param int $user The user's id; if null the currently logged in user will be taken
      */
     public static function log($event, $log, $user = NULL)
     {
