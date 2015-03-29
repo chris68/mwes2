@@ -45,6 +45,11 @@ return [
                 //],
             ],
         ],
+        'urlManager' => [
+            'baseUrl' => 'http://mailwitch.com/',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ]
     ],
     'params' => $params,
 ];

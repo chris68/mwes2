@@ -9,8 +9,6 @@ $params = array_merge(
 return [
     'id' => 'mwes2',
     'basePath' => dirname(__DIR__),
-    'name' => 'Mailwitch Email Services',
-    'version' => '2.0',
     'language' => 'de',
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
