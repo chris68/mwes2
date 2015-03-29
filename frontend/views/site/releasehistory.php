@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Die Plattform wird laufend weiterentwickelt und damit Sie schnell erkennen können, wann was neu hinzugekommen ist, haben wir hier die Releasehistorie veröffentlicht. Kleinere Änderungsrelease mit Fehlerkorrekturen werden hier jedoch nicht aufgeführt.
     </p>
     <h3>
-        Version 2.0 (??.??.2015)
+        Version 2.0 (29.03.2015)
     </h3>
     <p>
         Umstellung auf das neue Webframwork Yii 2.0
