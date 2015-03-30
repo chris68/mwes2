@@ -25,6 +25,8 @@ use frontend\models\Emaildomain;
 
     <?= $form->field($model, 'comment') ?>
 
+    <?= $form->field($model, 'target') ?>
+
     <?= $form->field($model, 'emaildomain_id')->dropDownList(['' => 'Alle Adressen']+[0 => 'Globale Adressen']+ArrayHelper::map(Emaildomain::find()->ownerScope()->orderBy('name')->all(),'id','name')) ?>
 
     <?= '' // $form->field($model, 'id') ?>

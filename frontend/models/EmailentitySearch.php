@@ -20,6 +20,12 @@ class EmailentitySearch extends Emailentity
     public $any;
     
     /**
+     *
+     * @var string Search in the target 
+     */
+    public $target;
+
+    /**
      * @inheritdoc
      */
     public function formName()
@@ -36,7 +42,7 @@ class EmailentitySearch extends Emailentity
             [['id', 'emaildomain_id', 'owner_id'], 'integer'],
             [['id', 'emaildomain_id', 'owner_id'], 'default', 'value' => NULL],
             [['id', 'emaildomain_id', 'owner_id'], 'filter', 'filter' => 'intval', 'skipOnEmpty' => true],
-            [['any', 'name', 'sortname', 'comment'], 'string'],
+            [['any', 'name', 'sortname', 'comment', 'target'], 'string'],
         ];
     }
 
@@ -48,6 +54,7 @@ class EmailentitySearch extends Emailentity
         return array_merge(parent::attributeLabels(),
             [
                 'any' => 'Beliebiges Feld',
+                'target' => 'Ziel',
             ]);
     }
 
@@ -88,6 +95,10 @@ class EmailentitySearch extends Emailentity
         $query->andFilterWhere(['ilike', 'name', $this->name])
             ->andFilterWhere(['ilike', 'sortname', $this->sortname])
             ->andFilterWhere(['ilike', 'comment', $this->comment]);
+
+        if (!empty($this->target)) {
+            $query->andWhere('exists (select 1 from tbl_emailmapping where tbl_emailentity.id = tbl_emailmapping.emailentity_id and target ilike :target )', [':target' => ('%' . strtr($this->target, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
+        }
 
         if (!empty($this->any)) {
             $query->andWhere('(name ilike :any or sortname ilike :any or comment ilike :any)', [':any' => ('%' . strtr($this->any, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
