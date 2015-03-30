@@ -26,8 +26,8 @@ use frontend\models\Emaildomain;
                 <?php if ($model->isNewRecord) : ?>
                 <span class="lead">Neuer Eintrag</span>
                 <?php else : ?>
-                <span class="lead"><?= Html::encode(Html::encode($model->sortname))?></span>
-                <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
+                <span class="lead"><?= Html::encode($model->sortname)?></span>
+                <span style="font-weight: bold">&lt;<?= Html::encode($model->getCompleteEmailname())?>&gt;</span>
                 <?php endif; ?>
                 <span class="pull-right">
                     <?= Html::a('', $model->isNewRecord?['emailentity/empty']:['emailentity/view', 'id' => $model->id], ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>

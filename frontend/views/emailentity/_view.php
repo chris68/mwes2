@@ -16,8 +16,8 @@ use yii\widgets\Pjax;
 <div style="min-height: 12vh">
     <div class="row">
         <div class="col-xs-12">
-            <span class="lead"><?= Html::encode(Html::encode($model->sortname))?></span>
-            <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
+            <span class="lead"><?= Html::encode($model->sortname)?></span>
+            <span style="font-weight: bold">&lt;<?= Html::encode($model->getCompleteEmailname())?>&gt;</span>
             <span class="pull-right">
             <?= Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id], ['title' => 'Editieren']) ?>
             &nbsp;
@@ -36,7 +36,7 @@ use yii\widgets\Pjax;
         <div class="col-xs-offset-1 col-xs-11">
             <fieldset>
             <legend class="small">Kommentare, Adressen, Telefonnummern</legend>
-            <p><?= nl2br(Html::encode(Html::encode($model->comment)))?></p>
+            <p><?= nl2br(Html::encode($model->comment))?></p>
             </fieldset>
             <fieldset>
             <legend class="small">Adressumleitungen</legend>

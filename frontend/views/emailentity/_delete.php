@@ -17,8 +17,8 @@ use yii\bootstrap\Alert;
 <div style="min-height: 12vh">
     <div class="row">
         <div class="col-xs-12">
-            <span class="lead"><?= Html::encode(Html::encode($model->sortname))?></span>
-            <span style="font-weight: bold">&lt;<?= Html::encode(Html::encode($model->getCompleteEmailname()))?>&gt;</span>
+            <span class="lead"><?= Html::encode($model->sortname)?></span>
+            <span style="font-weight: bold">&lt;<?= Html::encode($model->getCompleteEmailname())?>&gt;</span>
             <span class="pull-right">
                 <?= Html::a('', ['emailentity/view', 'id' => $model->id], ['class' => 'btn btn-sm btn-default glyphicon glyphicon-remove']) ?>
             </span>
