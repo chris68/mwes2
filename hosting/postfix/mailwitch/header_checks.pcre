@@ -1,0 +1,2 @@
+# Delete the DKIM-Signature since it will be corrupted in 90% of the cases anyway since mailwitch changes the from/to adresses in the adress rewriting
+/^DKIM-Signature:/ IGNORE 
