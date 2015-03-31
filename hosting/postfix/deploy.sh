@@ -20,7 +20,7 @@ mkdir /etc/postfix/mailwitch || check_error
 chown postfix:postfix /etc/postfix/mailwitch || check_error
 chmod 755 /etc/postfix/mailwitch  || check_error
 
-cp mailwitch/*.{hash,regexp,pgsql} /etc/postfix/mailwitch/. || check_error
+cp mailwitch/*.{hash,regexp,pgsql,pcre} /etc/postfix/mailwitch/. || check_error
 # Append the config file in order not to overwrite the existing one
 cat main.cf >> /etc/postfix/main.cf || check_error
 
