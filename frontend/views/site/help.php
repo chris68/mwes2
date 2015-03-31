@@ -215,6 +215,23 @@ Weitergeleitete Email
 <pre>  m.meier@web.de                       =&gt; markus.meier@mailwitch.com
   meier@verkehrsbetriebe-freiburg.de   =&gt; markus.meier+work@mailwitch.com
 </pre>
+<p class="alert alert-danger">
+    <b>Absenderadressersetzung ein Muss bei Empfängeradressersetzung</b><br><br>
+    Bei allen Emailprovidern, die <?= Assist::extlink('DMARC', 'http://de.wikipedia.org/wiki/DMARC')?> (z.B. gmail.com und vor allem yahoo.com) nutzen,
+    ist bei Nutzung von Adressumwandlungen der Empfängeradresse auch eine Absenderadressersetzung ein Muss. Eine Adressumwandlung der Empfängeradresse liegt in Mailwitch immer dann vor, wenn bei der <a href="#emailtarget">Zieladresse</a> nur <b>genau eine Adresse <u>ohne</u> Komma</b> angegeben wurde.<br><br>
+
+    Sprich: wenn Sie von z.B. einem Yahoo-Account eine Mail an eine Mailwitch-Empfängeradresse
+    schreiben, wo dann gemäß der Adressbuchidee die Mailwitch-Adresse durch die echte Adresse ersetzt wird (und nicht nur weitergeleitet wird), dann müssen Sie auch ihre Absenderadresse auf einen Mailwitch-Adresse umschießen,
+    indem Sie eine entsprechende Absenderadressersetzung registrieren.<br><br>
+
+    Der Hintergrund ist, dass durch das Verändern der Zieladresse im Emailheader die DKIM-Signatur gebrochen wird und man dann auf keinen Fall den Anschein erwecken, dass die Mail von gmail,yahoo, etc. verschickt wurde. Und dazu muss man halt auch die Absenderadresse anpassen.
+    Wenn jedoch eine Mail an eine normale Weiterleitung geschickt wird, dann ist das unproblematisch, weil die Emailheader nicht verändert werden und damit die Signatur nicht gebrochen wird.<br><br>
+
+    Im Umkehrschluss heißt das: geben Sie nie im großen Stil Mailwitch-Adressen nach außen, wo in der Zieladresse eine Adressumwandlung hinterlegt ist, denn spätestens, wenn z.B. ein Yahoo-Nutzer an diese eine Mail schreibt, wird die Mail wahrscheinlich nicht mehr akzeptiert, sondern wegen der gebrochenen DKIM-Signatur als Fälschung klassifiziert.<br><br>
+
+    Und genau das ist auch die Kritik an DMARC: Emailweiterleitungen werden deutlich erschwert und die Dominanz der großen Mailprovider soll zementiert werden. Aber vor allem Yahoo steckt dafür derzeit gerade so viel Kritik ein, dass das Pendel eventuell demnächst wieder zurückschlägt.
+
+</p>
 
 <h2><a name="access-management">Berechtigungskonzept</a></h2>
 <p>Das Berechtigungskonzept von Mailwitch ist ganz einfach:</p>
