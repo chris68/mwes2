@@ -1,7 +1,7 @@
 <?php
 return [
     'name' => 'Mailwitch Email Services',
-    'version' => '2.0.3',
+    'version' => '2.0.4',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'cache' => [
