@@ -57,6 +57,7 @@ AppAsset::register($this);
                         ['label' => 'Absenderadressen', 'url' => ['/foreignemailaccount']],
                         '<li class="divider"></li>',
                         ['label' => 'Nutzerdaten', 'url' => ['/site/userdata']],
+                        ['label' => 'Fremdlogins', 'url' => ['/site/foreignlogin']],
                     ],
                 ],
                 ['linkOptions' => ['target' => '_blank'], 'label' => 'Hilfe', 'url' => ['/site/help'.(isset($this->params['help']) ? ('#'.$this->params['help']) : ''), ],],
