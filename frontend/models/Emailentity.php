@@ -48,6 +48,7 @@ class Emailentity extends \yii\db\ActiveRecord
             [['emaildomain_id', 'name', ], 'required'],
             [['name', 'sortname', 'comment'], 'string'],
             [['name', 'sortname', 'comment'], 'trim'],
+            [['name'], 'filter', 'filter' => 'mb_strtolower', 'skipOnEmpty' => true],
             [['name'], 'match', 'pattern' => '/^([a-z0-9][a-z0-9._-]+)$/i', 'message' => 'Der Emailname darf nur aus ASCII-Zeichen (ohne Umlaute, etc.) und Ziffern sowie Punkten, Unterstrichen oder Gedankenstrichen als Trenner bestehen' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['name'], 'match', 'pattern' => '/^.*\\.(main|home|work|extra1|extra2|extra3|all)$/i', 'not' => true, 'message' => 'Der Emailname darf nicht mit .main, .home, .work, .extra1, .extra2, .extra3 oder .all enden' ], // the i for case independent is needed for the client check where the lower case is not done yet!
             [['emaildomain_id', 'name'], 'unique', 'targetAttribute' => ['emaildomain_id', 'name'], 'message' => 'Der gewählte Emailname wird in dem Adressbuch bereits genutzt'],
