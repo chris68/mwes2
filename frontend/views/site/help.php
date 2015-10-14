@@ -115,8 +115,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <li><b>all:</b> Spezielle, automatisch erzeugte Kontoart (siehe unten)</li>
 </ul>
 
-<p>Die Kontenart <i>main</i> beschreibt die Hauptemailadresse, also markus.meier@mailwitch.com. Die anderen Kontenarten folgen durch einen + getrennt direkt hinter dem Emailnamen, also markus.meier+work@mailwitch.com, markus.meier+home@mailwitch.com, markus.meier.all@mailwitch.com, etc.</p>
-<p>Dieses Verfahren entspricht dem Sub-adressing im Emailverkehr (siehe <?= Assist::extlink('http://en.wikipedia.org/wiki/Email_address#Address_tags', 'http://en.wikipedia.org/wiki/Email_address#Address_tags')?>). Mailwitch unterstützt dieses Sub-Adressing uneingeschränkt (sprich: auch markus.meier+2015@mailwitch.com ginge) und leitet alles einfach auf die Hauptadresse (ohne das +work, etc.) weiter, wenn keine entsprechende Kontenart explizit definiert ist.</p>
+<p>Die Kontenart <i>main</i> beschreibt die Hauptemailadresse, also markus.meier@mailwitch.com. Die anderen Kontenarten folgen durch einen + getrennt direkt hinter dem Emailnamen, also markus.meier+work@mailwitch.com, markus.meier+home@mailwitch.com, markus.meier+all@mailwitch.com, etc.</p>
+<p>Dieses Verfahren entspricht dem Sub-adressing im Emailverkehr (siehe <?= Assist::extlink('http://en.wikipedia.org/wiki/Email_address#Sub-addressing', 'http://en.wikipedia.org/wiki/Email_address#Sub-addressing')?>). Mailwitch unterstützt dieses Sub-Adressing uneingeschränkt (sprich: auch markus.meier+2015@mailwitch.com ginge) und leitet alles einfach auf die Hauptadresse (ohne das +work, etc.) weiter, wenn keine entsprechende Kontenart explizit definiert ist.</p>
 <p>Der große Vorteil ist damit, dass Mails auch dann korrekt ankommen, wenn die entsprechende Kontenart gar nicht definiert ist, weil es in diesem Falle immer automatisch an die Hauptadresse geht.</p>
 <p>Die Kontoart <i>all</i> wird immer automatisch erzeugt und verweist auf alle von Ihnen definierten Kontenarten. Sie können also mit z.B. markus.meier+all@mailwitch.com den Herren auf allen seinen Konten erreichen!</p>
 <p class="alert alert-danger">
