@@ -1,8 +1,9 @@
 #!/bin/bash
 env=""
-stage=""
+stage="yes"
+migrate="yes"
 branch="master"
-while getopts "b:se:" optname
+while getopts "b:m:s:e:" optname
   do
     case "$optname" in
       "e")
@@ -24,7 +25,30 @@ while getopts "b:se:" optname
         branch=$OPTARG
         ;;
       "s")
-        stage="yes"
+        stage=$OPTARG
+		case "$stage" in
+		  "yes")
+			;;
+		  "no")
+			;;
+		  *)
+			echo "-s (stage) requires either 'yes' or 'no' as parameter"
+			exit 1
+			;;
+		esac
+        ;;
+      "m")
+        migrate=$OPTARG
+		case "$migrate" in
+		  "yes")
+			;;
+		  "no")
+			;;
+		  *)
+			echo "-m (migrate) requires either 'yes' or 'no' as parameter"
+			exit 1
+			;;
+		esac
         ;;
       "?")
         echo "Unknown option $OPTARG"
@@ -38,7 +62,7 @@ while getopts "b:se:" optname
     esac
   done
 if [ "$env" == "" ]; then
-	echo "Parameter --e must be given"
+	echo "Parameter --e (environment) must be given"
 	exit 1
 fi
 echo Deploying to $env
@@ -48,11 +72,13 @@ git clone https://github.com/chris68/mwes2 /home/mailwitch/mwes2$suffix
 # psql postgres #create the database (see migration)
 # psql postgres #CREATE DATABASE mwes2_dev WITH TEMPLATE mwes2; (for Development test)
 sudo composer self-update
-composer global require "fxp/composer-asset-plugin:~1.0.0"
+composer global require "fxp/composer-asset-plugin:^1.2.0"
 composer create-project -d /home/mailwitch/mwes2$suffix 
 
 /home/mailwitch/mwes2$suffix/init --env=$env
-/home/mailwitch/mwes2$suffix/yii migrate
+if [ "$migrate" == "yes" ]; then
+    /home/mailwitch/mwes2$suffix/yii migrate
+fi
 if [ "$stage" == "yes" ]; then
 	sudo rm -R /var/opt/mailwitch/www/mwes2$suffix
 	sudo cp -R /home/mailwitch/mwes2$suffix /var/opt/mailwitch/www/.
