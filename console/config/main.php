@@ -20,6 +20,8 @@ return [
                 ],
             ],
         ],
+
+// @chris68
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
             'itemFile' => '@common/data/items.php', 

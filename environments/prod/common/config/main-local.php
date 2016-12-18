@@ -3,6 +3,7 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
+// @chris68
             'dsn' => 'pgsql:host=localhost;dbname=mwes2',
             'username' => 'mailwitch',
             'password' => 'mailwitch',

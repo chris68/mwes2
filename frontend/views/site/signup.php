@@ -20,14 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($model, 'username') ?>
+                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
+                <p>
+                    Ich habe die <?= Assist::linkNew('Nutzungsbedingungen',['site/terms']) ?> <b>und</b> <?= Assist::linkNew('Datenschutzregeln',['site/privacy']) ?> gelesen und akzeptiere <b>beide</b>.
+                </p>
+                <?=
+                $form->field($model, 'acceptTerms')->checkbox() ?>
+
                 <div class="form-group">
-                    <?= Html::submitButton(\Yii::t('base','Signup'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(\Yii::t('base','Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
 
                 <p>Oder registieren Sie sich über einen der externen OAuth-Provider:</p>

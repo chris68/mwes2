@@ -4,12 +4,14 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+
+// @chris68
+use yii\helpers\Url;
 use frontend\models\Emaildomain;
 
 AppAsset::register($this);
@@ -19,9 +21,11 @@ AppAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+// @chris68
     <meta name="description" content="Plattform zum Verwalten von Adressbüchern und Emailumleitungen">
     <?= Html::csrfMetaTags() ?>
+// @chris68
     <link rel="icon" type="image/x-icon" href="<?=Url::to('favicon.ico')?>">
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
@@ -32,6 +36,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
+// @chris68
                 // Label should be small; otherwise on mobile phone the navbar blows up to two lines!
                 'brandLabel' => '<small>Mailwitch Email Services</small>',
                 'brandUrl' => Yii::$app->homeUrl,

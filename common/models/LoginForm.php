@@ -11,6 +11,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
+// @chris68
     public $rememberMe = false;
 
     private $_user;
@@ -31,6 +32,7 @@ class LoginForm extends Model
         ];
     }
 
+// @chris68
     /**
      * {@inheritdoc}
      */
@@ -54,20 +56,16 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
-            if (isset($user) && ($user->password_hash === '')) {
-                // Due to the migration from mwes1 to mwes2 the password has been set to null
-                $this->addError('password', 'Um sich nach der Systemumstellung anzumelden, müssen Sie zuerst ihr Passwort zurücksetzen');
-            } else if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError('password', \Yii::t('common','Incorrect username or password.'));
-            }
+			if (!$user || !$user->validatePassword($this->password)) {
+		            $this->addError($attribute, \Yii::t('common','Incorrect username or password.'));
+		    }
         }
     }
 
     /**
      * Logs in a user using the provided username and password.
      *
-     * @return boolean whether the user is logged in successfully
+     * @return bool whether the user is logged in successfully
      */
     public function login()
     {

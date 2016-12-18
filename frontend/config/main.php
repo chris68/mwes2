@@ -1,5 +1,6 @@
 <?php
 
+// @chris68
 $oauth = parse_ini_file('/etc/apache2/oauth.key/mailwitch.com.ini', true);
 
 $params = array_merge(
@@ -10,10 +11,14 @@ $params = array_merge(
 );
 
 return [
+// @chris68
     'id' => 'mwes2',
     'basePath' => dirname(__DIR__),
-    'language' => 'de',
+    'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+
+// @chris68
+    'language' => 'de',
     'modules' => [
         'markdown' => [
             // the module class
@@ -23,14 +28,24 @@ return [
 
         ],
     ],
+
     'components' => [
+        'request' => [
+            'csrfParam' => '_csrf-frontend',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+// @chris68
             'as loginLogger' => [
                 'class' => 'common\behaviors\ProtocolLogin',
                 // ... property init values ...
             ],
+        ],
+        'session' => [
+            // this is the name of the session cookie used for login on the frontend
+            'name' => 'advanced-frontend',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -44,6 +59,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
+// @chris68
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
             'itemFile' => '@common/data/items.php', 
@@ -57,17 +79,13 @@ return [
              'class' => 'yii\authclient\Collection',
              'clients' => [
                     'google' => [
-                        'class' => 'yii\authclient\clients\GoogleOAuth',
+                        'class' => 'yii\authclient\clients\Google',
                         'clientId' => $oauth['google']['clientId'],
                         'clientSecret' => $oauth['google']['clientSecret'],
                     ],
                  // etc.
              ],
          ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-        ],
         'i18n' => [
             'translations' => [
                 'common' => [
