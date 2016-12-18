@@ -34,7 +34,7 @@ class EnsureOwnership extends Behavior {
     }
 
     /**
-     * Set an empty owner id to the current user upon object creation
+     * Set the owner id to the current user upon object creation
      * Checks if owner id fits to current user upon object update
      *
      * @param yii\base\Event $event event parameter

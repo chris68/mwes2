@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+
 // @chris68
  * @property integer $create_time // additional field as timestamp instead of unix time
  * @property integer $update_time // additional field as timestamp instead of unix time

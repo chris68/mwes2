@@ -75,6 +75,7 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+
 // @chris68
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
@@ -165,6 +166,7 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionSignup($oauth='')
+// @chris68
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
@@ -201,7 +203,7 @@ class SiteController extends Controller
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', Yii::t('base','There was an error sending email.'));
+                Yii::$app->session->setFlash('error', \Yii::t('base','There was an error sending email.'));
             }
         }
 
@@ -237,31 +239,6 @@ class SiteController extends Controller
     }
 
 // @chris68
-    public function actionTerms()
-    {
-        return $this->render('terms');
-    }
-
-    public function actionPrivacy()
-    {
-        return $this->render('privacy');
-    }
-
-    public function actionImpressum()
-    {
-        return $this->render('impressum');
-    }
-
-    public function actionHelp()
-    {
-        return $this->render('help');
-    }
-
-    public function actionReleasehistory()
-    {
-        return $this->render('releasehistory');
-    }
-
     public function onAuthSuccess($client)
     {
         $attributes = $client->getUserAttributes();
@@ -307,6 +284,31 @@ class SiteController extends Controller
                 }
             }
         }
+    }
+
+    public function actionTerms()
+    {
+        return $this->render('terms');
+    }
+
+    public function actionPrivacy()
+    {
+        return $this->render('privacy');
+    }
+
+    public function actionImpressum()
+    {
+        return $this->render('impressum');
+    }
+
+    public function actionHelp()
+    {
+        return $this->render('help');
+    }
+
+    public function actionReleasehistory()
+    {
+        return $this->render('releasehistory');
     }
 
     public function actionUserdata()

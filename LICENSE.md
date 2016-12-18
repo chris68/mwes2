@@ -1,6 +1,6 @@
 Licence for MWES2
 =================
-Copyright © 2014 by Christoph Toussaint
+Copyright © 2016 by Christoph Toussaint
 All rights reserved.
 
 

@@ -37,7 +37,7 @@ class SignupForm extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => \Yii::t('common','This email address has already been taken.')],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
@@ -47,11 +47,11 @@ class SignupForm extends Model
         ];
     }
 
-// @chris68
     /**
      * {@inheritdoc}
      */
     public function attributeLabels()
+// @chris68
     {
         return [
             'username' => \Yii::t('common','Username'),

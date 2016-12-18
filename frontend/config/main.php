@@ -24,8 +24,7 @@ return [
             // the module class
             'class' => 'kartik\markdown\Module',
             // whether to use PHP SmartyPants to process Markdown output
-            'smartyPants' => false
-
+            'smartyPants' => false,
         ],
     ],
 
@@ -59,12 +58,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+// @chris68
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
+
 // @chris68
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',

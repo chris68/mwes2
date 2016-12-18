@@ -3,11 +3,26 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+
+// @chris68
+use yii\helpers\Url;
 use frontend\helpers\Assist;
 
 $this->title = \Yii::t('base','About');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style>
+    /*
+        Otherwise when navigating to an anchor the heading is hidden behind the navbar
+        See http://stackoverflow.com/questions/4086107/html-positionfixed-page-header-and-in-page-anchors
+    */
+    .site-about a[name]:before {
+      content:"";
+      display:block;
+      height:50px; /* fixed header height*/
+      margin:-50px 5px 0; /* negative fixed header height; it should be just a line so it does not overlap content and makes it unclickable */
+    }
+</style>
 <div class="site-about">
     <h1><?= $this->title ?></h1>
 

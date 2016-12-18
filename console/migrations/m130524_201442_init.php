@@ -25,13 +25,13 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
 
+// @chris68
             // use additionally real timestamp instead of unix time save as int
             'create_time' => $this->timestamp()->notNull(),
             'update_time' => $this->timestamp()->notNull(),
 
             // The default role the user has
             'role' => $this->smallInteger()->notNull()->defaultValue(10),
-
         ], $tableOptions);
     }
 

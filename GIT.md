@@ -18,6 +18,12 @@ The gibhub repository where the yii2-app-advanced template is hosted; this is ne
  * yii2-app-advanced	https://github.com/yiisoft/yii2-app-advanced (fetch)
  * yii2-app-advanced	https://github.com/yiisoft/yii2-app-advanced (push)
 
+Add this remote via:
+```
+git remote add yii2-app-advanced https://github.com/yiisoft/yii2-app-advanced
+git config remote.yii2-app-advanced.tagopt --no-tags
+```
+The no-tags option is necessary so that the tags defined in the Yii framework are not fetched to our local repo
 Branches
 --------
 
@@ -34,11 +40,13 @@ Handling
 Merge in changes from yii2-app-advanced
 ---------------------------------------
 
- * Check and write down as *CommitOld* (via `git log` or `git log-pretty-abs`) the **current** top-most commit of yii2-app-advanced/master
+ * You want to merge changes from a *tag-from* to a *tag-to*
  * Execute `git fetch yii2-app-advanced`
- * Check and write down as *CommitNew* the **now** top-most commit of yii2-app-advanced/master
- * Then `git cherry-pick -e -x` all the commits which are new; do this best copy and past directly from github
- * It is likely that you get conflicts; resolve them
- * Check the results and commit them; due to the -x the cherrypicked sha will be included; due to the -e you have the chance to review at all!
+ * Gather from github the commit of the *tag-from* and the commit of the *tag-to* of yii2-app-advanced/master
+ * Execute `git log-pretty-abs <commit-from>..<commit-to>`
+ * Copy and paste the output to a text file and edit the textfile; throw out all commits which do not change any relevant part of our application
+ * Then `git cherry-pick -e -x <commit>` all the relevant commits from the textfile
+ * It is likely that you get conflicts; resolve them in netbeans (quite well supported)
+ * Check the results and commit them in netbeans; due to the -x the cherrypicked sha will be included; due to the -e you have the chance to review at all!
  * Check the log and see that the commits are now on master!
 

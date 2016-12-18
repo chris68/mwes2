@@ -43,6 +43,7 @@ class ContactForm extends Model
             'email' => \Yii::t('base','Email'), 
             'subject' => \Yii::t('base','Subject'), 
             'body' => \Yii::t('base', 'Body'),
+
             'verifyCode' => \Yii::t('base','Verification Code'),
         ];
     }
@@ -56,6 +57,7 @@ class ContactForm extends Model
     public function sendEmail($email)
     {
             return Yii::$app->mailer->compose()
+// @chris68
                 ->setTo([$this->email => $this->name])
                 ->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name . ' (robot)'])
                 ->setBcc(Yii::$app->params['contactEmail'])

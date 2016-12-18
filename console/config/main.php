@@ -10,6 +10,8 @@ return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+// @chris68
+    'language' => 'en-US',
     'controllerNamespace' => 'console\controllers',
     'components' => [
         'log' => [
@@ -43,11 +45,6 @@ return [
                 //],
             ],
         ],
-        'urlManager' => [
-            'baseUrl' => 'http://mailwitch.com/',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-        ]
     ],
     'params' => $params,
 ];

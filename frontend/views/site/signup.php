@@ -6,6 +6,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+// @chris68
 use frontend\helpers\Assist;
 
 $this->title = 'Signup';

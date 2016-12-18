@@ -62,7 +62,7 @@ while getopts "b:m:s:e:" optname
     esac
   done
 if [ "$env" == "" ]; then
-	echo "Parameter --e (environment) must be given"
+	echo "Parameter -e (environment) must be given"
 	exit 1
 fi
 echo Deploying to $env

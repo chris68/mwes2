@@ -75,11 +75,14 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => \Yii::t('base','Signup'), 'url' => ['/site/signup']];
                 $menuItems[] = ['label' => \Yii::t('base','Login'), 'url' => ['/site/login']];
             } else {
-                $menuItems[] = [
-                    'label' => \Yii::t('base','Logout').' (' . Yii::$app->user->identity->username .')' ,
-                    'url' => ['/site/logout'],
-                    'linkOptions' => ['data-method' => 'post']
-                ];
+        $menuItems[] = '<li>'
+            . Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                \Yii::t('base','Logout').' (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>';
             }
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],

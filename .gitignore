@@ -1,4 +1,7 @@
-# yii console commands
+# Backup files
+*~
+
+# yii console command
 /yii
 /yii_test
 /yii_test.bat
