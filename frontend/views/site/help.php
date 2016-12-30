@@ -81,7 +81,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>Wenn Sie sich unter einer solchen Emaildomäne alle Ihre Bekannten und Freunde als sprechende Emailadressen (z.B. immer vorname.nachname) mit Weiterleitung auf die echten Emailkonten definieren, haben Sie sich quasi ein virtuelles Adressbuch aufgebaut. Sie können nämlich von überall Emails an diese leicht merkbaren Adressen schreiben und Mailwitch leitet diese dann automatisch an den entspechenden Empfänger weiter - ohne dass dies jemand merkt!</p>
 
 <p>Zu jeder Emailadresse können Sie auch weitere Details hinterlegen (Telefon, Wohnadresse, Geburtstage, etc.) und sich dann die so definierten Adressdaten als PDF-File ausgeben lassen - ein idealer Ersatz für Ihr gutes altes Adressbuch! Auch der Export der Daten in die meisten Mailprogramme (insbesondere Google Mail) wird unterstützt.</p>
-
+<p>Telefonnummern werden hierbei speziell erkannt und dann im Internet als klickbare Telefonnummer angezeigt, wenn man ein <b>tel:</b> vor die Telefonnummer setzt. Wenn man die Art der Telefonnummer sogar mit <b>tel-main:</b> (Festnetz), <b>tel-mobile:</b> (Mobile),  <b>tel-work:</b> (Geschäftlich) oder <b>tel-private:</b> (Privat) angibt, dann wird diese Info angezeigt. Zudem wird in diesem Falle in dem Export die Telefonnummer herausgezogen und in dem dafür vorgesehenen Feld eingetragen. Damit kann man auch beim Smartphone telefonieren.</p>
+<p>Man muss hierbei nicht immer die komplette Vorwahl angeben, sondern über das Tag <b>tel-access:</b> kann man in der Adressbuchbeschreibung eine Standardvorwahl (z.B. +49-721) angeben und dann wird es automatisch dort angefügt, wo es fehlt</p>
 <p>Es ist also wesentlich vielseitiger und einfacher, die Adressen einmal in Mailwitch zu pflegen, als dies in vielen Emailprogrammen einzeln zu tun und dann meistens nochmal auf irgendeinem Adresszettel.</p>
 <h4>Adresslisten für Vereine, etc.</h4>
 

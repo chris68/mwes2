@@ -13,6 +13,22 @@ $this->params['breadcrumbs'][] = $this->title;
         Die Plattform wird laufend weiterentwickelt und damit Sie schnell erkennen können, wann was neu hinzugekommen ist, haben wir hier die Releasehistorie veröffentlicht. Kleinere Änderungsrelease mit Fehlerkorrekturen werden hier jedoch nicht aufgeführt.
     </p>
     <h3>
+        Version 2.1 (30.10.2016)
+    </h3>
+    <p>
+        Verbesserung der Benutzbarkeit vor allem im Zusammenhang mit Smartphones
+    </p>
+    <ul>
+        <li>Umstellung des Exports auf das Format von Google Kontaktlisten</li>
+        <li>Unterstützung von Telefonnummern:
+            <ul>
+                <li>Wenn man in den Kommentaren eine Telefonnummer mit <b>tel:</b>xxxx markiert, dann wird die Telefonnummer als Link <a href="tel:115">115</a> angezeigt und kann damit in den meisten Browsern direkt fürs Telefonieren genutzt werden</li>
+                <li>Wenn man in den Kommentaren eine Telefonnummer sogar mit <b>tel-main:</b> (Festnetz), <b>tel-mobile:</b> (für Mobilgerät),  <b>tel-work:</b> (Geschäftlich) oder <b>tel-private:</b> (Privat) markiert, dann wird zudem in dem Export die Telefonnummer herausgezogen und in dem dafür vorgesehenen Feld eingetragen, womit es dann z.B. im Smartphone zur Verfügung steht</li>
+                <li>Wenn man in der Beschreibung der Domäne mit <b>tel-access:</b> (z.B. +49-721) eine Standardvorwahl angibt, dann wird das sogar automatisch ergänzt</li>
+            </ul>
+        </li>
+    </ul>
+    <h3>
         Version 2.0 (29.03.2015)
     </h3>
     <p>

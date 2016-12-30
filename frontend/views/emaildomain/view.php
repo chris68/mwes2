@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\helpers\ModelFormatter;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Emaildomain */
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     
     <p>
-        <?= Html::encode($model->description) ?>
+        <?=ModelFormatter::formatwithHtmlTelTags($model,$model->description)?>
     </p>
 
     <p>

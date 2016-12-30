@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use frontend\helpers\ModelFormatter;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Emailentity */
@@ -36,7 +37,7 @@ use yii\widgets\Pjax;
         <div class="col-xs-offset-1 col-xs-11">
             <fieldset>
             <legend class="small">Kommentare, Adressen, Telefonnummern</legend>
-            <p><?= nl2br(Html::encode($model->comment))?></p>
+            <p><?=ModelFormatter::formatwithHtmlTelTags($model->emaildomain,$model->comment)?></p>
             </fieldset>
             <fieldset>
             <legend class="small">Adressumleitungen</legend>

@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     
     <?= $form->field($model, 'name')->textInput() ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6])->hint('Hier können sie mit <b>tel-access:</b> die Standardvorwahl mit internationalem Zugangscode (via +<i>Ländervorwahl</i>) und ihren gewohnten Trennzeichen definieren.<br/>Erlaubte Trennzeichen sind "-", "/" oder " ", also z.B. tel-access:+49-721- oder tel-access:+49 721/<br/>Sie können es übrigens hier gleich mit Telefonnummer ausprobieren, weil der Mecahnismus auch hier implementiert ist.') ?>
 
     <?= '' // $form->field($model, 'owner_id')->textInput() ?>
 

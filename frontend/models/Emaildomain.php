@@ -133,4 +133,32 @@ class Emaildomain extends \yii\db\ActiveRecord
             }
         }
     }
+
+    /**
+     * Normalizes a telephone number to the default access code given via the tag 'tel-access' in the domain
+     * @param string $tel The input tel no
+     * @return string The normalized tel no
+     */
+    public function normalizeTel($tel) {
+        $tel = trim($tel);
+        preg_replace_callback(
+            '/tel-access:\+([0-9]*)([ -\/])([0-9]*)([ -\/])/',
+            function ($match) use(&$tel) {
+                switch (substr($tel,0,1)) {
+                    case '+':
+                        break;
+                    case '0': $tel='+'.$match[1].$match[2].substr($tel,1,100);
+                        break;
+                    default: $tel='+'.$match[1].$match[2].$match[3].$match[4].$tel;
+                        break;
+                }
+                
+            },
+            $this->description,
+            1
+        );
+
+        return $tel;
+    }
+
 }
