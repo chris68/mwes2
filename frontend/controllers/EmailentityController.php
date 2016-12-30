@@ -50,7 +50,7 @@ class EmailentityController extends Controller
         $dataProvider->query->ownerScope();
         // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
         // $dataProvider->query->joinWith('emailmappings');
-        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 20;
 
         return $this->render('index', [
@@ -71,7 +71,7 @@ class EmailentityController extends Controller
         $dataProvider->query->ownerScope();
         // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
         // $dataProvider->query->joinWith('emailmappings');
-        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 0;
 
         return $this->render('print', [
@@ -91,7 +91,7 @@ class EmailentityController extends Controller
         $dataProvider->query->ownerScope();
         // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
         // $dataProvider->query->joinWith('emailmappings');
-        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, ];
+        $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 0;
 
         Yii::$app->response->format = Response::FORMAT_RAW;
