@@ -23,11 +23,11 @@ use yii\widgets\Pjax;
             &nbsp;
             <?= Html::a('<span class="glyphicon glyphicon-trash""></span>', ['delete', 'id' => $model->id], [
                 'title' => 'Löschen',
-                // todo data attribute currently does not play nice with pjax (see github.com/yiisoft/yii2/issues/2505)
-                // 'data' => [
-                    // 'confirm' => 'Wollen Sie den Eintrag wirklich löschen?',
-                    // 'method' => 'post',
-                // ],
+                 'data' => [
+                     'pjax' => '0', // see github.com/yiisoft/yii2/issues/2505
+                     'confirm' => 'Wollen Sie den Eintrag wirklich löschen?',
+                     'method' => 'post',
+                 ],
             ]) ?>
             </span>
         </div>

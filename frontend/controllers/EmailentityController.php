@@ -233,9 +233,10 @@ class EmailentityController extends Controller
      * Deletes an existing Emailentity model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+    *  @param bool $confirmed If confirmed = false a confirmation dialog will be opend
      * @return mixed
      */
-    public function actionDelete($id, $confirmed = false)
+    public function actionDelete($id, $confirmed = true)
     {
         $confirmed = boolval($confirmed);
 
