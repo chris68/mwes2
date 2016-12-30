@@ -56,13 +56,13 @@
                 case 'Group Membership': $row[] = $item->emaildomain->getCompleteDomainname();
                     break;
 
-                case 'Phone 1 - Type': $row[] = $tels[1]['type'];
+                case 'Phone 1 - Type': $row[] = ucfirst($tels[1]['type']);
                     break;
-                case 'Phone 2 - Type': $row[] = $tels[2]['type'];
+                case 'Phone 2 - Type': $row[] = ucfirst($tels[2]['type']);
                     break;
-                case 'Phone 3 - Type': $row[] = $tels[3]['type'];
+                case 'Phone 3 - Type': $row[] = ucfirst($tels[3]['type']);
                     break;
-                case 'Phone 4 - Type': $row[] = $tels[4]['type'];
+                case 'Phone 4 - Type': $row[] = ucfirst($tels[4]['type']);
                     break;
                 
                 case 'Phone 1 - Value': $row[] = $tels[1]['value'];
@@ -74,15 +74,15 @@
                 case 'Phone 4 - Value': $row[] = $tels[4]['value'];
                     break;
 
-                case 'E-mail 1 - Type': $row[] = isset($item->emailmappings[0])?($item->emailmappings[0]->emailarea->name):'';
+                case 'E-mail 1 - Type': $row[] = isset($item->emailmappings[0])?(ucfirst($item->emailmappings[0]->emailarea->name)):'';
                     break;
-                case 'E-mail 2 - Type': $row[] = isset($item->emailmappings[1])?($item->emailmappings[1]->emailarea->name):'';
+                case 'E-mail 2 - Type': $row[] = isset($item->emailmappings[1])?(ucfirst($item->emailmappings[1]->emailarea->name)):'';
                     break;
-                case 'E-mail 3 - Type': $row[] = isset($item->emailmappings[2])?($item->emailmappings[2]->emailarea->name):'';
+                case 'E-mail 3 - Type': $row[] = isset($item->emailmappings[2])?(ucfirst($item->emailmappings[2]->emailarea->name)):'';
                     break;
-                case 'E-mail 4 - Type': $row[] = isset($item->emailmappings[3])?($item->emailmappings[3]->emailarea->name):'';
+                case 'E-mail 4 - Type': $row[] = isset($item->emailmappings[3])?(ucfirst($item->emailmappings[3]->emailarea->name)):'';
                     break;
-                case 'E-mail 5 - Type': $row[] = isset($item->emailmappings[4])?($item->emailmappings[4]->emailarea->name):'';
+                case 'E-mail 5 - Type': $row[] = isset($item->emailmappings[4])?(ucfirst($item->emailmappings[4]->emailarea->name)):'';
                     break;
 
                 case 'E-mail 1 - Value': $row[] = isset($item->emailmappings[0])?($item->emailmappings[0]->getResolvedaddress()):'';
