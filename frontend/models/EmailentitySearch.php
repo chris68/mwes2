@@ -97,7 +97,7 @@ class EmailentitySearch extends Emailentity
             ->andFilterWhere(['ilike', 'comment', $this->comment]);
 
         if (!empty($this->target)) {
-            $query->andWhere('exists (select 1 from tbl_emailmapping where tbl_emailentity.id = tbl_emailmapping.emailentity_id and target ilike :target )', [':target' => ('%' . strtr($this->target, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
+            $query->andWhere('exists (select 1 from tbl_emailmapping where tbl_emailentity.id = tbl_emailmapping.emailentity_id and emailarea_id <> 255 and target ilike :target )', [':target' => ('%' . strtr($this->target, ['%'=>'\%', '_'=>'\_', '\\'=>'\\\\']) . '%')]);
         }
 
         if (!empty($this->any)) {
