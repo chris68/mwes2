@@ -159,19 +159,6 @@ class Emailentity extends \yii\db\ActiveRecord
         $dot_all_mapping->target = ('+'.$all_mapping->emailarea->name.', ');
         $dot_all_mapping->resolvedtarget = ($all_mapping->resolvedaddress.', ');
         $dot_all_mapping->save(false);
-
-        // Generate new dot mappings for the rest of the mappings
-        foreach ($this->emailmappings as $mapping) {
-            if ($mapping->isActive() && $mapping->emailarea_id !== 0) {
-                $dot_mapping = new Emailmapping();
-                $dot_mapping->emailarea_id = 256+$mapping->emailarea_id;
-                $dot_mapping->emailentity_id = $this->id;
-                $dot_mapping->isvirtual = true;
-                $dot_mapping->target = ('+'.$mapping->emailarea->name.', ');
-                $dot_mapping->resolvedtarget = ($mapping->resolvedaddress.', ');
-                $dot_mapping->save(false);
-            }
-        }
     }
 
     function saveDeep($runValidation = true, $attributeNames = null)

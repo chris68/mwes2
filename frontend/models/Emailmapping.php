@@ -144,13 +144,7 @@ class Emailmapping extends \yii\db\ActiveRecord
                 $resolveditems[$i] = $item;
             }
 
-            if (mb_strpos($resolveditems[$i],'.') === 0) {
-                if (count($this->emailentity->getErrors('name')) === 0) {
-                    $resolveditems[$i] = $this->emailentity->name.$resolveditems[$i];
-                } else {
-                    $this->addError('target', "Kurzadressen wie '.work', '.home', etc. können erst gewandelt und geprüft werden, nachdem der Emailname korrekt gesetzt wurde");
-                }
-            } elseif (mb_strpos($resolveditems[$i],'+') === 0) {
+            if (mb_strpos($resolveditems[$i],'+') === 0) {
                 if (count($this->emailentity->getErrors('name')) === 0) {
                     $resolveditems[$i] = $this->emailentity->name.$resolveditems[$i];
                 } else {

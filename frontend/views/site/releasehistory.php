@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Die Plattform wird laufend weiterentwickelt und damit Sie schnell erkennen können, wann was neu hinzugekommen ist, haben wir hier die Releasehistorie veröffentlicht. Kleinere Änderungsrelease mit Fehlerkorrekturen werden hier jedoch nicht aufgeführt.
     </p>
     <h3>
-        Version 2.1 (30.10.2016)
+        Version 2.1 (30.12.2016)
     </h3>
     <p>
         Verbesserung der Benutzbarkeit vor allem im Zusammenhang mit Smartphones
@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li>Wenn man in der Beschreibung der Domäne mit <b>tel-access:</b> (z.B. +49-721) eine Standardvorwahl angibt, dann wird das sogar automatisch ergänzt</li>
             </ul>
         </li>
+        <li>Die alte Adressierungmethode mit .work, .home, etc. wird nicht mehr unterstützt; es gibt nun stattdessen Relocation-Mails (aktiv seit dem 07.01.2017)</li>
     </ul>
     <h3>
         Version 2.0 (29.03.2015)

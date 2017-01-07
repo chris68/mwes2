@@ -121,10 +121,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>Der große Vorteil ist damit, dass Mails auch dann korrekt ankommen, wenn die entsprechende Kontenart gar nicht definiert ist, weil es in diesem Falle immer automatisch an die Hauptadresse geht.</p>
 <p>Die Kontoart <i>all</i> wird immer automatisch erzeugt und verweist auf alle von Ihnen definierten Kontenarten. Sie können also mit z.B. markus.meier+all@mailwitch.com den Herren auf allen seinen Konten erreichen!</p>
 <p class="alert alert-danger">
-    <b>Auslauf der alten Adressierungsmethode mit .work, .home, etc.</b><br><br>
-    Früher war in Mailwitch der Trenner hinter der Kontenart ein Punkt und die Adressen dann z.B. markus.meier.work@mailwitch.com. Diese Methode wird nach dem Go-Live von Mailwitch 2.0 noch ca. 1 Jahr <b>parallel</b> unterstützt. Danach wird das alte Verfahren jedoch abgeschaltet. <br><br>
-    Sie sollten daher baldigst ihre Mailpartner auf die neuen Addresskonventionen hinweisen. Es wird nach dem Entfall der alten Konvention aber auch automatisierte Relocated-Bounce-Mails geben, die die neue Adressierungsmethode beschreiben und damit sollte nichts verloren gehen.<br><br>
-    Zudem wird es im Gegenzug für sehr lange Zeit weiterhin nicht erlaubt sein, Adressen mit den alten Endungen .work, etc. zu definieren.
+    <b>Alte Adressierungsmethode mit .work, .home, etc.</b><br><br>
+    Früher war in Mailwitch der Trenner hinter der Kontenart ein Punkt und die Adressen dann z.B. markus.meier.work@mailwitch.com. Diese alte Konvention wird nicht mehr unterstützt, sondern es gibt automatisierte Relocated-Bounce-Mails, die die neue Adressierungsmethode beschreiben und damit sollte nichts verloren gehen.<br><br>
+    Zudem wird es für sehr lange Zeit weiterhin nicht erlaubt sein, Adressen mit den alten Endungen .work, etc. zu definieren.
 </p>
 
 <h2><a name="emailtarget">Zieladresse</a></h2>
@@ -202,7 +201,7 @@ Weitergeleitete Email
    (Die Standardemailadresse ist damit die private Adresse)
    markus.meier+home@mailwitch.com  =&gt; m.meier@web.de,
    (Weiterleitung an die Privatadresse)
-   markus.meier+work@mailwitch.com  =&gt; meier@verkehrsbetriebe-freiburg.de, .home
+   markus.meier+work@mailwitch.com  =&gt; meier@verkehrsbetriebe-freiburg.de, +home
    (Weiterleitung an die Geschäftsadresse und Kopie an die Privatadresse)
 </pre>
 
