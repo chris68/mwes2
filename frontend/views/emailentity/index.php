@@ -11,6 +11,8 @@ use yii\widgets\Pjax;
 
 $this->title = 'Adressen';
 $this->params['breadcrumbs'][] = $this->title;
+
+\frontend\assets\AutosizeAsset::register($this); // Register already here since in pjax it is no longer feasible
 ?>
 <div class="emailentity-index">
 

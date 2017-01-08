@@ -15,7 +15,12 @@ use frontend\models\Emaildomain;
 <?php 
     if ($pjax) {
         Pjax::begin(['id' => 'item_'.($model->isNewRecord?'new':$model->id), 'enablePushState' => FALSE, ]);
+    } else {
+        \frontend\assets\AutosizeAsset::register($this); // Register here if it is not an pjax usage
     }
+    $this->registerJs('autosize($("textarea"));', \yii\web\View::POS_READY);
+
+
 /* @var $form yii\bootstrap\ActiveForm */
     $form = ActiveForm::begin(['action' => $model->isNewRecord ? ['emailentity/create'] : ['emailentity/update', 'id' => $model->id] , 'options' => ['data-pjax' => true ], 'enableClientValidation' => false]);
 ?>

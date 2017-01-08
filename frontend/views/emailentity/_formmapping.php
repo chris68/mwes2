@@ -9,7 +9,7 @@ use frontend\models\Emailmapping;
 /* @var $form ActiveForm */
 ?>
 <div class="tab-formmapping">
-    <?= $form->field($model, "[{$model->emailarea_id}]target") ?>
+    <?= $form->field($model, "[{$model->emailarea_id}]target")->textarea() ?>
     <?= $form->field($model, "[{$model->emailarea_id}]locked")->checkbox() ?>
     <div class="form-group">
         <label class="control-label">Zieladressen</label>

@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </ul>
         </li>
         <li>Die alte Adressierungmethode mit .work, .home, etc. wird nicht mehr unterstützt; es gibt nun stattdessen Relocation-Mails (aktiv seit dem 07.01.2017)</li>
+        <li>Die Textboxen beim Editieren wachsen automatisch mit dem Inhalt (Danke an jackmoore/autosize)</li>
     </ul>
     <h3>
         Version 2.0 (29.03.2015)
