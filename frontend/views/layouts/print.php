@@ -17,7 +17,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Plattform zum Verwalten von Adressbüchern und Emailumleitungen">
     <?= Html::csrfMetaTags() ?>
-    <link rel="icon" type="image/x-icon" href="<?=Url::to('favicon.ico')?>">
+    <link rel="icon" type="image/x-icon" href="<?=Url::to('/favicon.ico')?>">
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
 </head>
