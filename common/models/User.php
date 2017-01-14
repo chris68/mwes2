@@ -226,7 +226,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function generateSystemPassword()
     {
         $this->password_hash = ''; // Blank entry denies all logins so it is safe to set it to blank
-        $this->password_reset_token = '';  // Blank entry is never valid token so it is safe to set it to blank
+        $this->password_reset_token = NULL;  // Must be NULL since there is a unique key on it
         $this->generateAuthKey(); // Auth key needs to be generated since it just compared for equality AND blank values are accepted!
     }
 }
