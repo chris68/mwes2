@@ -4,8 +4,7 @@ Php >= 5.4 is required
 The following modules are needed. Install/Activate them via
 
 ```
-sudo apt-get install php-mcrypt
-sudo phpenmod mcrypt
+None
 ```
 ## Postgres ##
 Postgres 9.5 is used.
