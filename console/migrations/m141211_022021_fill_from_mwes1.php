@@ -10,6 +10,8 @@ class m141211_022021_fill_from_mwes1 extends Migration
 {
     public function safeUp()
     {
+        return; // No longer needed but leave the code in the archive; maybe we need it for another migration...
+        
         // Establish connection before via port tunneling using: ssh -L 5433:localhost:5432 mailwitch@mailwitch.com
         $connection = new \yii\db\Connection([
             'dsn' => 'pgsql:host=localhost;port=5433;dbname=mailwitch',
@@ -32,7 +34,7 @@ class m141211_022021_fill_from_mwes1 extends Migration
             
             // Set the passwords to empty so each user needs to trigger the password reset process
             $user->password_hash = ''; // Blank entry denies all logins so it is safe to set it to blank
-            $user->password_reset_token = '';  // Blank entry is never valid token so it is safe to set it to blank
+            $user->password_reset_token = NULL;  
             $user->generateAuthKey(); // Auth key needs to be generated since it just compared for equality AND blank values are accepted!
             
             $user->save();
