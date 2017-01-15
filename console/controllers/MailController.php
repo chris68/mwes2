@@ -24,7 +24,7 @@ class MailController extends Controller
             $message = Yii::$app->mailer->compose(['text' => 'notification-release'], ['user' => $user])
                 ->setTo([$user->email => $user->username])
                 ->setFrom([Yii::$app->params['noreplyEmail'] => Yii::$app->name . ' (robot)'])
-                ->setSubject("Bei der Plattform 'Mailwitch Email Services' (mailwitch.com) wurde soeben die Release ".Yii::$app->version." veröffentlicht" );
+                ->setSubject("Neue Release ".Yii::$app->version." der Plattform 'Mailwitch Email Services' (mailwitch.com)" );
             $success = $this->send($user,$message) && $success;
         }
 
