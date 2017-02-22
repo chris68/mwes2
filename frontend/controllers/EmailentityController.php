@@ -48,8 +48,7 @@ class EmailentityController extends Controller
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->ownerScope();
-        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
-        // $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->query->joinWith('emailmappings');
         $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 20;
 
@@ -69,8 +68,7 @@ class EmailentityController extends Controller
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->ownerScope();
-        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
-        // $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->query->joinWith('emailmappings');
         $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 0;
 
@@ -89,8 +87,7 @@ class EmailentityController extends Controller
         $searchModel = new EmailentitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->ownerScope();
-        // Todo Currently eager loading with sort does not work, see github.com/yiisoft/yii2/issues/6611
-        // $dataProvider->query->joinWith('emailmappings');
+        $dataProvider->query->joinWith('emailmappings');
         $dataProvider->sort->defaultOrder = ['emaildomain_id' => SORT_ASC, 'sortname' => SORT_ASC, 'name' => SORT_ASC, ];
         $dataProvider->pagination->pageSize = 0;
 
