@@ -30,13 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
         Wenn Sie als Nutzer oder Betroffener glauben, dass ihre Datenschutzrechte in irgendeiner Form verletzt wurden, dann infomieren Sie uns doch bitte über die Kontaktseite.
     </p>
     
-    <h4>Änderung der Datenschutzregeln</h4>
+    <h4>Verarbeitung personenbezogener Daten (Datenschutzrichtlinie EU)</h4>
     <p>
-        Alle Änderungen dieser Datenschutzregeln werden hier veröffentlicht und mit dem in bei Veröffentlichung angegebenen Gültigkeitdatum gültig. Wir werden Ihnen eine Benachrichtigungsmail an Ihre Standard Emailadresse aus dem Nutzerprofil schicken und Sie zudem auf der Startseite auf die Änderungen hinweisen. Wenn Sie mit den Änderungen nicht einverstanden sind, dann dürfen Sie den Service nicht weiter nutzen.
+        Wir speichern als administrativen Serverlog den Zeitpunkt von einer Anmeldung bei unseren System, um missbräuchliche Attaken zu entdecken. Aus den gleichen Grund speichern wir die 
+        HTTP-Request-Headerdaten (access.log), um missbräuchliche Zugriffe auf unser System zu entdecken. Die Daten werden unter keinen Umständen - außer wenn es das Gesetz verlangt - herausgegeben
+        oder mit anderen Daten in Verbindung gebracht.
+    </p>
+
+     <h4>Änderung der Datenschutzregeln</h4>
+    <p>
+        Alle Änderungen dieser Datenschutzregeln werden hier veröffentlicht und mit dem in bei Veröffentlichung angegebenen Gültigkeitdatum gültig. Wenn Sie mit den Änderungen nicht einverstanden sind, dann dürfen Sie den Service nicht weiter nutzen.
     </p>
 
     <p>
-        (Stand 06.10.2014; gültig ab 06.10.2014)
+        (Stand 20.05.2018; gültig ab 25.05.2018)
     </p>
 
     <h3>Datenschutz-FAQ</h3>
