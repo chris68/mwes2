@@ -62,7 +62,7 @@ class Emaildomain extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function find()
     {
@@ -70,7 +70,7 @@ class Emaildomain extends \yii\db\ActiveRecord
     }
     
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
