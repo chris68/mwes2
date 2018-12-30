@@ -23,10 +23,10 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-// @chris68
+<?php // @chris68 ?>
     <meta name="description" content="Plattform zum Verwalten von Adressbüchern und Emailumleitungen">
     <?= Html::csrfMetaTags() ?>
-// @chris68
+<?php // @chris68 ?>
     <link rel="icon" type="image/x-icon" href="<?=Url::to('/favicon.ico')?>">
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
