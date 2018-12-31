@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li>Die Arbeitsadresse von Markus Meier wäre dann z.B. markus.meier+work@mailwitch.com (anstatt markus.meier.work@mailwitch.com wie früher)</li>
                 <li>Die alte Methode mit dem Punkt als Trenner wird ca. noch ein Jahr unterstützt und wird dann auslaufen</li>
             </ul>
-        <li>Auf dem Mailserver selbst wurden Spamabwehrmethoden wie Blacklisting und Greylisting implementiert, um der Spamflut Herr zu werden</li>
+        <li>Auf dem Mailserver selbst wurden Spamabwehrmethoden wie Blacklisting implementiert, um der Spamflut Herr zu werden</li>
     </ul>    
     <h3>
         Version 1 (von 2005 bis Anfang 2015)

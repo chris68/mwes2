@@ -123,8 +123,6 @@ smtpd_client_restrictions =
     reject_unauth_pipelining,
     # Reject if the reverse dns and the ip do not fit
     reject_unknown_client_hostname,
-    ## Currently not really needed since greylisting not yet used; however, later we should bypass greylisting for those domains
-    ##  permit_dnswl_client swl.spamhaus.org,
     # Reject according to spamhaus.org backlist
     reject_rbl_client zen.spamhaus.org,
     permit
