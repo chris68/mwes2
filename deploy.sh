@@ -79,7 +79,7 @@ if [ "$migrate" == "yes" ]; then
     /home/mailwitch/mwes2$suffix/yii migrate
 fi
 if [ "$stage" == "yes" ]; then
-	sudo rm -R /var/opt/mailwitch/www/mwes2$suffix
+	sudo rm -R -f /var/opt/mailwitch/www/mwes2$suffix
 	sudo cp -R /home/mailwitch/mwes2$suffix /var/opt/mailwitch/www/.
 	sudo rm -R /var/opt/mailwitch/www/mwes2$suffix/.git
 	sudo chown -R www-data:mailwitch /var/opt/mailwitch/www/mwes2$suffix
