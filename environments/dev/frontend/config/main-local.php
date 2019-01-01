@@ -14,6 +14,8 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
+        // chris68: If you need to use the console on test (on the real server) you need to uncomment this
+        // 'allowedIPs' => ['*'],
      ];
 
     $config['bootstrap'][] = 'gii';
