@@ -37,11 +37,6 @@ mydestination = localhost
 mydomain = mailwitch.com
 myhostname = mailwitch.com
 
-# Special authorities for the host only (note: setting will not be used, since we set the actual value below)
-mynetworks_style = host
-# Since the default values of mynetworks_style yield to strange results, we simply set it to localhost!
-mynetworks = 127.0.0.0/8
-
 # If mail is sent from localhost then $mydomain should be appended
 myorigin = $mydomain
 
@@ -139,5 +134,5 @@ smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, per
 ## Debugging ##
 
 # Uncomment to enable debugging and restrict to localhost (i.e. especially do not allow traffic from the external ones)
-#debug_peer_list = 127.0.0.1
-#inet_interfaces = 127.0.0.1
+#debug_peer_list = 127.0.0.0/8 [::1]/128 [fe80::]/64
+#inet_interfaces = 127.0.0.0/8 [::1]/128 [fe80::]/64
