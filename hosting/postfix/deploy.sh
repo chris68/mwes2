@@ -31,10 +31,10 @@ chmod 444 /etc/postfix/mailwitch/*  || check_error
 # Build up the mappings db (currently not needed)
 #postmap /etc/postfix/mailwitch/*.hash || check_error
 
-echo "Postfix configuration deployed. "
+echo "Postfix configuration deployed."
 echo "The configuration section for mailwitch has been appended (!) to the end of /etc/postfix/main.cf"
-echo "Do not forget to edit/reconcile the configuration file via"
+echo "Do not forget to edit/reconcile the configuration file via:"
 echo "sudo nano /etc/postfix/main.cf"
-echo "You must ensure that no config parameter is set twice" via
+echo "You must ensure that no config parameter is set twice via:"
 echo "sudo service postfix reload; sudo tail -f /var/log/mail.log"
 echo "The log should not show any warnings"
