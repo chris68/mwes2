@@ -37,6 +37,9 @@ mydestination = localhost
 mydomain = mailwitch.com
 myhostname = mailwitch.com
 
+# Postfix should forward mail from only the local machine; makes the setting in mynetworks irrelevant
+mynetworks_style = host
+
 # If mail is sent from localhost then $mydomain should be appended
 myorigin = $mydomain
 
