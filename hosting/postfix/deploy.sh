@@ -36,5 +36,5 @@ echo "The configuration section for mailwitch has been appended (!) to the end o
 echo "Do not forget to edit/reconcile the configuration file via:"
 echo "sudo nano /etc/postfix/main.cf"
 echo "You must ensure that no config parameter is set twice via:"
-echo "sudo service postfix reload; sudo tail -f /var/log/mail.log"
+echo "sudo service postfix restart; sudo tail -f /var/log/mail.log"
 echo "The log should not show any warnings"
