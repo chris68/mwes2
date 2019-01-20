@@ -10,3 +10,13 @@ None
 Postgres 9.5 is used.
 ## Postfix ##
 See hosting/postfix and the respective deploy.sh
+
+### OAUTH ###
+The oauth file looks as follows. The <> has to be replaced by the respective credentials
+
+```
+[google]
+clientId="<>"
+clientSecret="<>"
+```
+
