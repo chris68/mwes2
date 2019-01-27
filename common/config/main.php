@@ -2,7 +2,7 @@
 return [
 // @chris68
     'name' => 'Mailwitch Email Services',
-    'version' => '2.1.7',
+    'version' => '2.2.0',
 
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
