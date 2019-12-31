@@ -8,7 +8,7 @@ None
 ```
 ## Postgres ##
 Postgres 9.5 is used.
-## Postfix ##
+## Postfix and Dovecot ##
 See hosting/postfix and the respective deploy.sh
 
 ### OAUTH ###
