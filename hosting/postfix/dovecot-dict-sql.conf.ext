@@ -1,0 +1,23 @@
+#################################################################################################################################
+#################################################################################################################################
+#################################################################################################################################
+
+## Settings for mailwitch/postfix integration (SMTP with TLS); add this to the end of /etc/dovecot/dovecot-dict-sql.conf.ext
+# See https://doc.dovecot.org/configuration_manual/authentication/sql/
+
+# Postgresql
+driver = pgsql
+# Use "host= ... pass=foo#bar" if your password has '#' character
+connect = host=localhost dbname=mwes2 user=mailwitch password=mailwitch
+
+# For testing check the password a plain text
+default_pass_scheme = PLAIN
+
+# Password query - check whether the user has an entry in the top level domain mailwitch.com. 
+# For beginners just take the username as password
+password_query = SELECT name as username, 'mailwitch.com' as domain, name as password FROM tbl_emailentity \
+WHERE emaildomain_id = 0 and name = '%n' AND 'mailwitch.com' = '%d'
+
+# User query is not really necessary for our usage
+user_query = SELECT username as home, emaildomain_id as uid, emaildomain_id as gid FROM tbl_emailentity \
+WHERE 1=0

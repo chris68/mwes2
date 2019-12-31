@@ -175,6 +175,16 @@ smtpd_tls_eecdh_grade = ultra
 # No SSL compression
 tls_ssl_options = NO_COMPRESSION
 
+
+## SASL/DOVECOT
+# See http://www.postfix.org/SASL_README.html
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+#broken_sasl_auth_clients = yes
+
+
 # Cache
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
