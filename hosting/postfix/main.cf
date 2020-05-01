@@ -125,8 +125,16 @@ smtpd_client_restrictions =
     reject_rbl_client zen.spamhaus.org,
     permit
 
-# Sender restrictions
-smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, permit
+## Sender restrictions 
+
+# reject_sender_login_mismatch based on dovecot authentication and the smtpd_sender_login_maps (see http://www.postfix.org/SASL_README.html)
+# Oddly, in this documentation the check is done in smtpd_recipient_restrictions instead of smtpd_sender_restrictions 
+smtpd_sender_restrictions = permit_mynetworks, reject_unknown_sender_domain, reject_sender_login_mismatch, permit
+
+# The sender adresses mapped here will be guarded be sasl/devocot login, i.e. you will not be able to send emails 
+# with senders listed here unless you are correctly authenticated
+smtpd_sender_login_maps = pgsql:/etc/postfix/mailwitch/smtpd_sender_login_maps.pgsql
+
 
 ## TLS
 
@@ -190,7 +198,7 @@ smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 
-## SMTPD restrictions  (preliminary test for smtpd restrictions; not used yet) ##
+## SMTPD restrictions  (preliminary test for further smtpd restrictions; not used yet) ##
 # smtpd_restriction_classes = RC_check_sender_access
 # RC_check_sender_access = check_sender_access hash:/etc/postfix/mailwitch/_sender_access.hash
 # smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination, check_recipient_access hash:/etc/postfix/mailwitch/_recipient_access_per_user.hash
