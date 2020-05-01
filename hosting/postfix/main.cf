@@ -8,6 +8,9 @@
 
 ### Basic administrative settings ###
 
+# Needed at least level 2 (see postconf smtpd_relay_restrictions)
+compatibility_level=2
+
 # Biff notifications not necessary
 biff = no
 

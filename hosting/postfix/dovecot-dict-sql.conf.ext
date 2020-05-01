@@ -2,7 +2,7 @@
 #################################################################################################################################
 #################################################################################################################################
 
-## Settings for mailwitch/postfix integration (SMTP with SASL); add this to the end of /etc/dovecot/dovecot-dict-sql.conf.ext
+## Settings for mailwitch/postfix integration (SMTP with SASL); add this to the end of /etc/dovecot/dovecot-sql.conf.ext
 # See https://doc.dovecot.org/configuration_manual/authentication/sql/ (general)
 # See https://doc.dovecot.org/configuration_manual/config_file/config_variables/ (variable lile %w, %u) 
 
@@ -16,7 +16,7 @@ default_pass_scheme = PLAIN
 
 # Password query - Check whether we find a match in username (full sender email!) and password - if so return a column to authenticate user
 password_query = SELECT distinct NULL AS password, 'Y' as nopassword \ # Password is part of the where condition - we just return a column if it matches
-  FROM tbl_emailmappings em left join tbl_saslaccount sa on em.id = sa.senderalias_id where em.resolvedaddress = '%u' and AND digest('%w','sha512') = sa.token_sha512
+  FROM tbl_emailmapping em left join tbl_saslaccount sa on em.id = sa.senderalias_id where em.resolvedaddress = '%u' and digest('%w','sha512') = sa.token_sha512
 
 # User query is not really necessary for our usage
 user_query = SELECT username as home, emaildomain_id as uid, emaildomain_id as gid FROM tbl_emailentity \
