@@ -37,6 +37,7 @@ CREATE OR REPLACE VIEW PostfixSenderWithSASL AS -- View needed for postfix (mapp
     m.resolvedaddress Sender
   FROM tbl_emailmapping m
   WHERE 
+    not locked and
     exists 
     (
         select 1 from tbl_emailentity 

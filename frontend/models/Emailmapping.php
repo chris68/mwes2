@@ -72,7 +72,7 @@ class Emailmapping extends \yii\db\ActiveRecord
             'preferredemailaddress' => 'Bevorzuge Emailadresse',
             'targetformula' => 'Zielformel',
             'senderbcc' => 'Senderbcc',
-            'locked' => 'Umleitung sperren',
+            'locked' => 'Nutzung sperren',
         ];
     }
 
