@@ -12,7 +12,7 @@ use frontend\helpers\ModelFormatter;
 <p><?=ModelFormatter::formatwithHtmlTelTags($model->emaildomain,$model->comment)?></p>
 <p>
     <?php foreach ($model->emailmappings as $mapping) : ?>
-    <b><?=$mapping->emailarea->name?><?=$mapping->locked?' (gesperrt): ':': '?></b>
+    <b><?=$mapping->emailarea->name?><?=$mapping->locked?'&nbsp;<span class="glyphicon glyphicon-lock"></span>':''?>:</b>
     <?=$mapping->target?>
     <?php endforeach  ?>
 </p>

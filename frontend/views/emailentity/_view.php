@@ -43,7 +43,7 @@ use frontend\helpers\ModelFormatter;
             <legend class="small">Adressumleitungen</legend>
             <dl>
                 <?php foreach ($model->emailmappings as $mapping) : ?>
-                <dt><?=$mapping->emailarea->name?><?=$mapping->locked?' (gesperrt)':''?></dt>
+                <dt><?=$mapping->emailarea->name?><?=$mapping->locked?'&nbsp;<span class="glyphicon glyphicon-lock"></span>':''?></dt>
                 <dd><?=$mapping->target?></dd>
                 <?php endforeach  ?>
             </dl>
