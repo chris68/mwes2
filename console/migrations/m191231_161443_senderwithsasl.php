@@ -18,13 +18,10 @@ $sql = <<<'EOT'
 CREATE TABLE tbl_saslaccount
 (
          id                                                    serial NOT NULL,
-         owner_id                                              int NOT NULL
-           CONSTRAINT NoSaslAccountsForRoot CHECK (owner_id<>0),
          senderalias_id                                        int, -- the sender (email mapping) the access is for
          accesshint                                            text NOT NULL, -- hint for the user about the access
          token_sha512                                          bytea NOT NULL, -- the sha512 hash of the tokem saved by the user
          PRIMARY KEY (ID),
-         FOREIGN KEY (owner_id) REFERENCES tbl_user (id) ON UPDATE CASCADE ON DELETE CASCADE,
          FOREIGN KEY (senderalias_id) REFERENCES tbl_emailmapping (id) ON UPDATE CASCADE ON DELETE CASCADE
 ) WITH OIDS;
 EOT;
