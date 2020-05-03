@@ -20,14 +20,48 @@ CREATE TABLE tbl_saslaccount
          id                                                    serial NOT NULL,
          senderalias_id                                        int, -- the sender (email mapping) the access is for
          accesshint                                            text NOT NULL, -- hint for the user about the access
-         token_sha512                                          bytea NOT NULL, -- the sha512 hash of the tokem saved by the user
+         token_sha512                                          bytea NOT NULL, -- the sha512 hash of the token saved by the user
+         token_unhashed                                        text, -- the unhashed token (only for entry, will not be saved but converted by a trigger)
          PRIMARY KEY (ID),
          FOREIGN KEY (senderalias_id) REFERENCES tbl_emailmapping (id) ON UPDATE CASCADE ON DELETE CASCADE
 ) WITH OIDS;
 EOT;
 $this->execute($sql);
 
-        
+$sql = <<<'EOT'
+CREATE OR REPLACE FUNCTION tbl_saslaccount_hash_token()
+  RETURNS trigger AS
+$$
+BEGIN
+    IF NEW.token_unhashed IS NOT NULL THEN
+        NEW.token_sha512 = digest(NEW.token_unhashed,'sha512');
+        NEW.token_unhashed = NULL;
+    END IF;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+EOT;
+$this->execute($sql);
+
+$sql = <<<'EOT'
+CREATE TRIGGER tbl_saslaccount_ins_token
+  BEFORE INSERT
+  ON tbl_saslaccount
+  FOR EACH ROW
+  EXECUTE PROCEDURE tbl_saslaccount_hash_token();
+EOT;
+$this->execute($sql);
+
+$sql = <<<'EOT'
+CREATE TRIGGER tbl_saslaccount_upd_token
+  BEFORE UPDATE
+  ON tbl_saslaccount
+  FOR EACH ROW
+  EXECUTE PROCEDURE tbl_saslaccount_hash_token();
+EOT;
+$this->execute($sql);
+
 $sql = <<<'EOT'
 CREATE OR REPLACE VIEW PostfixSenderWithSASL AS -- View needed for postfix (mapping )
   SELECT

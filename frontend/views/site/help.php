@@ -208,13 +208,15 @@ Weitergeleitete Email
 <h2><a name="sender-replacement">Absenderadressenersetzung</a></h2>
 <p>Wenn Sie Mailwitch richtig nutzen, dann werden Sie sich eine Mailwitchadresse wie <i>markus.meier</i>@mailwitch.com als globale Adresse definieren, die Sie dann auf ihre eigentliches Emailkonto bei ihrem Emailprovider (z.B. gmail.com, web.de, yahoo.com, gmx.de, etc.) umleiten. Wenn ihnen jemand an diese Adresse <i>markus.meier</i>@mailwitch.com schreibt, erhalten Sie die Email dann in ihrem Emailkonto(z.B. m.meier@web.de)
 </p><p>Genauso werden Sie Emails nie direkt von Mailwitch aus schreiben, sondern immer von Ihrem eigentlichen Emailprovider. Trotzdem wollen Sie, dass alle Leute die Emails unter Ihrer Mailwitchadresse <i>markus.meier</i>@mailwitch.com erhalten.
-</p><p>Bei vielen Emailprovidern ist es nun möglich, sich weitere Absenderadressen registrieren zu lassen. Hierzu wird ein Freischaltcode an die gewünschte Adresse geschickt und dadurch geprüft, dass einem die Adresse wirklich gehört. Nach der Freischaltung kann man die registrierte Adresse dann als Absenderadressen verwenden. Auf diese Weise können Sie sich beliebig viele Mailwitchadressen als Absenderadressen bei Ihrem Emailprovider freischalten lassen und dann nutzen. Wenn Ihr Emailprovider dieses Verfahren unterstützt (z.B. Google Mail), dann sollten Sie diese nutzen, denn es ist am einfachsten und flexibelsten.
-</p><p>Leider geht dieses Verfahren jedoch nicht bei allen Providern - insbesondere nicht bei der Arbeit. Daher hat Mailwitch ein zweites Verfahren, um Absenderadressen zu verändern. Sie registrieren hierzu in Mailwitch eine Emailadresse als Absenderadresse. Hierzu müssen Sie auch über Freischaltcodes nachweisen, dass Ihnen die Adresse wirklich gehört. Für jede solche registrierte Absenderadresse können Sie dann eine Mailwitchadresse (jedoch nur globale Adressen!) wählen und Mailwitch wird automatisch die originale Absenderadresse in jeder Mail durch die Mailwitchadresse ersetzen.
+</p><p>Bei vielen Emailprovidern ist es nun möglich, sich weitere Absenderadressen registrieren zu lassen. Hierzu wird ein Freischaltcode an die gewünschte Adresse geschickt und dadurch geprüft, dass einem die Adresse wirklich gehört. Nach der Freischaltung kann man die registrierte Adresse dann als Absenderadressen verwenden. Auf diese Weise können Sie sich beliebig viele Mailwitchadressen als Absenderadressen bei Ihrem Emailprovider freischalten lassen und dann nutzen. Wenn Ihr Emailprovider dieses Verfahren unterstützt (z.B. Google Mail bis zum Rollout des SMTP-Versandverfahren), dann sollten Sie diese nutzen, denn es ist am einfachsten und flexibelsten.
+</p><p>Leider geht dieses Verfahren jedoch nicht bei allen Providern - insbesondere nicht bei der Arbeit. Daher hat Mailwitch ein zweites Verfahren, um Absenderadressen während des Durchschleusens durch Mailwitch zu verändern. Sie registrieren hierzu in Mailwitch eine Emailadresse als Absenderadresse. Hierzu müssen Sie auch über Freischaltcodes nachweisen, dass Ihnen die Adresse wirklich gehört. Für jede solche registrierte Absenderadresse können Sie dann eine Mailwitchadresse (jedoch nur globale Adressen!) wählen und Mailwitch wird automatisch die originale Absenderadresse in jeder Mail durch die Mailwitchadresse ersetzen.
 </p><p>Sie können beliebig viele Absenderadressen registrieren und entsprechend umleiten. Folgendes Beispiel für eine typische Nutzung mit einer Arbeits- und einer Heimadresse:
 </p>
 <pre>  m.meier@web.de                       =&gt; markus.meier@mailwitch.com
   meier@verkehrsbetriebe-freiburg.de   =&gt; markus.meier+work@mailwitch.com
 </pre>
+<p>Dieses Verfahren funktioniert aber nur, wenn sie konsequent alle Mail über Mailwitch senden. Und daher sollte man vor allem den SMTP-Versand nutzen.
+</p>
 <p class="alert alert-danger">
     <b>Absenderadressersetzung ein Muss bei Empfängeradressersetzung</b><br><br>
     Bei allen Emailprovidern, die <?= Assist::extlink('DMARC', 'http://de.wikipedia.org/wiki/DMARC')?> (z.B. gmail.com und vor allem yahoo.com) nutzen,
@@ -231,6 +233,13 @@ Weitergeleitete Email
 
     Und genau das ist auch die Kritik an DMARC: Emailweiterleitungen werden deutlich erschwert und die Dominanz der großen Mailprovider soll zementiert werden. Aber vor allem Yahoo steckt dafür derzeit gerade so viel Kritik ein, dass das Pendel eventuell demnächst wieder zurückschlägt.
 
+</p>
+<h2><a name="sender-">SMTP-Mailversand (mit Authentifizierung)</a></h2>
+<p>Seit Mai 2020 bietet Mailwitch die Möglichkeit, den Versand von Mails über eine gesicherte Verbindung mit Anmeldung durchzuführen. Gerade im Zusammenspiel mit Gmail funktioniert dies hervorragend. Falls Sie Mailwitch richtig nutzen, dann sollten Sie auf jeden Fall diese Möglichkeit einsetzen, denn dies garantiert einen problemlosen Versand der Mails.
+</p><p>Hierzu muss man in Gmail (oder bei einem anderen Emailprovider, der sowas kann; web.de kann es Stand 2020 nicht...) eine neue Absenderadresse registrieren. 
+</p><p>Zur Vorbereitung holen Sie sich für die Adresse in Mailwitch eine Senderfreigabe, was nichts anderes ist als die Emailadresse (z.B. markus.meier@mailwitch.com) als Nutzername und ein Zugangstoken quasi als Passwort für diese Emailadresse. Wichtig ist: der Zugang muss in Mailwitch registriert sein bevor dieser genutzt werden kann und das sichtbare Token ist nur bei der Registrierung sichtbar. Im Zweifel muss man daher ein Neues erzeugen!
+</p><p>Diese Daten müssen dann bei dem Emailprovider eingetragen werden (bei Gmail: Sender als Alias registrieren!), wobei der Nutzername die komplette Absenderadresse ist und das Passwort eben der Zugangstoken. Die Verbindung muss über <strong>Port 25</strong> laufen und man sollte TLS nutzen. Während der Registrierung wird der Emailprovider den Zugang prüfen und diesen freigeben, wenn alles geklappt hat. Danach kann man unter dem Absender Emails verschicken.
+</p><p>Man kann sich auch mehrere Zugänge für die gleiche Absenderadresse registrieren, was zum Beispiel für Sammel/Familienaccounts ganz nett ist, denn dann können mehrere Personen unter den gleichen Absender senden.
 </p>
 
 <h2><a name="access-management">Berechtigungskonzept</a></h2>

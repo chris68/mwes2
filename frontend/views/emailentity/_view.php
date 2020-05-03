@@ -40,10 +40,10 @@ use frontend\helpers\ModelFormatter;
             <p><?=ModelFormatter::formatwithHtmlTelTags($model->emaildomain,$model->comment)?></p>
             </fieldset>
             <fieldset>
-            <legend class="small">Adressumleitungen</legend>
+            <legend class="small">Definierte Adressen &amp; Umleitungen</legend>
             <dl>
                 <?php foreach ($model->emailmappings as $mapping) : ?>
-                <dt><?=$mapping->emailarea->name?><?=$mapping->locked?'&nbsp;<span class="glyphicon glyphicon-lock"></span>':''?></dt>
+                <dt><?=$mapping->emailarea->name?><?=$mapping->locked?'&nbsp;<span class="glyphicon glyphicon-lock"></span>':($mapping->hasSaslaccounts()?'&nbsp;<span class="glyphicon glyphicon-send"></span>':'')?></dt>
                 <dd><?=$mapping->target?></dd>
                 <?php endforeach  ?>
             </dl>

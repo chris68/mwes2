@@ -110,6 +110,31 @@ class Emailentity extends \yii\db\ActiveRecord
     function prepareExchange() {
         if (!$this->isNewRecord) {
             $emailmappings = $this->getEmailmappings()->findFor('emailentities', $this);
+            
+            // Build up a new model for each mapping as a container for one new sasl account per mapping
+            // Actually one could create further (and not only one) new records via this pattern!
+            foreach ($emailmappings as $mapping) {
+                // Get the existing saslaccounts
+                $saslaccounts = $mapping->getSaslaccounts()->findFor('saslaccounts', $mapping);
+                
+                // Create a new one 
+                $new_account = new Saslaccount();
+                // Label it with a negative id as indicator for a newly created record (id will be unset on save)
+                $new_account->id = -1; // First new record; use -2, -3 for further new records
+                // Link it to the mapping
+                $new_account->senderalias_id = $mapping->id;
+                // Prefill with random unhashed token
+                $new_account->token_unhashed = Yii::$app->getSecurity()->generateRandomString(32);
+                // Make sure that also the backlink points to the correct mapping
+                $new_account->populateRelation('senderalias',$mapping);
+                // Add the new record under its (nagative) id to the existing records
+                $saslaccounts[$new_account->id] = $new_account;
+
+                ksort($saslaccounts);
+
+                // And then hard set the relation saslaccounts 
+                $mapping->populateRelation('saslaccounts', $saslaccounts);
+            }
         } else {
             $emailmappings = [];
         }
@@ -172,6 +197,18 @@ class Emailentity extends \yii\db\ActiveRecord
                         $mapping->emailentity_id = $this->id;
                     }
                     $res = min($res,$mapping->save($runValidation));
+                    
+                    foreach ($mapping->saslaccounts as $account) {
+                        if ($account->accesshint <> '') {
+                            $res = min($res,$account->save($runValidation));
+                        } else {
+                            if (!$account->isNewRecord) {
+                                $account->delete();
+                            }
+                        }
+                        
+                    }
+                    
                 } else {
                     $mapping->delete();
                 }
@@ -195,6 +232,11 @@ class Emailentity extends \yii\db\ActiveRecord
         if (isset($this->emailmappings)) {
             $res = min($res,\yii\base\Model::loadMultiple($this->emailmappings, $data));
         }
+        foreach ($this->emailmappings as $mapping) {
+            if (isset($mapping->saslaccounts) && count($mapping->saslaccounts)>0) {
+                $res = min($res,\yii\base\Model::loadMultiple($mapping->saslaccounts, $data));
+            }
+        }
         return $res;
     }
 
@@ -203,6 +245,11 @@ class Emailentity extends \yii\db\ActiveRecord
         $res = $this->validate($attributeNames, $clearErrors);
         if (isset($this->emailmappings)) {
             $res = min($res,\yii\base\Model::validateMultiple($this->emailmappings));
+        }
+        foreach ($this->emailmappings as $mapping) {
+            if (isset($mapping->saslaccounts)) {
+                $res = min($res,\yii\base\Model::validateMultiple($mapping->saslaccounts));
+            }
         }
         return $res;
     }
@@ -219,7 +266,7 @@ class Emailentity extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery 
      */
     public function getEmaildomain()
     {

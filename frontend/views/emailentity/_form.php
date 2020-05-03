@@ -39,7 +39,14 @@ use frontend\models\Emaildomain;
                     &nbsp;
                     <?= Html::submitButton('', ['class' => 'btn btn-sm btn-primary glyphicon glyphicon-save']) ?>
                 </span>
-                <?= $form->errorSummary(array_merge(['' => $model],$model->emailmappings)) ?>
+                <?php
+                    /* Consolidate all errors for better visibility */
+                    $errors = array_merge(['' => $model],$model->emailmappings);
+                    foreach ($model->emailmappings as $mapping) {
+                        $errors = array_merge($errors,$mapping->saslaccounts);
+                    }
+                ?>
+                <?= $form->errorSummary($errors) ?> 
                 <div id ="pjax-notification-sending" style="display: none" class="alert alert-info">Die Änderungen werden zum Server geschickt. Das sollte nur kurze Zeit dauern. Wenn es Probleme gibt, dann kommt eine Fehlermeldung</div>
                 <div id ="pjax-notification-error" style="display: none" class="alert alert-danger"></div>
             </div>
@@ -57,7 +64,7 @@ use frontend\models\Emaildomain;
             <?= $form->field($model, 'comment')->textarea(['rows' => 3]) ?>
             </fieldset>
             <fieldset>
-            <legend>Adressumleitungen</legend>
+            <legend>Definierte Adressen &amp; Umleitungen</legend>
             <?php
             if(isset($model->emailmappings)) {
                 $items = [];

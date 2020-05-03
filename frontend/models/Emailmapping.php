@@ -21,6 +21,7 @@ use Yii;
  *
  * @property Emailentity $emailentity
  * @property Emailarea $emailarea
+ * @property Saslaccount[] $saslaccounts
  */
 class Emailmapping extends \yii\db\ActiveRecord
 {
@@ -107,6 +108,31 @@ class Emailmapping extends \yii\db\ActiveRecord
     public function getEmailarea()
     {
         return $this->hasOne(Emailarea::className(), ['id' => 'emailarea_id']);
+    }
+
+    /**
+     * Get the Saslaccounts for the mapping
+     * Index the resulting array by the id (mainly for access in the tabular input)
+     *
+     * @return \yii\db\ActiveQuery 
+     */
+    public function getSaslaccounts()
+    {
+        return 
+            $this->hasMany(Saslaccount::className(), ['senderalias_id' => 'id'])
+                ->orderBy('{{%saslaccount}}.id')
+                ->indexBy('id')
+            ;
+    }
+
+    /**
+     * Check if Saslaccounts for the mapping exists
+     *
+     * @return \yii\db\ActiveQuery 
+     */
+    public function hasSaslaccounts()
+    {
+        return Saslaccount::find()->where(['senderalias_id' => $this->id])->count() > 0;
     }
 
     public function isActive() {
