@@ -89,10 +89,15 @@ $this->execute($sql);
     {
 $sql = <<<'EOT'
 DROP VIEW PostfixSenderWithSASL ;
+EOT;
+$this->execute($sql);
+$sql = <<<'EOT'
 DROP TABLE tbl_saslaccount;
+EOT;
+$this->execute($sql);
+$sql = <<<'EOT'
 DROP EXTENSION pgcrypto ;
 EOT;
-
 $this->execute($sql);
     }
 }
