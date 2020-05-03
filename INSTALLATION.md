@@ -31,6 +31,12 @@ to
 #!include auth-static.conf.ext
 ```
 
+Also add
+``auth_username_chars = abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890.-_@+``
+after
+``auth_mechanisms = plain``
+
+
 Add ``dovecot-dict-sql.conf.ext`` to the end of ``/etc/dovecot/dovecot-sql.conf.ext`` (not /etc/dovecot/dovecot-**dict**-sql.conf.ext).  
 
 Change the socket config in ``/etc/dovecot/conf.d/10-master.conf`` from
