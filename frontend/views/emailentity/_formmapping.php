@@ -10,6 +10,10 @@ use yii\bootstrap\Tabs;
 /* @var $form ActiveForm */
 ?>
 <div class="tab-formmapping">
+    <div class="form-group">
+        <label class="control-label">Adresse</label>
+        <p class="form-control-static"><?=Html::encode($model->resolvedaddress)?></p>
+    </div>
     <?= $form->field($model, "[{$model->emailarea_id}]target")->textarea() ?>
     <?= $form->field($model, "[{$model->emailarea_id}]locked")->checkbox() ?>
     <div class="form-group">
