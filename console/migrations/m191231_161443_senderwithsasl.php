@@ -68,15 +68,7 @@ CREATE OR REPLACE VIEW PostfixSenderWithSASL AS -- View needed for postfix (mapp
     m.resolvedaddress Sender
   FROM tbl_emailmapping m
   WHERE 
-    not locked and
-    exists 
-    (
-        select 1 from tbl_emailentity 
-        where 
-            id = m.emailentity_id and
-            emaildomain_id = 0 and -- only top level domains for the time being
-            owner_id = 102 -- only ctoussa for the time being
-    )
+    not locked
  ;        
 EOT;
 $this->execute($sql);
