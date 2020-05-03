@@ -110,9 +110,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <li><b>main:</b> Die Standardemailadresse</li>
     <li><b>work:</b> Geschäftliches Emailkonto</li>
     <li><b>home:</b> Privates Emailkonto</li>
+    <li><b>mobile:</b> Email auf dem Handy (falls man hier eine spezielle Adresse hat)</li>
     <li><b>extra1:</b> Erstes weiteres Emailkonto</li>
     <li><b>extra2:</b> Zweites weiteres Emailkonto</li>
-    <li><b>extra3:</b> Drittes weiteres Emailkonto</li>
     <li><b>all:</b> Spezielle, automatisch erzeugte Kontoart (siehe unten)</li>
 </ul>
 

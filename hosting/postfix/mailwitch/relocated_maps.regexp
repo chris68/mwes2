@@ -1,2 +1,2 @@
 # Send relocation message that the old style email areas are no longer supported
-/^(.*)\.(main|work|home|extra1|extra2|extra3)@(.*\.)?mailwitch\.com$/                 Die Emailadresse ist nun '+work', '+home', ... anstatt '.work','.home', d.h. '+' anstatt '.'  //  The email is now '+work', '+home', ... instead of '.work','.home.', i.e. '+' instead of '.'
+/^(.*)\.(main|work|home|extra1|extra2|extra3|all)@(.*\.)?mailwitch\.com$/                 Die Emailadresse ist nun '+work', '+home', ... anstatt '.work','.home', d.h. '+' anstatt '.'  //  The email is now '+work', '+home', ... instead of '.work','.home.', i.e. '+' instead of '.'
