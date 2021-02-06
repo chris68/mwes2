@@ -108,6 +108,8 @@ smtpd_helo_required = yes
 smtpd_helo_restrictions =
     # Allow localhost, etc.
     permit_mynetworks,
+    # Allow authenticated users
+    permit_sasl_authenticated,
     # Reject if not a welformed hostname in helo
     reject_invalid_helo_hostname,
     # Reject if not a real hostname in helo
@@ -122,6 +124,8 @@ smtpd_client_restrictions =
     permit_mynetworks,
     # Reject if the other party talks to fast
     reject_unauth_pipelining,
+    # Allow authenticated users
+    permit_sasl_authenticated,
     # Reject if the reverse dns and the ip do not fit
     reject_unknown_client_hostname,
     # Reject according to spamhaus.org backlist
