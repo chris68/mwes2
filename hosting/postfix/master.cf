@@ -1,4 +1,15 @@
 # See http://www.postfix.org/master.5.html
 # Mailwitch configuration
 
-# Nothing special
+# Patch these parameters into main.cf for enabling port 587; test via netstat -na | grep LISTEN | grep 587
+
+submission inet n       -       y       -       -       smtpd
+# Uncommented for mailwitch - service submission accepts authenticated users on port 587 with TLS required
+
+# Added for mailwitch 
+# These parameters override the ones from main.cf for service submission, see http://www.postfix.org/master.5.html
+# See https://librelamp.com/PostfixSubmission
+ -o syslog_name=postfix/submission
+ -o smtpd_tls_security_level=encrypt
+ -o smtpd_tls_auth_only=yes
+ -o smtpd_sasl_auth_enable=yes

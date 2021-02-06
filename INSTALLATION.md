@@ -105,7 +105,9 @@ service auth {
 ```
 by replacing the lines under Postfix smtp-auth.
 ### Postfix ###
-See hosting/postfix and the respective deploy.sh
+See hosting/postfix and the respective deploy.sh.
+
+Postfix runs on port 25 (standard) and 587 (authenticated with TLS)
 ## OAUTH ##
 The oauth file looks as follows. The <> has to be replaced by the respective credentials
 

@@ -24,6 +24,12 @@ cp mailwitch/*.{hash,regexp,pgsql} /etc/postfix/mailwitch/. || check_error
 # Append the config file in order not to overwrite the existing one
 cat main.cf >> /etc/postfix/main.cf || check_error
 
+# master.cf has to be edited manually
+echo "Here the content to be added to master.cf:"
+echo "======"
+cat master.cf 
+echo "======"
+
 # postfix must be able to read the files; no one should be allowed to write the files
 chown root:root /etc/postfix/mailwitch/* || check_error
 chmod 444 /etc/postfix/mailwitch/*  || check_error
@@ -33,8 +39,9 @@ chmod 444 /etc/postfix/mailwitch/*  || check_error
 
 echo "Postfix configuration deployed."
 echo "The configuration section for mailwitch has been appended (!) to the end of /etc/postfix/main.cf"
-echo "Do not forget to edit/reconcile the configuration file via:"
+echo "Do not forget to edit/reconcile the two configuration files via:"
 echo "sudo nano /etc/postfix/main.cf"
+echo "sudo nano /etc/postfix/master.cf"
 echo "You must ensure that no config parameter is set twice via:"
 echo "sudo service postfix restart; sudo tail -f /var/log/mail.log"
 echo "The log should not show any warnings"
