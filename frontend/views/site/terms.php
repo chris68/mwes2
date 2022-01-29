@@ -9,6 +9,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-terms">
     <h1><?= $this->title ?></h1>
     
+    <h4>Privater und geschlossener Service</h4>
+    <p>
+        Dieser Service wird privat und nur für Freunde des Machers angeboten. Seit dem 29.01.2022 werden keine neuen Nutzer mehr angenommen und die bestehenden 
+        Nutzer, die nicht über persönlichen Kontakt die Möglichkeit einer Nutzung behalten werden, werden am 02.08.2022 gelöscht.
+    </p>
+
     <h4>Kostenloser Service</h4>
     <p>
         Dieser Service wird kostenlos angeboten. Wir beabsichtigen dies auch für die Zukunft, aber aus rechtlichen Gründen müssen wir klarstellen: es ist NICHT 100% sichergestellt, dass der Service auch in Zukunft immer kostenlos sein wird.
@@ -48,6 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <p>
-        (Stand 01.03.2015; gültig ab 01.03.2015)
+        (Stand 29.01.2022; gültig ab 29.01.2022)
     </p>
 </div>

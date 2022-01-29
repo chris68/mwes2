@@ -173,6 +173,10 @@ class SiteController extends Controller
     public function actionSignup($oauth='')
 // @chris68
     {
+        Yii::$app->getSession()->setFlash('error',
+        'Eine Registierung ist wegen des nahenden Shutdowns leider nicht mehr möglich!');
+        return $this->redirect(['/']);
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {

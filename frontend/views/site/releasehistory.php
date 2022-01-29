@@ -13,6 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
         Die Plattform wird laufend weiterentwickelt und damit Sie schnell erkennen können, wann was neu hinzugekommen ist, haben wir hier die Releasehistorie veröffentlicht. Kleinere Änderungsrelease mit Fehlerkorrekturen werden hier jedoch nicht aufgeführt.
     </p>
     <h3>
+        Version 2.3 (29.01.2022)
+    </h3>
+    <p>
+        Sundown als öffentlicher Service
+    </p>
+    <ul>
+        <li>Mailwitch.com ist kein öffentlicher Service mehr</li>
+    </ul>
+    <h3>
         Version 2.2 (27.01.2019)
     </h3>
     <p>
