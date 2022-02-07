@@ -47,13 +47,13 @@
         
         foreach ($fields as $field) {
             switch ($field) {
-                case 'Name': $row[] = empty($item->sortname)?$item->getCompleteEmailname():$item->sortname;
+                case 'Name': $row[] = empty($item->sortname)?$item->name:$item->sortname;
                     break;
-                case 'Nickname': $row[] = $item->getCompleteEmailname();
+                case 'Nickname': $row[] = $item->name;
                     break;
                 case 'Notes': $row[] = $item->comment;
                     break;
-                case 'Group Membership': $row[] = $item->emaildomain->getCompleteDomainname();
+                case 'Group Membership': $row[] = $item->emaildomain->name;
                     break;
 
                 case 'Phone 1 - Type': $row[] = ucfirst($tels[1]['type']);
@@ -85,15 +85,15 @@
                 case 'E-mail 5 - Type': $row[] = isset($item->emailmappings[4])?(ucfirst($item->emailmappings[4]->emailarea->name)):'';
                     break;
 
-                case 'E-mail 1 - Value': $row[] = isset($item->emailmappings[0])?($item->emailmappings[0]->getResolvedaddress()):'';
+                case 'E-mail 1 - Value': $row[] = isset($item->emailmappings[0])?($item->emailmappings[0]->resolvedtarget):'';
                     break;
-                case 'E-mail 2 - Value': $row[] = isset($item->emailmappings[1])?($item->emailmappings[1]->getResolvedaddress()):'';
+                case 'E-mail 2 - Value': $row[] = isset($item->emailmappings[1])?($item->emailmappings[1]->resolvedtarget):'';
                     break;
-                case 'E-mail 3 - Value': $row[] = isset($item->emailmappings[2])?($item->emailmappings[2]->getResolvedaddress()):'';
+                case 'E-mail 3 - Value': $row[] = isset($item->emailmappings[2])?($item->emailmappings[2]->resolvedtarget):'';
                     break;
-                case 'E-mail 4 - Value': $row[] = isset($item->emailmappings[3])?($item->emailmappings[3]->getResolvedaddress()):'';
+                case 'E-mail 4 - Value': $row[] = isset($item->emailmappings[3])?($item->emailmappings[3]->resolvedtarget):'';
                     break;
-                case 'E-mail 5 - Value': $row[] = isset($item->emailmappings[4])?($item->emailmappings[4]->getResolvedaddress()):'';
+                case 'E-mail 5 - Value': $row[] = isset($item->emailmappings[4])?($item->emailmappings[4]->resolvedtarget):'';
                     break;
 
                 default:
